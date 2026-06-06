@@ -285,24 +285,7 @@ body{font-family:'Zen Maru Gothic','Hiragino Maru Gothic Pro',sans-serif;
 .rec-bar{height:100%;border-radius:999px;transition:width .6s ease}
 .rec-detail{font-size:11px;opacity:.65;margin-top:3px}
 
-/* ── ごほうびキャラ ── */
-#reward-section{margin-top:18px;background:linear-gradient(135deg,#FFF9C4,#FFF3E0);border-radius:20px;padding:16px;border:2px solid #FFE082;box-shadow:0 4px 16px rgba(249,168,37,.2)}
-.reward-title{font-size:16px;font-weight:900;color:#F57F17;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.reward-stage{text-align:center}
-.reward-char{font-size:64px;line-height:1;margin-bottom:6px;display:block;transition:all .5s}
-.reward-name{font-size:14px;font-weight:900;color:#5D4037;margin-bottom:4px}
-.reward-stars{font-size:13px;color:#F57F17}
-.reward-progress{height:12px;background:#FFE082;border-radius:999px;margin:8px 0;overflow:hidden}
-.reward-progress-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#FFB300,#FF8F00);transition:width .6s ease}
-.reward-next{font-size:11px;color:#8D6E63;text-align:center}
 
-/* ── ごほうびポップアップ ── */
-#reward-popup{position:fixed;inset:0;z-index:600;display:none;align-items:center;justify-content:center;padding:20px}
-#reward-popup.show{display:flex}
-.reward-popup-bg{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px)}
-.reward-popup-box{position:relative;background:linear-gradient(135deg,#FFF9C4,#FFFDE7);border-radius:28px;padding:36px 28px;text-align:center;max-width:320px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:slideUp .5s cubic-bezier(.34,1.56,.64,1)}
-@keyframes evolveAnim{0%{transform:scale(1)}30%{transform:scale(0.1) rotate(180deg)}60%{transform:scale(1.4) rotate(-10deg)}80%{transform:scale(0.9)}100%{transform:scale(1)}}
-.evolve-char{font-size:88px;line-height:1;margin:10px 0;display:block;animation:evolveAnim 1.2s ease .3s both}
 
 /* ── スタート画面 ── */
 #start-screen{
@@ -310,6 +293,23 @@ body{font-family:'Zen Maru Gothic','Hiragino Maru Gothic Pro',sans-serif;
   background:linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   cursor:pointer;
+  transition:background 1s ease;
+}
+/* 朝(5〜10時): 明るいオレンジ〜ピンク */
+#start-screen.time-morning{
+  background:linear-gradient(160deg,#FF8C42 0%,#FFD580 40%,#FFF4CC 100%);
+}
+/* 昼(10〜17時): 空色〜水色 */
+#start-screen.time-day{
+  background:linear-gradient(160deg,#29B6F6 0%,#81D4FA 40%,#E1F5FE 100%);
+}
+/* 夕方(17〜20時): 夕焼けオレンジ〜赤紫 */
+#start-screen.time-evening{
+  background:linear-gradient(160deg,#FF5722 0%,#FF8A65 40%,#FFD54F 100%);
+}
+/* 夜(20〜5時): 深い紺〜紫 */
+#start-screen.time-night{
+  background:linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);
 }
 @keyframes startPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 @keyframes startFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
@@ -346,6 +346,137 @@ body{font-family:'Zen Maru Gothic','Hiragino Maru Gothic Pro',sans-serif;
 .skb-block-add{background:#FFF9C4;border:2px solid #F9A825}
 .skb-block-result{background:#C8E6C9;border:2px solid #66BB6A}
 
+
+/* ══════════════════════════════════════════
+   🥚 たまごそだてシステム
+══════════════════════════════════════════ */
+
+/* ホームの卵ウィジェット */
+#egg-widget{
+  margin:18px 0 0;
+  background:linear-gradient(135deg,rgba(255,255,255,.85),rgba(255,249,220,.9));
+  border-radius:22px;padding:16px 14px 14px;
+  box-shadow:0 4px 18px rgba(0,0,0,.10);
+  border:2px solid rgba(255,200,80,.4);
+  text-align:center;
+}
+.egg-title{
+  font-size:15px;font-weight:900;color:#5D4037;
+  margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.egg-stage-wrap{
+  display:flex;align-items:center;justify-content:center;gap:18px;
+  margin-bottom:10px;
+}
+/* SVG卵コンテナ */
+#egg-svg-wrap{
+  cursor:pointer;
+  filter:drop-shadow(0 6px 14px rgba(0,0,0,.18));
+  transition:transform .12s;
+  display:inline-block;
+}
+#egg-svg-wrap:active{transform:scale(.93);}
+@keyframes eggWobble{
+  0%{transform:rotate(0deg)}
+  20%{transform:rotate(-14deg)}
+  40%{transform:rotate(14deg)}
+  60%{transform:rotate(-8deg)}
+  80%{transform:rotate(8deg)}
+  100%{transform:rotate(0deg)}
+}
+#egg-svg-wrap.wobble{animation:eggWobble .55s ease;}
+
+/* 卵ゲージ */
+.egg-bar-wrap{
+  width:100%;background:#EDE7F6;border-radius:999px;
+  height:12px;overflow:hidden;margin:6px 0 4px;
+}
+.egg-bar-fill{
+  height:100%;border-radius:999px;
+  background:linear-gradient(90deg,#FFB300,#FF6B35);
+  transition:width .5s ease;
+}
+.egg-bar-label{
+  font-size:12px;font-weight:700;color:#8D6E63;text-align:center;
+}
+
+/* 卵割れ演出ポップアップ */
+#egg-hatch-popup{
+  position:fixed;inset:0;z-index:700;
+  display:none;align-items:center;justify-content:center;
+  padding:20px;
+}
+#egg-hatch-popup.show{display:flex;}
+.ehp-bg{position:absolute;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);}
+.ehp-box{
+  position:relative;background:linear-gradient(135deg,#FFF9C4,#FFF3E0);
+  border-radius:30px;padding:36px 28px 30px;
+  text-align:center;max-width:320px;width:100%;
+  box-shadow:0 24px 70px rgba(0,0,0,.35);
+  animation:ehpPop .6s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes ehpPop{
+  from{opacity:0;transform:scale(.3) rotate(-15deg)}
+  to{opacity:1;transform:scale(1) rotate(0)}
+}
+.ehp-title{font-size:26px;font-weight:900;color:#F57F17;margin-bottom:6px;}
+.ehp-sub{font-size:14px;opacity:.7;margin-bottom:16px;}
+.ehp-char{font-size:96px;line-height:1;display:block;margin:8px 0;
+  animation:ehpCharIn .8s cubic-bezier(.34,1.56,.64,1) .3s both;}
+@keyframes ehpCharIn{
+  from{opacity:0;transform:scale(0) rotate(20deg)}
+  to{opacity:1;transform:scale(1) rotate(0)}
+}
+.ehp-name{font-size:20px;font-weight:900;color:#5D4037;margin-top:6px;}
+.ehp-msg{font-size:13px;opacity:.7;margin:6px 0 22px;}
+.ehp-btn{
+  background:linear-gradient(135deg,#FF6B35,#FF8F00);
+  color:white;border:none;border-radius:999px;
+  padding:14px 36px;font-size:17px;font-weight:900;
+  cursor:pointer;font-family:inherit;
+  box-shadow:0 6px 22px rgba(255,107,53,.45);
+}
+
+/* コレクション */
+#egg-collection{
+  margin-top:10px;
+}
+.ecol-title{
+  font-size:13px;font-weight:900;color:#8D6E63;
+  margin-bottom:8px;text-align:left;
+  display:flex;align-items:center;gap:5px;
+}
+.ecol-grid{
+  display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-start;
+}
+.ecol-item{
+  width:46px;height:56px;
+  border-radius:14px;
+  background:rgba(255,255,255,.8);
+  border:2px solid #E0D0A0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:26px;line-height:1;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  cursor:pointer;
+  transition:transform .15s;
+  position:relative;
+}
+.ecol-item:hover{transform:scale(1.12);}
+.ecol-item.locked{
+  background:rgba(220,220,220,.5);
+  filter:grayscale(1);
+  border-color:#ccc;
+}
+.ecol-item .ecol-no{
+  font-size:9px;font-weight:900;color:#bbb;
+  position:absolute;top:3px;right:5px;
+}
+
+/* 時間帯による卵の光彩 */
+.egg-glow-morning{ filter:drop-shadow(0 0 12px rgba(255,180,50,.7)) drop-shadow(0 6px 14px rgba(0,0,0,.18)); }
+.egg-glow-day    { filter:drop-shadow(0 0 12px rgba(80,180,255,.7)) drop-shadow(0 6px 14px rgba(0,0,0,.18)); }
+.egg-glow-evening{ filter:drop-shadow(0 0 12px rgba(255,100,50,.7)) drop-shadow(0 6px 14px rgba(0,0,0,.18)); }
+.egg-glow-night  { filter:drop-shadow(0 0 12px rgba(150,80,255,.7)) drop-shadow(0 6px 14px rgba(0,0,0,.18)); }
 </style>
 </head>
 <body>
@@ -412,8 +543,25 @@ body{font-family:'Zen Maru Gothic','Hiragino Maru Gothic Pro',sans-serif;
     </div>
   </div>
   <div id="home-score-wrap"></div>
+  <!-- 🥚 たまごそだて -->
+  <div id="egg-widget">
+    <div class="egg-title">🥚 たまごをそだてよう！</div>
+    <div class="egg-stage-wrap">
+      <div id="egg-svg-wrap" onclick="eggTap()" title="たまごをタップ！">
+        <!-- SVGは JS で描画 -->
+      </div>
+      <div style="flex:1;min-width:0">
+        <div id="egg-char-name" style="font-size:13px;font-weight:900;color:#5D4037;margin-bottom:4px"></div>
+        <div class="egg-bar-wrap"><div class="egg-bar-fill" id="egg-bar" style="width:0%"></div></div>
+        <div class="egg-bar-label" id="egg-bar-label"></div>
+      </div>
+    </div>
+    <div id="egg-collection">
+      <div class="ecol-title">🎁 コレクション</div>
+      <div class="ecol-grid" id="ecol-grid"></div>
+    </div>
+  </div>
   <div id="study-record"></div>
-  <div id="reward-section"></div>
 </div>
 </div>
 
@@ -532,17 +680,17 @@ body{font-family:'Zen Maru Gothic','Hiragino Maru Gothic Pro',sans-serif;
   </div>
 </div>
 
-<!-- ごほうびポップアップ -->
-<div id="reward-popup">
-  <div class="reward-popup-bg"></div>
-  <div class="reward-popup-box">
-    <div id="rp-stars" style="font-size:28px;margin-bottom:8px"></div>
-    <div id="rp-title" style="font-size:22px;font-weight:900;margin-bottom:4px;color:#F57F17"></div>
-    <div id="rp-sub" style="font-size:14px;opacity:.7;margin-bottom:14px"></div>
-    <span id="rp-char" class="evolve-char"></span>
-    <div id="rp-name" style="font-size:18px;font-weight:900;color:#5D4037;margin-top:8px"></div>
-    <div id="rp-msg" style="font-size:13px;opacity:.7;margin:6px 0 20px"></div>
-    <button onclick="closeRewardPopup()" style="background:linear-gradient(135deg,#FFB300,#FF8F00);color:white;border:none;border-radius:999px;padding:12px 32px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit;box-shadow:0 6px 20px rgba(255,143,0,.4)">やったー！</button>
+
+<!-- 🥚 たまご割れポップアップ -->
+<div id="egg-hatch-popup">
+  <div class="ehp-bg" onclick="closeEggHatch()"></div>
+  <div class="ehp-box">
+    <div class="ehp-title" id="ehp-title">🎉 うまれた！！</div>
+    <div class="ehp-sub" id="ehp-sub">たまごからとびだしたよ！</div>
+    <span class="ehp-char" id="ehp-char">🐣</span>
+    <div class="ehp-name" id="ehp-name">ひよこ</div>
+    <div class="ehp-msg" id="ehp-msg">ぴよぴよ！</div>
+    <button class="ehp-btn" onclick="closeEggHatch()">やったー！🎉</button>
   </div>
 </div>
 <!-- FEEDBACK -->
@@ -847,42 +995,42 @@ const MC={
   add:{name:"たしざん", ic:"➕", col:"var(--add)", pcol:"#FF6B35",
     lv:[
       {n:"かんたん！",      d:"1〜9 くり上がりなし"},
-      {n:"ちょっとむずかしい",d:"くり上がりあり"},
-      {n:"がんばろう！",    d:"20まで いっけたと2けた"},
+      {n:"ちょっとむずかしい",d:"くり上がりあり (10いじょう)"},
+      {n:"がんばろう！",    d:"20まで 1けたと2けたのたしざん"},
       {n:"むずかしい",      d:"2けたのたしざん"},
       {n:"もんだいをよもう",d:"ぶんしょうもんだい"},
     ]},
   sub:{name:"ひきざん", ic:"➖", col:"var(--sub)", pcol:"#5865F2",
     lv:[
-      {n:"かんたん！",      d:"10まで"},
-      {n:"ちょっとむずかしい",d:"くり下がりあり"},
-      {n:"がんばろう！",    d:"20まで いっけたと2けた"},
+      {n:"かんたん！",      d:"1〜9 くり下がりなし"},
+      {n:"ちょっとむずかしい",d:"くり下がりあり (10いか)"},
+      {n:"がんばろう！",    d:"20まで 1けたと2けたのたしざん"},
       {n:"むずかしい",      d:"2けたのひきざん"},
       {n:"もんだいをよもう",d:"ぶんしょうもんだい"},
     ]},
   eng:{name:"えいご",  ic:"🔤", col:"var(--eng)", pcol:"#0BAB64",
     lv:[
-      {n:"すうじ・いろ・かたち",d:"Numbers / Colors / Shapes (25語)"},
-      {n:"どうぶつ・たべもの",  d:"Animals & Food (36語)"},
-      {n:"ようび・からだ・もの",d:"Days / Body / Things (47語)"},
-      {n:"かんたんなフレーズ",  d:"Simple Phrases (20語)"},
-      {n:"かいわにちょうせん",  d:"Conversation (20語)"},
+      {n:"すうじ・いろ・かたち",d:"Numbers / Colors / Shapes (25ご)"},
+      {n:"どうぶつ・たべもの",  d:"Animals & Food (36ご)"},
+      {n:"ようび・からだ・もの",d:"Days / Body / Things (47ご)"},
+      {n:"かんたんなフレーズ",  d:"Simple Phrases (20ご)"},
+      {n:"かいわにちょうせん",  d:"Conversation (20ご)"},
     ]},
   kan:{name:"かんじ",  ic:"漢", col:"var(--kan)", pcol:"#F4A100",
     lv:[
-      {n:"しぜんのかんじ",   d:"山・川・日・月など (16字)"},
-      {n:"ほうこう・からだ", d:"上下左右・手口目など (16字)"},
-      {n:"がっこう・くらし", d:"学・本・村・犬など (16字)"},
-      {n:"ぶんのなかのかんじ",d:"どうしのよみかた (16字)"},
-      {n:"いみのちょうせん",  d:"かんじのいみを考えよう (16字)"},
+      {n:"しぜんのかんじ",   d:"山・川・日・月など (16じ)"},
+      {n:"ほうこう・からだ", d:"上下左右・手口目など (16じ)"},
+      {n:"がっこう・くらし", d:"学・本・村・犬など (16じ)"},
+      {n:"ぶんのなかのかんじ",d:"かんじのよみかた (16じ)"},
+      {n:"いみのちょうせん",  d:"かんじのいみを かんがえよう (16じ)"},
     ]},
   clk:{name:"とけい", ic:"🕐", col:"var(--clk)", pcol:"#8E24AA",
     lv:[
-      {n:"10ぷんたんい",  d:"なんじ なんじゅっぷん？"},
+      {n:"10ふんたんい",  d:"なんじ なんじゅっぷん？"},
       {n:"5ふんたんい",   d:"なんじ なんぷん？"},
-      {n:"1ぷんたんい",   d:"ぴったり なんぷん？"},
+      {n:"1ふんたんい",   d:"ぴったり なんぷん？"},
       {n:"びょうもよもう", d:"なんじ なんぷん なんびょう？"},
-      {n:"24じかんひょうき",d:"13じ・22じなどの表記"},
+      {n:"24じかんひょうき",d:"13じ・22じなどの よみかた"},
     ]},
 };
 
@@ -892,7 +1040,16 @@ const MC={
 const HEMO=['🐣','🐥','🐤','🦊','🐰','🐻','🦁','🐸','🐧','🐨'];
 function goHome(){
   scr('scr-home');
-  $('hero-emoji').textContent = HEMO[Math.floor(Date.now()/60000)%HEMO.length];
+  // 最後に集めたキャラがいればそれを、なければ卵を表示
+  (()=>{
+    initEggState();
+    const col = REC.eggs.collected;
+    if(col && col.length>0){
+      $('hero-emoji').textContent = EGG_CHARS[col[col.length-1]].char;
+    } else {
+      $('hero-emoji').textContent = '🥚';
+    }
+  })();
   const hw=$('home-score-wrap');
   if(TS>0){
     hw.style.display='block';
@@ -900,6 +1057,7 @@ function goHome(){
     hw.innerHTML=`きょうのごほうびスター<br>${s}<br><span style="font-size:12px;opacity:.7">${TS}こ あつめたよ！</span>`;
   }
   renderStudyRecord();
+  renderEggWidget();
 }
 
 // ============================================================
@@ -932,15 +1090,44 @@ function showLevel(mode){
 function buildQ(mode,lv){
   if(mode==='add'){
     if(lv===5) return shuffle([...ADD_ST]).slice(0,10).map(q=>({...q,isStory:true,type:'add'}));
-    return Array.from({length:10},()=>genAdd(lv));
+    // 連続で同じ問題（a+b）が出ないよう生成
+    return (()=>{
+      const qs=[]; let prev=null;
+      for(let i=0;i<10;i++){
+        let q,retry=0;
+        do{ q=genAdd(lv); retry++; }while(prev!==null && q.ans===prev.ans && q.a===prev.a && retry<30);
+        qs.push(q); prev=q;
+      }
+      return qs;
+    })();
   }
   if(mode==='sub'){
     if(lv===5) return shuffle([...SUB_ST]).slice(0,10).map(q=>({...q,isStory:true,type:'sub'}));
-    return Array.from({length:10},()=>genSub(lv));
+    // 連続で同じ問題（a-b）が出ないよう生成
+    return (()=>{
+      const qs=[]; let prev=null;
+      for(let i=0;i<10;i++){
+        let q,retry=0;
+        do{ q=genSub(lv); retry++; }while(prev!==null && q.ans===prev.ans && q.a===prev.a && retry<30);
+        qs.push(q); prev=q;
+      }
+      return qs;
+    })();
   }
   if(mode==='eng') return shuffle([...ENG[lv]]).slice(0,10);
   if(mode==='kan') return shuffle([...KAN[lv]]).slice(0,10);
-  if(mode==='clk') return Array.from({length:10},()=>genClock(lv));
+  if(mode==='clk'){
+    // 連続で同じ時刻が出ないよう生成
+    return (()=>{
+      const qs=[]; let prev=null;
+      for(let i=0;i<10;i++){
+        let q,retry=0;
+        do{ q=genClock(lv); retry++; }while(prev!==null && q.label===prev.label && retry<30);
+        qs.push(q); prev=q;
+      }
+      return qs;
+    })();
+  }
 }
 
 function genAdd(lv){
@@ -1115,19 +1302,24 @@ function ansKan(btn,ok,q){
     playCorrectSFX(); zeztzReact(true);
     // 読み上げ→画像アニメ、両方終わったら補足表示
     recordKanjiMaster(q.q.replace(/[「」\n]/g,'').trim()||q.q);
-    Promise.all([spJa(q.a), showEpop(q.e)]).then(()=>{
+    // 正解音の読み上げ → 絵文字アニメ（並行）→ 補足説明の読み上げ → 次の問題
+    spJa(q.a).then(()=>{
       // ヒントボタンを隠す（正解後は不要）
       document.querySelectorAll('.hint-btn').forEach(b=>b.style.display='none');
       const ex=$('kanex');
       if(ex&&q.ex){
         ex.classList.add('show');
         ex.innerHTML=`💡 ${q.ex}`;
-        // 補足を読み上げ、終わったら自動で次へ
-        setTimeout(()=>spJa(q.exs||q.ex).then(nextQ), 200);
+        // 補足説明を読み上げ、完全に終わってから次の問題へ
+        setTimeout(()=>{
+          spJa(q.exs||q.ex).then(()=>{ nextQ(); });
+        }, 300);
       } else {
         nextQ();
       }
     });
+    // 絵文字アニメは読み上げと並行して表示（表示のみ・nextQには影響しない）
+    showEpop(q.e);
   } else {
     showFB(false);
     playWrongSFX(); zeztzReact(false);
@@ -1253,13 +1445,18 @@ function showHint(a,b,type){
         </div>
       </div>`;
 
-    // 段階的アニメ＋音声
+    // 段階的アニメ＋音声（0を含む計算は表示しない）
     setTimeout(()=>{
-      $('skb-s1').classList.add('show');
-      // ブロックをパラパラ表示
-      for(let i=0;i<need;i++) setTimeout(()=>document.getElementById(`blk-need-${i}`)?.classList.add('show'),i*60);
-      for(let i=0;i<rest;i++) setTimeout(()=>document.getElementById(`blk-rest-${i}`)?.classList.add('show'),need*60+i*60);
-      spJa(`${b}を、${need}と${rest}にわけます`);
+      if(rest===0){
+        // bがちょうどneedと等しい → ステップ①はスキップ（0に分ける説明不要）
+        $('skb-s1').style.display='none';
+        spJa(`${b}はそのまま${a}に足せば、${rounded}になるよ！`);
+      } else {
+        $('skb-s1').classList.add('show');
+        for(let i=0;i<need;i++) setTimeout(()=>document.getElementById(`blk-need-${i}`)?.classList.add('show'),i*60);
+        for(let i=0;i<rest;i++) setTimeout(()=>document.getElementById(`blk-rest-${i}`)?.classList.add('show'),need*60+i*60);
+        spJa(`${b}を、${need}と${rest}にわけます`);
+      }
     },100);
     setTimeout(()=>{
       $('skb-s2').classList.add('show');
@@ -1268,7 +1465,12 @@ function showHint(a,b,type){
     },2200);
     setTimeout(()=>{
       $('skb-s3').classList.add('show');
-      spJa(`${rounded}たす${rest}は、${a+b}！これが こたえだよ！`);
+      if(rest===0){
+        // 残りが0の場合はステップ③不要（roundedがそのまま答え）
+        $('skb-s3').style.display='none';
+      } else {
+        spJa(`${rounded}たす${rest}は、${a+b}！これが こたえだよ！`);
+      }
     },4000);
 
   } else {
@@ -1316,10 +1518,16 @@ function showHint(a,b,type){
       </div>`;
 
     setTimeout(()=>{
-      $('skb-s1').classList.add('show');
-      for(let i=0;i<10;i++) setTimeout(()=>document.getElementById(`blk-ten-${i}`)?.classList.add('show'),i*50);
-      for(let i=0;i<ones;i++) setTimeout(()=>document.getElementById(`blk-ones-${i}`)?.classList.add('show'),10*50+i*60);
-      spJa(`${a}を、10と${ones}にわけます`);
+      if(ones===0){
+        // aがちょうど10 → ステップ①はスキップ（0に分ける説明不要）
+        $('skb-s1').style.display='none';
+        spJa(`${a}は10だから、そのまま${b}をひくよ！`);
+      } else {
+        $('skb-s1').classList.add('show');
+        for(let i=0;i<10;i++) setTimeout(()=>document.getElementById(`blk-ten-${i}`)?.classList.add('show'),i*50);
+        for(let i=0;i<ones;i++) setTimeout(()=>document.getElementById(`blk-ones-${i}`)?.classList.add('show'),10*50+i*60);
+        spJa(`${a}を、10と${ones}にわけます`);
+      }
     },100);
     setTimeout(()=>{
       $('skb-s2').classList.add('show');
@@ -1327,8 +1535,13 @@ function showHint(a,b,type){
       spJa(`10から${b}をひくと、${diff}！`);
     },2200);
     setTimeout(()=>{
-      $('skb-s3').classList.add('show');
-      spJa(`${diff}たす${ones}は、${a-b}！これが こたえだよ！`);
+      if(ones===0){
+        // 残りが0の場合はステップ③不要（diffがそのまま答え）
+        $('skb-s3').style.display='none';
+      } else {
+        $('skb-s3').classList.add('show');
+        spJa(`${diff}たす${ones}は、${a-b}！これが こたえだよ！`);
+      }
     },4000);
   }
 }
@@ -2468,26 +2681,6 @@ setTimeout(spawnRunner, 12000);
 // 学習記録 & ごほうびシステム
 // ============================================================
 
-// ── ごほうびキャラの成長ステージ ──
-const REWARD_STAGES = [
-  {char:'🥚', name:'たまご',         msg:'もうすぐかえるよ！',             need:0},
-  {char:'🐣', name:'うまれた！',     msg:'かなとにあえてうれしいよ！',     need:10},
-  {char:'🐥', name:'ひよこ',         msg:'ぴよぴよ！げんきだよ！',         need:25},
-  {char:'🐤', name:'おおきいひよこ', msg:'もっとおおきくなるよ！',         need:45},
-  {char:'🐦', name:'ことり',         msg:'ちゅんちゅん！うれしいな！',     need:70},
-  {char:'🦜', name:'おしゃべりとり', msg:'かなとすごい！かなとすごい！',   need:100},
-  {char:'🐧', name:'ペンギン！',     msg:'ぐぐがが〜！',                   need:135},
-  {char:'🐧', name:'ダンスペンギン', msg:'いっしょにおどろう！ぐぐがが！', need:175},
-  {char:'🦭', name:'アザラシ',       msg:'ぱふぱふ〜！かなとえらい！',     need:220},
-  {char:'🐬', name:'イルカ',         msg:'きゅいきゅい！すごいね！',       need:270},
-  {char:'🦊', name:'きつね',         msg:'こんこん！てんさいだ！',         need:325},
-  {char:'🐼', name:'パンダ',         msg:'ももももも〜！さいこう！',       need:385},
-  {char:'🦁', name:'ライオン',       msg:'がおー！かなとはヒーローだ！',   need:450},
-  {char:'🐉', name:'ドラゴン',       msg:'かなとのちからがすごい！',       need:520},
-  {char:'🦄', name:'ユニコーン',     msg:'まほうのちからがめざめた！',     need:600},
-  {char:'🌈', name:'にじペンギン',   msg:'ぐぐがが〜！にじいろだよ！',     need:700},
-  {char:'🌟', name:'スターペンギン', msg:'きみのおかげで ほしになれた！',  need:850},
-];
 
 // ── localStorage保存/読み込み ──
 function saveRecord(){
@@ -2513,14 +2706,14 @@ let REC = {
   },
   kanjiMastered: {},      // {kanji: true} 習得済み漢字
   maxLv: {add:0,sub:0,eng:0,kan:0,clk:0}, // 各コース最高クリアLv
+  eggs: null,             // 🥚 たまごそだてデータ
 };
 loadRecord();
 
 // ── goHomeに記録表示を統合 ──
 function renderStudyRecord(){
   const rec=$('study-record');
-  const rew=$('reward-section');
-  if(!rec||!rew) return;
+  if(!rec) return;
 
   // ── 学習記録 ──
   const modeInfo={
@@ -2551,61 +2744,248 @@ function renderStudyRecord(){
   });
   rec.innerHTML=`<div class="rec-title">📊 がくしゅうきろく</div><div class="rec-grid">${cards}</div>`;
 
-  // ── ごほうびキャラ ──
-  const stars=REC.totalStars;
-  let stageIdx=0;
-  for(let i=REWARD_STAGES.length-1;i>=0;i--){
-    if(stars>=REWARD_STAGES[i].need){stageIdx=i;break;}
-  }
-  const stage=REWARD_STAGES[stageIdx];
-  const nextStage=REWARD_STAGES[Math.min(stageIdx+1,REWARD_STAGES.length-1)];
-  const nextNeed=nextStage.need;
-  const prevNeed=stage.need;
-  const progress=nextNeed>prevNeed?Math.min(100,((stars-prevNeed)/(nextNeed-prevNeed))*100):100;
-  const remaining=Math.max(0,nextNeed-stars);
+}
 
-  rew.innerHTML=`<div class="reward-title">🎁 ごほうびキャラ</div>
-  <div class="reward-stage">
-    <span class="reward-char">${stage.char}</span>
-    <div class="reward-name">${stage.name}</div>
-    <div class="reward-stars">⭐ ${stars}こ あつめたよ！</div>
-    <div class="reward-progress"><div class="reward-progress-fill" style="width:${progress}%"></div></div>
-    <div class="reward-next">${stageIdx<REWARD_STAGES.length-1?`あと⭐${remaining}こで「${nextStage.name}」になるよ！`:'さいこうのすがただ！🌟'}</div>
-  </div>`;
+
+// ============================================================
+// 🥚 たまごそだてシステム
+// ============================================================
+
+// 18種類のキャラ定義
+const EGG_CHARS = [
+  {char:'🐣', name:'ひよこ',           msg:'ぴよぴよ！うまれたよ！'},
+  {char:'🐥', name:'ちびひよこ',       msg:'かなとだいすき！'},
+  {char:'🐤', name:'まるひよこ',       msg:'まんまるだよ！'},
+  {char:'🦆', name:'あひる',           msg:'がーがー！'},
+  {char:'🐸', name:'かえる',           msg:'ぴょこぴょこ〜！'},
+  {char:'🐢', name:'かめ',             msg:'のんびりいこう！'},
+  {char:'🦎', name:'とかげ',           msg:'きらりとひかるよ！'},
+  {char:'🐊', name:'わに',             msg:'がぶっ！じょうずだね！'},
+  {char:'🦕', name:'きょうりゅう',     msg:'ガオー！すごい！'},
+  {char:'🦖', name:'Tレックス',        msg:'ガオガオー！さいきょう！'},
+  {char:'🐲', name:'りゅう',           msg:'かっこいいでしょ！'},
+  {char:'🦅', name:'わし',             msg:'たかくとぶよ！'},
+  {char:'🦉', name:'ふくろう',         msg:'ほーほー！かしこいね！'},
+  {char:'🦚', name:'くじゃく',         msg:'きれいでしょ〜！'},
+  {char:'🦜', name:'オウム',           msg:'かなとすごい！かなとすごい！'},
+  {char:'🐉', name:'ドラゴン',         msg:'まほうがつかえるよ！'},
+  {char:'🦄', name:'ユニコーン',       msg:'きらきら！まほうのこ！'},
+  {char:'🐨', name:'コアラ',           msg:'のんびりだよ〜！'},
+  {char:'🐼', name:'パンダ',           msg:'もぐもぐ〜！'},
+  {char:'🦁', name:'ライオン',         msg:'がおー！かっこいいでしょ！'},
+  {char:'🐯', name:'とら',             msg:'がるるっ！つよいね！'},
+  {char:'🦊', name:'きつね',           msg:'こんこん！かしこいよ！'},
+  {char:'🐺', name:'おおかみ',         msg:'あおーん！なかまだよ！'},
+  {char:'🦝', name:'アライグマ',       msg:'いたずらだいすき！'},
+  {char:'🐬', name:'イルカ',           msg:'きゅいきゅい！'},
+  {char:'🐳', name:'くじら',           msg:'ぷしゅ〜！おおきいよ！'},
+  {char:'🦈', name:'サメ',             msg:'ざぱーん！はやいよ！'},
+  {char:'🐙', name:'タコ',             msg:'てがいっぱいだよ！'},
+  {char:'🦋', name:'ちょうちょ',       msg:'ひらひら〜きれいでしょ！'},
+  {char:'✨',  name:'でんせつのたまご', msg:'とんでもないものがうまれた！！'},
+];
+
+// 卵のひびステージ（0〜4）→ SVG描画用
+// 各キャラの「たまごのいろ」 (hue degree for HSL)
+const EGG_COLORS = [
+  '#FFE066','#FFCF66','#FFD0A0','#C8F0C8','#A0E8FF',
+  '#E0C8FF','#FFB3BA','#B3FFD9','#FFD9B3','#B3D9FF',
+  '#FFB3FF','#FFFACD','#D4F5B3','#FFB3C6','#B3E8FF',
+  '#F5B3FF','#FFFAB3','#B3FFFA','#D4E6FF','#FFE0B2',
+  '#E8F5E9','#FCE4EC','#E3F2FD','#FFF9C4','#F3E5F5',
+  '#E0F7FA','#FBE9E7','#F9FBE7','#EDE7F6','#FFECB3',
+];
+
+// EGG_STATE: 現在の卵データ
+// REC.eggs = { starsInCurrentEgg, collectedIdx:[], currentEggIdx }
+const EGG_STARS_NEEDED = 20; // 割れるのに必要なスター数
+
+function initEggState(){
+  if(!REC.eggs){
+    REC.eggs = {
+      starsInCurrentEgg: 0,
+      collected: [],      // 集めたキャラのindex一覧
+      currentEggIdx: Math.floor(Math.random()*EGG_CHARS.length),
+    };
+    saveRecord();
+  }
+}
+
+// 時間帯グロークラス取得
+function getTimeGlowClass(){
+  const h=new Date().getHours();
+  if(h>=5&&h<10)  return 'egg-glow-morning';
+  if(h>=10&&h<17) return 'egg-glow-day';
+  if(h>=17&&h<20) return 'egg-glow-evening';
+  return 'egg-glow-night';
+}
+
+// 卵SVGを生成（ひびの数でステージが変わる）
+function drawEggSVG(eggIdx, crackStage, timeGlow){
+  const col = EGG_COLORS[eggIdx % EGG_COLORS.length];
+  // ひびのパス（stage 0=なし, 1=小, 2=中, 3=大, 4=直前）
+  const cracks = [
+    '',
+    '<path d="M40,18 L36,26 L40,24 L37,34" stroke="rgba(0,0,0,.25)" stroke-width="1.5" fill="none" stroke-linecap="round"/>',
+    '<path d="M40,18 L36,26 L40,24 L37,34" stroke="rgba(0,0,0,.3)" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M52,30 L47,36 L50,38" stroke="rgba(0,0,0,.2)" stroke-width="1.5" fill="none" stroke-linecap="round"/>',
+    '<path d="M40,18 L36,26 L40,24 L37,34" stroke="rgba(0,0,0,.35)" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M52,30 L47,36 L50,38" stroke="rgba(0,0,0,.25)" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M30,35 L34,42 L30,46" stroke="rgba(0,0,0,.2)" stroke-width="1.5" fill="none" stroke-linecap="round"/>',
+    '<path d="M40,18 L34,28 L40,25 L36,38" stroke="rgba(0,0,0,.4)" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M52,28 L46,36 L51,38 L47,46" stroke="rgba(0,0,0,.3)" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M28,33 L33,42 L29,45" stroke="rgba(0,0,0,.25)" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M44,48 L48,55" stroke="rgba(0,0,0,.2)" stroke-width="1.5" fill="none" stroke-linecap="round"/>',
+  ];
+  const crackPath = cracks[Math.min(crackStage, 4)];
+
+  // 光彩の色
+  const glowColors = { 'egg-glow-morning':'#FFDD55', 'egg-glow-day':'#50B4FF', 'egg-glow-evening':'#FF6633', 'egg-glow-night':'#9955FF' };
+  const glowCol = glowColors[timeGlow] || '#FFDD55';
+
+  return `<svg width="80" height="96" viewBox="0 0 80 96" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="eggGrad" cx="38%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="white" stop-opacity=".7"/>
+      <stop offset="100%" stop-color="${col}" stop-opacity="1"/>
+    </radialGradient>
+    <radialGradient id="eggGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="${glowCol}" stop-opacity=".35"/>
+      <stop offset="100%" stop-color="${glowCol}" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- 光彩 -->
+  <ellipse cx="40" cy="52" rx="36" ry="42" fill="url(#eggGlow)"/>
+  <!-- 卵本体 -->
+  <path d="M40,4 C22,4 8,22 8,48 C8,70 22,88 40,88 C58,88 72,70 72,48 C72,22 58,4 40,4 Z"
+    fill="url(#eggGrad)" stroke="${col}" stroke-width="2"/>
+  <!-- てかり -->
+  <ellipse cx="32" cy="26" rx="8" ry="5" fill="white" opacity=".45" transform="rotate(-20,32,26)"/>
+  <!-- ひび -->
+  ${crackPath}
+  <!-- 影 -->
+  <ellipse cx="40" cy="92" rx="20" ry="4" fill="rgba(0,0,0,.12)"/>
+</svg>`;
+}
+
+// 卵ウィジェット描画
+function renderEggWidget(){
+  initEggState();
+  const e = REC.eggs;
+  const idx = e.currentEggIdx;
+  const stars = e.starsInCurrentEgg;
+  const pct = Math.min(100, (stars / EGG_STARS_NEEDED) * 100);
+  const crackStage = stars===0?0 : stars<8?1 : stars<16?2 : stars<22?3 : 4;
+  const timeGlow = getTimeGlowClass();
+
+  const wrap = $('egg-svg-wrap');
+  if(wrap){
+    wrap.innerHTML = drawEggSVG(idx, crackStage, timeGlow);
+    wrap.className = ''; // reset
+    // グロークラスはSVG側で対応済みなのでここでは不要
+  }
+
+  const nameEl = $('egg-char-name');
+  if(nameEl) nameEl.textContent = `⭐${stars} / ${EGG_STARS_NEEDED}こ あつめると…`;
+
+  const barEl = $('egg-bar');
+  if(barEl) barEl.style.width = pct + '%';
+
+  const labelEl = $('egg-bar-label');
+  if(labelEl){
+    const rem = EGG_STARS_NEEDED - stars;
+    labelEl.textContent = rem>0 ? `あと⭐${rem}こで われる！` : 'もうすぐわれる！！';
+  }
+
+  renderEggCollection();
+}
+
+// コレクション表示
+function renderEggCollection(){
+  const grid = $('ecol-grid');
+  if(!grid) return;
+  const collected = (REC.eggs && REC.eggs.collected) || [];
+  let html = '';
+  EGG_CHARS.forEach((c,i)=>{
+    const got = collected.includes(i);
+    html += `<div class="ecol-item${got?'':' locked'}" title="${got?c.name+'「'+c.msg+'」':'？？？'}" onclick="ecollTap(${i},${got})">
+      <span class="ecol-no">${i+1}</span>
+      ${got ? c.char : '❓'}
+    </div>`;
+  });
+  grid.innerHTML = html;
+}
+
+// コレクションアイテムタップ
+function ecollTap(i, got){
+  if(!got) return;
+  const c = EGG_CHARS[i];
+  spJa(c.name + '！' + c.msg);
+  // ぷるぷる
+  const items = document.querySelectorAll('.ecol-item');
+  const el = items[i];
+  if(el){ el.style.animation='none'; void el.offsetWidth; el.style.animation='popIn .4s ease'; }
+}
+
+// 卵タップ（ぷるぷる）
+function eggTap(){
+  const wrap = $('egg-svg-wrap');
+  if(!wrap) return;
+  wrap.classList.remove('wobble');
+  void wrap.offsetWidth;
+  wrap.classList.add('wobble');
+  setTimeout(()=>wrap.classList.remove('wobble'), 600);
+  // ランダムセリフ
+  const lines=['がんばってね！','もうすぐわれるよ！','なかにだれがいるかな？','たのしみにしてて！','ぽかぽかあたためてね！'];
+  spJa(lines[Math.floor(Math.random()*lines.length)]);
+}
+
+// スター追加時に卵に反映
+function addStarToEgg(n){
+  initEggState();
+  REC.eggs.starsInCurrentEgg += n;
+  saveRecord();
+  // 割れるか判定
+  if(REC.eggs.starsInCurrentEgg >= EGG_STARS_NEEDED){
+    setTimeout(()=>hatchEgg(), 600);
+  }
+}
+
+// 割れる演出
+function hatchEgg(){
+  initEggState();
+  const e = REC.eggs;
+  const idx = e.currentEggIdx;
+  const c = EGG_CHARS[idx];
+
+  // コレクションに追加
+  if(!e.collected.includes(idx)) e.collected.push(idx);
+
+  // 次の卵をセット（まだ出ていないものを優先）
+  const notCollected = EGG_CHARS.map((_,i)=>i).filter(i=>!e.collected.includes(i));
+  e.currentEggIdx = notCollected.length > 0
+    ? notCollected[Math.floor(Math.random()*notCollected.length)]
+    : Math.floor(Math.random()*EGG_CHARS.length);
+  e.starsInCurrentEgg = 0;
+  saveRecord();
+
+  // ポップアップ表示
+  $('ehp-char').textContent = c.char;
+  $('ehp-name').textContent = c.name;
+  $('ehp-msg').textContent  = c.msg;
+  $('ehp-title').textContent = '🎉 うまれた！！';
+  $('ehp-sub').textContent   = 'たまごから とびだしたよ！';
+  $('egg-hatch-popup').classList.add('show');
+  confetti();
+  spJa('やったー！たまごがわれた！' + c.name + 'だよ！' + c.msg);
+  renderEggWidget();
+}
+
+function closeEggHatch(){
+  $('egg-hatch-popup').classList.remove('show');
 }
 
 // ── スター加算 & 進化チェック ──
 function addStar(n=1){
   REC.totalStars += n;
   saveRecord();
-  // 進化チェック
-  let newStageIdx=0;
-  for(let i=REWARD_STAGES.length-1;i>=0;i--){
-    if(REC.totalStars>=REWARD_STAGES[i].need){newStageIdx=i;break;}
-  }
-  if(newStageIdx > REC.lastStage){
-    REC.lastStage=newStageIdx;
-    saveRecord();
-    setTimeout(()=>showEvolution(newStageIdx), 800);
-  }
+  addStarToEgg(n);
 }
 
-// ── 進化ポップアップ ──
-function showEvolution(idx){
-  const s=REWARD_STAGES[idx];
-  $('rp-stars').textContent='✨⭐✨';
-  $('rp-title').textContent='せいちょうした！！';
-  $('rp-sub').textContent='すごい！かなとのおかげだよ！';
-  $('rp-char').textContent=s.char;
-  $('rp-name').textContent=s.name;
-  $('rp-msg').textContent=s.msg;
-  $('reward-popup').classList.add('show');
-  confetti();
-  spJa(`やったー！${s.name}に せいちょうしたよ！${s.msg}`);
-}
-function closeRewardPopup(){
-  $('reward-popup').classList.remove('show');
-}
 
 // ── クリア記録 ──
 function recordClear(mode, lv, score){
@@ -2702,6 +3082,34 @@ function startApp(){
     goHome();
   }, 600);
 }
+
+// ── スタート画面：時間帯で背景・絵文字を変える ──
+(function(){
+  const ss=document.getElementById('start-screen');
+  if(!ss) return;
+  const h=new Date().getHours();
+  let cls, emoji, msg;
+  if(h>=5 && h<10){
+    cls='time-morning'; emoji='🌅'; msg='おはよう！いっしょにべんきょうしよう！';
+  } else if(h>=10 && h<17){
+    cls='time-day'; emoji='☀️'; msg='たのしく まなぼう 🌟';
+  } else if(h>=17 && h<20){
+    cls='time-evening'; emoji='🌆'; msg='もうひとがんばり！いっしょにやろう！';
+  } else {
+    cls='time-night'; emoji='🌙'; msg='こんばんは！いっしょにべんきょうしよう！';
+  }
+  ss.classList.add(cls);
+  const charEl=ss.querySelector('.start-char');
+  if(charEl) charEl.textContent=emoji;
+  const subEl=ss.querySelector('.start-sub');
+  if(subEl) subEl.textContent=msg;
+  if(cls==='time-morning'||cls==='time-day'){
+    ss.querySelectorAll('.start-title').forEach(el=>{ el.style.color='#3D2B00'; });
+    if(subEl) subEl.style.color='rgba(61,43,0,0.7)';
+    const guguEl=ss.querySelector('.start-gugu');
+    if(guguEl) guguEl.style.color='rgba(100,50,0,0.7)';
+  }
+})();
 
 // スタート画面を表示（goHomeは押すまで呼ばない）
 // goHome(); // ← スタート画面タップ後に呼ばれる
