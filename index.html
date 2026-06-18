@@ -96,13 +96,13 @@ body{
   letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   text-shadow:0 2px 6px rgba(0,0,0,.15);
 }
-#hdr-top-btn{
+#hdr-back-btn{
   flex-shrink:0;background:rgba(255,255,255,.3);border:2px solid rgba(255,255,255,.5);
-  border-radius:var(--r-btn);padding:5px 12px;font-size:12px;font-weight:900;
+  border-radius:var(--r-btn);padding:5px 12px;font-size:13px;font-weight:900;
   color:white;font-family:inherit;cursor:pointer;white-space:nowrap;
   box-shadow:0 3px 0 rgba(0,0,0,.12);transition:transform .12s,box-shadow .12s;
 }
-#hdr-top-btn:active{transform:translateY(3px);box-shadow:none}
+#hdr-back-btn:active{transform:translateY(3px);box-shadow:none}
 #hdr-star{
   flex-shrink:0;background:rgba(255,255,255,.3);border:2px solid rgba(255,255,255,.5);
   border-radius:var(--r-btn);padding:5px 14px;color:#fff;font-size:14px;font-weight:700;
@@ -185,7 +185,6 @@ body{
   background:linear-gradient(155deg,#F8F0FF,#EDD9FF);
   border-color:#C87FFF;
   box-shadow:0 8px 0 #C87FFF88, 0 12px 28px #C77DFF18;
-  grid-column:1/-1;
 }
 .c-clk .card-name{color:var(--clk-d)}
 .c-clk:active{box-shadow:0 2px 0 #C87FFF88, 0 3px 10px #C77DFF18 !important}
@@ -494,13 +493,31 @@ body{
   box-shadow:0 6px 0 rgba(200,200,220,.5), 0 10px 24px rgba(0,0,0,.06);
   border:3px solid rgba(220,220,240,.6);
 }
-.rec-title{font-size:16px;font-weight:900;color:#5D4037;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.rec-title{font-size:16px;font-weight:900;color:#5D4037;margin-bottom:12px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.rec-total-badge{font-size:11px;font-weight:900;background:linear-gradient(135deg,#FFD700,#FFA000);color:#fff;padding:3px 10px;border-radius:999px;box-shadow:0 2px 6px #FFA00055}
 .rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .rec-card{
   background:#fff;border-radius:16px;padding:10px 12px;
   border:2.5px solid #F0F0F0;
   box-shadow:0 4px 0 #E8E8E8, 0 6px 14px rgba(0,0,0,.05);
 }
+.rec-mode-row{display:flex;align-items:center;gap:5px;margin-bottom:7px;flex-wrap:wrap}
+.rec-mode-ic{font-size:16px}
+.rec-mode-name{font-size:13px;font-weight:900;flex:1}
+.rec-mode-total{font-size:10px;font-weight:900;padding:2px 7px;border-radius:999px}
+.rec-lv-row{display:flex;flex-direction:column;gap:4px;margin-bottom:6px}
+.rec-lv-badge{
+  display:flex;align-items:center;justify-content:space-between;
+  border-radius:10px;padding:4px 8px;border:1.5px solid #EEE;
+  font-size:11px;font-weight:900;
+}
+.rec-lv-badge--none{background:#F8F8F8;color:#CCC}
+.rec-lv-badge--done{color:#333}
+.rec-lv-badge-num{font-size:10px;font-weight:900;opacity:.7;min-width:28px}
+.rec-lv-badge-cnt{font-size:11px;font-weight:900}
+.rec-praise{font-size:11px;font-weight:700;color:#888;margin-top:2px}
+.rec-special{font-size:11px;font-weight:900;color:#E65100;margin-top:4px;background:#FFF3E0;border-radius:8px;padding:4px 8px}
+/* 旧CSS互換（使用されなくなるが残しておく） */
 .rec-mode{font-size:12px;font-weight:900;opacity:.7;margin-bottom:4px}
 .rec-lv{font-size:15px;font-weight:900}
 .rec-bar-wrap{height:8px;background:#EEE;border-radius:999px;margin-top:5px;overflow:hidden;box-shadow:inset 0 2px 3px rgba(0,0,0,.07)}
@@ -787,6 +804,69 @@ body{
 
 /* ── クロック hint ── */
 .clock-svg-wrap{margin:6px auto 4px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.12))}
+
+/* ═══════════════════════════════════════
+   🎨 かたち・おおきさクイズ
+═══════════════════════════════════════ */
+:root{
+  --shp:#FF7043; --shp-l:#FFF3EF; --shp-d:#D84315;
+  --mon:#14B8A6; --mon-l:#ECFDF8; --mon-d:#0E8C7E;
+}
+.c-mon{
+  background:linear-gradient(155deg,#ECFDF8,#C8F2E9);
+  border-color:#5FD9C4;
+  box-shadow:0 8px 0 #5FD9C488, 0 12px 28px #14B8A618;
+}
+.c-mon .card-name{color:var(--mon-d)}
+.c-mon:active{box-shadow:0 2px 0 #5FD9C488, 0 3px 10px #14B8A618 !important}
+.mon-area{
+  display:flex;flex-wrap:wrap;gap:2px;
+  justify-content:center;align-items:center;
+  margin:6px auto;max-width:320px;min-height:60px;
+}
+.c-shp{
+  background:linear-gradient(155deg,#FFF3EF,#FFD5C8);
+  border-color:#FF9E7A;
+  box-shadow:0 8px 0 #FF9E7A88, 0 12px 28px #FF704318;
+}
+.c-shp .card-name{color:var(--shp-d)}
+.c-shp:active{box-shadow:0 2px 0 #FF9E7A88, 0 3px 10px #FF704318 !important}
+
+/* SVGクイズ表示エリア */
+.shp-svg-area{
+  width:100%;max-width:320px;margin:0 auto;
+  background:linear-gradient(135deg,#FAFEFF,#F0F8FF);
+  border-radius:20px;padding:10px;
+  border:2.5px solid #E0F0FF;
+  box-shadow:inset 0 2px 8px rgba(0,0,0,.05);
+}
+/* SVG選択肢ボタン */
+.ch-svg{
+  background:linear-gradient(160deg,#fff 0%,#F7F7FF 100%);
+  border:3.5px solid #DDD;border-radius:22px;
+  padding:10px 6px;
+  cursor:pointer;text-align:center;
+  box-shadow:0 7px 0 #CCCCCC, 0 10px 20px rgba(0,0,0,.07);
+  min-height:80px;display:flex;align-items:center;justify-content:center;
+  transition:transform .12s,box-shadow .12s,border-color .12s;
+  flex-direction:column;gap:4px;
+}
+.ch-svg:hover{transform:translateY(-3px);box-shadow:0 10px 0 #CCC, 0 14px 24px rgba(0,0,0,.09)}
+.ch-svg:active{transform:translateY(6px);box-shadow:0 1px 0 #CCC}
+.ch-svg.ok{
+  background:linear-gradient(160deg,#E8F5E9,#C8E6C9) !important;
+  border-color:#66BB6A !important;
+  box-shadow:0 4px 0 #43A04766 !important;
+  animation:correctFlash .4s ease;
+}
+.ch-svg.ng{
+  background:linear-gradient(160deg,#FFEBEE,#FFCDD2) !important;
+  border-color:#EF5350 !important;
+  box-shadow:0 4px 0 #C6282866 !important;
+  animation:shake .4s ease;
+}
+.ch-svg.dim{opacity:.32;cursor:default;pointer-events:none}
+.ch-svg-label{font-size:12px;font-weight:900;color:#888;margin-top:2px}
 </style>
 </head>
 <body>
@@ -820,12 +900,12 @@ body{
 
 <!-- HEADER -->
 <div id="hdr">
-  <button id="hdr-top-btn" onclick="goTop()" style="
+  <button id="hdr-back-btn" onclick="hdrBack()" style="visibility:hidden;
     background:rgba(255,255,255,0.25);border:none;border-radius:999px;
-    padding:5px 12px;font-size:12px;font-weight:900;color:white;
+    padding:5px 12px;font-size:13px;font-weight:900;color:white;
     font-family:inherit;cursor:pointer;white-space:nowrap;
     text-shadow:0 1px 2px rgba(0,0,0,.2);">
-    🏠 トップへ
+    ← もどる
   </button>
   <div id="hdr-title">🌈 おべんきょうページ</div>
   <div id="hdr-star">⭐ <span id="total-star">0</span></div>
@@ -860,12 +940,36 @@ body{
       <div class="card-name">かんじ</div>
       <div class="card-hint">Lv1〜5 / 80じ</div>
     </div>
-    <div class="card c-clk" onclick="showLevel('clk')" style="grid-column:1/-1">
+    <div class="card c-clk" onclick="showLevel('clk')">
       <span class="card-ic">🕐</span>
       <div class="card-name">とけい</div>
       <div class="card-hint">Lv1〜5 なんじなんぷん？</div>
     </div>
+    <div class="card c-shp" onclick="showLevel('shp')">
+      <span class="card-ic">
+        <svg width="54" height="44" viewBox="0 0 54 44" style="display:block;margin:0 auto">
+          <!-- 左：赤いまる -->
+          <circle cx="10" cy="28" r="9" fill="#FF5252" opacity=".93"/>
+          <!-- 中央上：青いさんかく -->
+          <polygon points="27,4 36,20 18,20" fill="#448AFF" opacity=".93"/>
+          <!-- 右：黄色いしかく -->
+          <rect x="36" y="19" width="16" height="16" rx="3" fill="#FFD600" opacity=".93"/>
+          <!-- 小さいほし（中央下） -->
+          <polygon points="27,26 28.5,31 33,31 29.5,34 30.8,39 27,36 23.2,39 24.5,34 21,31 25.5,31" fill="#FF9100" opacity=".85"/>
+        </svg>
+      </span>
+      <div class="card-name">かたち</div>
+      <div class="card-hint">Lv1〜5 いろ・かたち・おおきさ</div>
+    </div>
+    <div class="card c-mon" onclick="showLevel('mon')">
+      <span class="card-ic">💰</span>
+      <div class="card-name">おかね</div>
+      <div class="card-hint">Lv1〜5 なんえん？</div>
+    </div>
   </div>
+  <button id="review-btn" onclick="startReview()" style="display:none;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:14px;background:linear-gradient(135deg,#FFE0A3,#FFC368);color:#7A4F00;border:3px solid #FFB74D;border-radius:20px;padding:14px;font-size:16px;font-weight:900;font-family:inherit;cursor:pointer;box-shadow:0 6px 0 #E59A2E66, 0 10px 24px rgba(255,160,40,.25)">
+    📝 まちがい ふくしゅう（<span id="review-count">0</span>もん）
+  </button>
   <div id="home-score-wrap"></div>
   <!-- 🥚 たまごそだて -->
   <div id="egg-widget">
@@ -891,7 +995,6 @@ body{
 
 <!-- ② LEVEL SELECT -->
 <div class="scr" id="scr-lv">
-<div style="padding:14px 16px 0"><button class="back" onclick="goHome()">← もどる</button></div>
 <div id="lv-wrap"></div>
 </div>
 
@@ -899,7 +1002,6 @@ body{
 <div class="scr" id="scr-qz">
 <div id="qz-wrap">
   <div class="qz-top">
-    <button class="back" onclick="showLevel(CM)">← もどる</button>
     <div class="qz-prog">
       <div class="prog-bar"><div class="prog-fill" id="pfill" style="width:0%"></div></div>
       <div class="prog-txt" id="ptxt">1 / 10</div>
@@ -973,9 +1075,6 @@ body{
 
 <!-- ④ 親向けページ -->
 <div class="scr" id="scr-parent">
-<div style="padding:14px 16px 0">
-  <button class="back" onclick="goTop()">← トップへもどる</button>
-</div>
 <div id="parent-wrap">
   <div style="font-size:22px;font-weight:900;color:#5D4037;margin:10px 0 16px;text-align:center">
     👨‍👩‍👧 がくしゅうかんりページ
@@ -1016,16 +1115,16 @@ body{
   <div class="parent-section">
     <div class="parent-sec-title">🥚 たまごコレクション</div>
     <div id="parent-egg-info" style="font-size:14px;font-weight:700;color:#5D4037;text-align:center;margin-bottom:10px"></div>
-    <button class="danger-btn safe" onclick="confirmResetEggs()">🥚 たまごをリセットする</button>
+    <button class="danger-btn safe" onclick="showResetModal('egg')">🥚 たまごをリセットする</button>
   </div>
 
   <!-- 学習記録リセット -->
   <div class="parent-section">
-    <div class="parent-sec-title">🗑️ きろくのリセット</div>
-    <div style="font-size:13px;color:#8D6E63;margin-bottom:10px;font-weight:700">
-      ※ リセットするともとにもどせません
+    <div class="parent-sec-title">🗑️ がくしゅうきろくのリセット</div>
+    <div style="font-size:13px;color:#8D6E63;margin-bottom:6px;font-weight:700">
+      ※ たまごはリセットされません<br>※ リセットするともとにもどせません
     </div>
-    <button class="danger-btn" onclick="confirmResetAll()">⚠️ すべてのきろくをリセット</button>
+    <button class="danger-btn" onclick="showResetModal('study')">⚠️ がくしゅうきろくをリセット</button>
   </div>
 
   <!-- PINコード変更 -->
@@ -1163,11 +1262,11 @@ body{
     <div class="res-title" id="r-title">すごい！</div>
     <div class="res-sub" id="r-sub">10もん ちょうせんしたよ！</div>
     <div class="res-stars" id="r-stars">⭐⭐⭐</div>
-    <div class="res-score"><span id="r-sc">0</span><span>/10</span></div>
+    <div class="res-score"><span id="r-sc">0</span><span id="r-tot">/10</span></div>
     <div class="res-score-sub">せいかい</div>
     <div class="res-btns">
-      <button class="res-btn res-s" onclick="closeRes();showLevel(CM)">もどる</button>
-      <button class="res-btn res-p" onclick="closeRes();startQuiz(CM,CL)">もういちど！</button>
+      <button class="res-btn res-s" onclick="resGoBack()">もどる</button>
+      <button class="res-btn res-p" onclick="resRetry()">もういちど！</button>
     </div>
   </div>
 </div>
@@ -1184,7 +1283,7 @@ function scr(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove
 const JN=["れい","いち","に","さん","よん","ご","ろく","なな","はち","きゅう","じゅう",
   "じゅういち","じゅうに","じゅうさん","じゅうよん","じゅうご","じゅうろく","じゅうなな",
   "じゅうはち","じゅうきゅう","にじゅう"];
-const nj=n=>JN[n]||String(n);
+const nj=n=>JN[n]||numJa(n);
 
 // 文章中のアラビア数字を日本語読みに一括変換（例: "3こ" → "さんこ"）
 function njText(s){
@@ -1389,7 +1488,7 @@ const KAN={
     {q:"口", a:"くち",     w:["め","みみ","はな"],           e:"👄", ex:"「くち」のほかに「こう」とも読むよ！「いりぐち」「でぐち」！", exs:"くちのほかに、こうとも読むよ！いりぐちやでぐちに使うね！"},
     {q:"目", a:"め",       w:["くち","みみ","て"],           e:"👁️", ex:"「め」は「めがね」「めだま」という言葉にも使うよ！", exs:"めは、めがねやめだまという言葉にも使うよ！"},
     {q:"耳", a:"みみ",     w:["め","くち","はな"],           e:"👂", ex:"「みみ」は「みみかき」「みみなり」という言葉にも使うよ！", exs:"みみは、みみかきやみみなりという言葉にも使うよ！"},
-    {q:"足", a:"あし",     w:["て","かお","かみ"],           e:"🦶", ex:"「あし」のほかに「そく」とも読むよ！「あしあと」「あしゆ」！", exs:"あしのほかに、そくとも読むよ！あしあとやあしあとに使うね！"},
+    {q:"足", a:"あし",     w:["て","かお","かみ"],           e:"🦶", ex:"「あし」のほかに「そく」とも読むよ！「あしあと」「あしゆ」！", exs:"あしのほかに、そくとも読むよ！あしあとやあしゆに使うね！"},
     {q:"一", a:"いち",     w:["に","さん","よん"],           e:"1️⃣", ex:"「いち」のほかに「ひと」とも読むよ！「ひとつ」「いっぽん」！", exs:"いちのほかに、ひととも読むよ！ひとつやいっぽんに使うね！"},
     {q:"二", a:"に",       w:["いち","さん","よん"],         e:"2️⃣", ex:"「に」のほかに「ふた」とも読むよ！「ふたつ」「にほん」！", exs:"にのほかに、ふたとも読むよ！ふたつやにほんに使うね！"},
     {q:"三", a:"さん",     w:["に","よん","ご"],             e:"3️⃣", ex:"「さん」のほかに「みっつ」とも読むよ！「さんかく」！", exs:"さんのほかに、みっつとも読むよ！さんかくに使うね！"},
@@ -1402,14 +1501,14 @@ const KAN={
     {q:"生",  a:"い(きる)",  w:["し(ぬ)","ね(る)","た(べる)"],        e:"🌱", ex:"「いきる」のほかに「せい」とも読むよ！「たんじょうび」「せいかつ」！", exs:"いきるのほかに、せいとも読むよ！たんじょうびやせいかつに使うね！"},
     {q:"本",  a:"ほん",    w:["ざっし","かみ","ペン"],        e:"📖", ex:"「ほん」は「えほん」「きほん」「にほん」という言葉にも使うよ！", exs:"ほんは、えほんやきほんやにほんという言葉にも使うよ！"},
     {q:"年",  a:"とし",    w:["つき","ひ","しゅう"],          e:"🎂", ex:"「とし」のほかに「ねん」とも読むよ！「まいねん」「ことし」！", exs:"としのほかに、ねんとも読むよ！まいねんやことしに使うね！"},
-    {q:"名",  a:"なまえ",  w:["かたち","いろ","おおきさ"],    e:"🏷️", ex:"「なまえ」のほかに「めい」とも読むよ！「ゆうめい」「なまえ」！", exs:"なまえのほかに、めいとも読むよ！ゆうめいという言葉に使うね！"},
+    {q:"名",  a:"なまえ",  w:["かたち","いろ","おおきさ"],    e:"🏷️", ex:"「なまえ」のほかに「めい」とも読むよ！「ゆうめい」「めいじん」！", exs:"なまえのほかに、めいとも読むよ！ゆうめいやめいじんに使うね！"},
     {q:"字",  a:"じ",      w:["え","かず","かたち"],          e:"✍️", ex:"「じ」は「もじ」「かんじ」「すうじ」という言葉にも使うよ！", exs:"じは、もじやかんじやすうじという言葉にも使うよ！"},
     {q:"村",  a:"むら",    w:["まち","し","けん"],            e:"🏘️", ex:"「むら」は「むらびと」「むらのおまつり」という言葉にも使うよ！", exs:"むらは、むらびとやむらのおまつりという言葉にも使うよ！"},
     {q:"町",  a:"まち",    w:["むら","し","くに"],            e:"🏙️", ex:"「まち」のほかに「ちょう」とも読むよ！「したまち」！", exs:"まちのほかに、ちょうとも読むよ！したまちに使うね！"},
     {q:"犬",  a:"いぬ",    w:["ねこ","とり","さかな"],        e:"🐕", ex:"「いぬ」は「こいぬ」「のらいぬ」という言葉にも使うよ！", exs:"いぬは、こいぬやのらいぬという言葉にも使うよ！"},
     {q:"虫",  a:"むし",    w:["さかな","とり","けもの"],      e:"🐛", ex:"「むし」は「むしめがね」という言葉にも使うよ！", exs:"むしは、むしめがねという言葉にも使うよ！"},
     {q:"王",  a:"おう",    w:["きさま","ひめ","かみ"],        e:"👑", ex:"「おう」は「おうさま」「じょおう」という言葉にも使うよ！", exs:"おうは、おうさまやじょおうという言葉にも使うよ！"},
-    {q:"力",  a:"ちから",  w:["こころ","あたま","からだ"],    e:"💪", ex:"「ちから」のほかに「りょく」とも読むよ！「たいりょく」「かいりょく」！", exs:"ちからのほかに、りょくとも読むよ！たいりょくやかいりょくに使うね！"},
+    {q:"力",  a:"ちから",  w:["こころ","あたま","からだ"],    e:"💪", ex:"「ちから」のほかに「りょく」とも読むよ！「たいりょく」「ぜんりょく」！", exs:"ちからのほかに、りょくとも読むよ！たいりょくやぜんりょくに使うね！"},
     {q:"円",  a:"えん",    w:["てん","かく","さん"],          e:"⭕", ex:"「えん」は「いちえん」「まるい」という言葉にも使うよ！", exs:"えんは、いちえんやまるいという言葉にも使うよ！"},
     {q:"糸",  a:"いと",    w:["ぬの","きぬ","かわ"],          e:"🧵", ex:"「いと」は「いとまき」「ぬいぐるみ」という言葉にも使うよ！", exs:"いとは、いとまきやぬいぐるみという言葉にも使うよ！"},
   ],
@@ -1445,7 +1544,7 @@ const KAN={
     {q:"「目」は\nなにをするところ？",a:"ものをみるところ",    w:["おとをきく","においをかぐ","ものをたべる"],          e:"👁️", ex:"「め」は「めがね」「めだま」という言葉にも使うよ！", exs:"めは、めがねやめだまという言葉にも使うよ！"},
     {q:"「花」は\nどんなもの？",     a:"きれいないろのしょくぶつ",w:["たべるもの","のむもの","かくもの"],              e:"🌸", ex:"「はな」は「はなびら」「はなたば」という言葉にも使うよ！", exs:"はなは、はなびらやはなたばという言葉にも使うよ！"},
     {q:"「心」は\nなに？",           a:"きもちやかんがえのこと",w:["からだのきかん","たべもの","たてもの"],            e:"💗", ex:"「こころ」のほかに「しん」とも読むよ！「きもち」「こころのなか」！", exs:"こころのほかに、しんとも読むよ！きもちやこころのなかに使うね！"},
-    {q:"「力」は\nなに？",           a:"うごかすもとのちから", w:["たべるもの","みるもの","きくもの"],                e:"💪", ex:"「ちから」は「たいりょく」「かいりょく」という言葉にも使うよ！", exs:"ちからは、たいりょくやかいりょくという言葉にも使うよ！"},
+    {q:"「力」は\nなに？",           a:"うごかすもとのちから", w:["たべるもの","みるもの","きくもの"],                e:"💪", ex:"「ちから」は「たいりょく」「ぜんりょく」という言葉にも使うよ！", exs:"ちからは、たいりょくやぜんりょくという言葉にも使うよ！"},
     {q:"「光」は\nなに？",           a:"あかるくかがやくもの", w:["おとをだすもの","においのするもの","かたいもの"],   e:"✨", ex:"「ひかり」のほかに「こう」とも読むよ！「たいようのひかり」「でんきのひかり」！", exs:"ひかりのほかに、こうとも読むよ！たいようのひかりやでんきのひかりに使うね！"},
     {q:"「音」は\nなに？",           a:"みみにきこえるもの",   w:["めでみるもの","てでさわるもの","はなでかぐもの"],    e:"🎵", ex:"「おと」のほかに「おん」とも読むよ！「おんがく」「おとあそび」！", exs:"おとのほかに、おんとも読むよ！おんがくやおとあそびに使うね！"},
   ]
@@ -1484,6 +1583,8 @@ const SUB_ST=[
 // ============================================================
 let CM='', CL=1, QS=[], QI=0, SS=0, TS=0, ANS=false, CQ=null;
 let STREAK=0; // ① 連続正解ストリーク数
+let REVIEW=false;     // まちがい復習モード中か
+let WRONG=[];         // まちがえた問題の保存リスト（localStorage同期）
 
 // ============================================================
 // MODE CONFIG
@@ -1500,8 +1601,8 @@ const MC={
   sub:{name:"ひきざん", ic:"➖", col:"var(--sub)", pcol:"#5865F2",
     lv:[
       {n:"かんたん！",      d:"1〜9 くり下がりなし"},
-      {n:"ちょっとむずかしい",d:"くり下がりあり (10いか)"},
-      {n:"がんばろう！",    d:"20まで 1けたと2けたのたしざん"},
+      {n:"ちょっとむずかしい",d:"くり下がりなし 2けた−1けた"},
+      {n:"がんばろう！",    d:"くり下がりあり 2けた−1けた"},
       {n:"むずかしい",      d:"2けたのひきざん"},
       {n:"もんだいをよもう",d:"ぶんしょうもんだい"},
     ]},
@@ -1529,6 +1630,22 @@ const MC={
       {n:"びょうもよもう", d:"なんじ なんぷん なんびょう？"},
       {n:"24じかんひょうき",d:"13じ・22じなどの よみかた"},
     ]},
+  shp:{name:"かたち", ic:"🔺", col:"var(--shp)", pcol:"#FF7043",
+    lv:[
+      {n:"複合さがし",         d:"色＋形＋大きさ 3つの条件でさがそう"},
+      {n:"なかまはずれ・かぞえ",d:"2属性仲間外れ・差1〜2の数え比較"},
+      {n:"パターン応用",       d:"色＋形同時パターン・増減・グリッド穴埋め"},
+      {n:"回転・合成・展開図",  d:"回転シルエット・3ピース合成・さいころ展開図"},
+      {n:"空間認識チャレンジ", d:"L字回転・多軸反転・立体断面"},
+    ]},
+  mon:{name:"おかね", ic:"💰", col:"var(--mon)", pcol:"#14B8A6",
+    lv:[
+      {n:"1えん・10えん",     d:"1円玉と10円玉を かぞえよう"},
+      {n:"5えん・100えん",    d:"5円・100円も いれて かぞえよう"},
+      {n:"500えん",          d:"500円玉も くわわるよ"},
+      {n:"1000えんさつ",      d:"1000円札も かぞえよう"},
+      {n:"5000・10000えん",   d:"おさつ いっぱい！なんえん？"},
+    ]},
 };
 
 // ============================================================
@@ -1542,13 +1659,13 @@ function goTop(){
   ss.style.display = '';
   ss.style.opacity = '0';
   ss.style.transition = 'opacity .5s ease';
-  // 全scr を非表示
   document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
   requestAnimationFrame(()=>{ ss.style.opacity = '1'; });
+  updateHdrBtn('top');
 }
 function goHome(){
+  REVIEW=false;
   scr('scr-home');
-  // 最後に集めたキャラがいればそれを、なければ卵SVGを表示
   (()=>{
     initEggState();
     const col = REC.eggs.collected;
@@ -1557,7 +1674,6 @@ function goHome(){
       heroEl.innerHTML = '';
       heroEl.textContent = EGG_CHARS[col[col.length-1]].char;
     } else {
-      // たまごをそだてようと同じSVGで表示（色・ひびを同期）
       const e = REC.eggs;
       const stars = e.starsInCurrentEgg;
       const crackStage = stars===0?0 : stars<8?1 : stars<16?2 : stars<22?3 : 4;
@@ -1573,6 +1689,55 @@ function goHome(){
   }
   renderStudyRecord();
   renderEggWidget();
+  updateReviewBtn();
+  updateHdrBtn('home');
+}
+
+// ── ヘッダーボタン制御 ──
+// screen: 'top'|'home'|'level'|'quiz'|'parent'
+function updateHdrBtn(screen){
+  const btn = $('hdr-back-btn');
+  if(!btn) return;
+  switch(screen){
+    case 'top':
+      // トップ画面：ボタン非表示
+      btn.style.visibility = 'hidden';
+      btn.dataset.target = '';
+      break;
+    case 'home':
+      // ホーム画面：トップへもどる
+      btn.style.visibility = 'visible';
+      btn.textContent = '🏠 トップへ';
+      btn.dataset.target = 'top';
+      break;
+    case 'level':
+      // レベル選択：ホームに戻る
+      btn.style.visibility = 'visible';
+      btn.textContent = '← もどる';
+      btn.dataset.target = 'home';
+      break;
+    case 'quiz':
+      // 問題中：レベル選択に戻る
+      btn.style.visibility = 'visible';
+      btn.textContent = '← もどる';
+      btn.dataset.target = 'level';
+      break;
+    case 'parent':
+      // 親管理：トップに戻る
+      btn.style.visibility = 'visible';
+      btn.textContent = '← もどる';
+      btn.dataset.target = 'top';
+      break;
+  }
+}
+
+function hdrBack(){
+  const btn = $('hdr-back-btn');
+  if(!btn) return;
+  const target = btn.dataset.target;
+  if(target === 'home') goHome();
+  else if(target === 'level') showLevel(CM);
+  else if(target === 'top') goTop();
 }
 
 // ============================================================
@@ -1580,6 +1745,7 @@ function goHome(){
 // ============================================================
 function showLevel(mode){
   CM=mode; scr('scr-lv');
+  updateHdrBtn('level');
   const m=MC[mode];
   const stars=i=>'★'.repeat(i+1)+'☆'.repeat(4-i);
   let h=`<div id="lv-wrap">
@@ -1643,6 +1809,8 @@ function buildQ(mode,lv){
       return qs;
     })();
   }
+  if(mode==='shp') return buildShapeQ(lv);
+  if(mode==='mon') return buildMoneyQ(lv);
 }
 
 function genAdd(lv){
@@ -1656,7 +1824,9 @@ function genAdd(lv){
     if(a+b<10){a=7;b=5;}
   }
   else if(lv===3){
-    a=rn(10,30); b=rn(0,9);
+    // 「20まで」を守る：2けた＋1けた、こたえは20いか、＋0は出さない
+    do{ a=rn(10,19); b=rn(1,9); }while(a+b>20 && tries++<200);
+    if(a+b>20){a=12;b=5;}
   }
   else{
     a=rn(10,20); b=rn(10,20);
@@ -1692,11 +1862,13 @@ function genSub(lv){
 // START / RETRY QUIZ
 // ============================================================
 function startQuiz(mode,lv){
+  REVIEW=false;
   CM=mode; CL=lv;
   QS=buildQ(mode,lv); QI=0; SS=0; ANS=false;
-  STREAK=0; // ① ストリークリセット
+  STREAK=0;
   $('pfill').style.background=MC[mode].pcol;
   scr('scr-qz');
+  updateHdrBtn('quiz');
   renderQ();
 }
 
@@ -1705,8 +1877,12 @@ function startQuiz(mode,lv){
 // ============================================================
 function renderQ(){
   ANS=false; CQ=QS[QI];
-  $('pfill').style.width=(QI/10*100)+'%';
-  $('ptxt').textContent=`${QI+1} / 10`;
+  // 復習モードでは問題ごとにモード・レベルが変わる
+  if(REVIEW && CQ && CQ._mode){ CM=CQ._mode; CL=CQ._lv; }
+  const total=QS.length||10;
+  $('pfill').style.background=MC[CM].pcol;
+  $('pfill').style.width=(QI/total*100)+'%';
+  $('ptxt').textContent=`${QI+1} / ${total}`;
   $('qpts').textContent=`${SS}てん`;
   $('qcard').innerHTML='';
   $('choices').innerHTML='';
@@ -1718,6 +1894,8 @@ function renderQ(){
   if(CM==='eng') buildEng();
   else if(CM==='kan') buildKan();
   else if(CM==='clk') buildClock();
+  else if(CM==='shp') buildShape();
+  else if(CM==='mon') buildMoney();
   else buildMath();
 }
 
@@ -1826,6 +2004,7 @@ function ansKan(btn,ok,q){
     playCorrectSFX(); zeztzReact(true);
     // ① ストリーク更新
     updateStreak(true);
+    if(REVIEW) removeWrongCurrent();
     recordKanjiMaster((q.q||'').replace(/[「」\n]/g,'').trim()||q.q||'');
     Promise.all([spJa(q.a.replace(/[()（）]/g,'')), showEpopKan(q.e)]).then(()=>{
       document.querySelectorAll('.hint-btn').forEach(b=>b.style.display='none');
@@ -1841,6 +2020,7 @@ function ansKan(btn,ok,q){
     playWrongSFX(); zeztzReact(false);
     // ① ストリーク中断
     updateStreak(false);
+    recordWrong();
     btn.classList.add('ng');
     btn.disabled=true;
     spJa('もういちどやってみよう！').then(()=>{
@@ -2082,26 +2262,909 @@ function showHint(a,b,type){
 
 // ⑥修正: skbSvgAdd / skbSvgSub は未使用のデッドコードのため削除
 
+// ============================================================
+// 🎨 SHAPE QUIZ — かたち・おおきさクイズ
+// ============================================================
+
+// ── SVGヘルパー関数 ──
+const SHP_COLORS = {
+  red:'#FF5252', blue:'#448AFF', yellow:'#FFD600', green:'#00C853',
+  orange:'#FF9100', purple:'#AA00FF', pink:'#FF4081'
+};
+const SHP_COLOR_JP = {
+  red:'あか', blue:'あお', yellow:'きいろ', green:'みどり',
+  orange:'おれんじ', purple:'むらさき', pink:'ぴんく'
+};
+// 問題文で「〜くて/〜で」とつなぐ用
+const SHP_COLOR_CONN = {
+  red:'あかくて', blue:'あおくて', yellow:'きいろくて', green:'みどりで',
+  orange:'おれんじで', purple:'むらさきで', pink:'ぴんくで'
+};
+// 「〜い/〜の」と単独で言う用
+const SHP_COLOR_ADJ = {
+  red:'あかい', blue:'あおい', yellow:'きいろい', green:'みどりの',
+  orange:'おれんじの', purple:'むらさきの', pink:'ぴんくの'
+};
+const SHP_NAMES = ['circle','triangle','square','star','diamond','heart'];
+const SHP_NAMES_JP = {circle:'まる',triangle:'さんかく',square:'しかく',star:'ほし',diamond:'ひしがた',heart:'はーと'};
+const SHP_SIZES = {small:30, medium:50, large:72};
+const SHP_SIZES_JP = {small:'ちいさい', medium:'ふつうの', large:'おおきい'};
+
+function drawShape(shape, color, size, cx, cy){
+  const c = SHP_COLORS[color] || color;
+  const s = typeof size === 'number' ? size : SHP_SIZES[size] || 50;
+  const r = s/2;
+  switch(shape){
+    case 'circle':
+      return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${c}" stroke="white" stroke-width="2"/>`;
+    case 'triangle':
+      return `<polygon points="${cx},${cy-r} ${cx-r*0.9},${cy+r*0.7} ${cx+r*0.9},${cy+r*0.7}" fill="${c}" stroke="white" stroke-width="2"/>`;
+    case 'square':
+      return `<rect x="${cx-r*0.88}" y="${cy-r*0.88}" width="${r*1.76}" height="${r*1.76}" fill="${c}" stroke="white" stroke-width="2" rx="4"/>`;
+    case 'star':{ 
+      const pts=[];
+      for(let i=0;i<10;i++){
+        const a=Math.PI/5*i - Math.PI/2;
+        const rr=i%2===0?r:r*0.42;
+        pts.push(`${cx+Math.cos(a)*rr},${cy+Math.sin(a)*rr}`);
+      }
+      return `<polygon points="${pts.join(' ')}" fill="${c}" stroke="white" stroke-width="2"/>`;
+    }
+    case 'diamond':
+      return `<polygon points="${cx},${cy-r} ${cx+r*0.72},${cy} ${cx},${cy+r} ${cx-r*0.72},${cy}" fill="${c}" stroke="white" stroke-width="2"/>`;
+    case 'heart':{
+      const sc=r/28;
+      return `<path d="M${cx} ${cy+28*sc} C${cx-38*sc} ${cy+10*sc} ${cx-50*sc} ${cy-14*sc} ${cx-26*sc} ${cy-24*sc} C${cx-12*sc} ${cy-30*sc} ${cx} ${cy-16*sc} ${cx} ${cy-16*sc} C${cx} ${cy-16*sc} ${cx+12*sc} ${cy-30*sc} ${cx+26*sc} ${cy-24*sc} C${cx+50*sc} ${cy-14*sc} ${cx+38*sc} ${cy+10*sc} ${cx} ${cy+28*sc} Z" fill="${c}" stroke="white" stroke-width="2"/>`;
+    }
+    default: return '';
+  }
+}
+
+function shapeToSVG(shape, color, size, w=100, h=100){
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${drawShape(shape,color,size,w/2,h/2)}</svg>`;
+}
+
+// ── かたちクイズ問題生成 ──
+function buildShapeQ(lv){
+  const builders=[genShapeQ1,genShapeQ2,genShapeQ3,genShapeQ4,genShapeQ5];
+  const gen=builders[lv-1]||builders[0];
+  const qs=[];
+  let prevQ=null, prevQtype=null, tries=0;
+  while(qs.length<10 && tries<60){
+    tries++;
+    const q=gen();
+    if(prevQ && q.q===prevQ) continue;
+    if(prevQtype && q.qtype===prevQtype && qs.filter(x=>x.qtype===q.qtype).length>=4) continue;
+    qs.push(q);
+    prevQ=q.q; prevQtype=q.qtype;
+  }
+  while(qs.length<10) qs.push(gen());
+  return qs;
+}
+
+// ── SVGでL字形を描く（SVG transform回転）──
+function drawLShape(color,rotDeg,cx,cy,sz){
+  const c=SHP_COLORS[color]||color;
+  const s=sz||36;
+  const pts=[[-s*0.18,-s*0.5],[s*0.18,-s*0.5],[s*0.18,s*0.1],[s*0.5,s*0.1],[s*0.5,s*0.5],[-s*0.18,s*0.5]];
+  return `<g transform="rotate(${rotDeg},${cx},${cy})"><polygon points="${pts.map(([x,y])=>`${x+cx},${y+cy}`).join(' ')}" fill="${c}" stroke="white" stroke-width="1.5"/></g>`;
+}
+
+// ── SVGでZ字形を描く（SVG transform回転）──
+function drawZShape(color,rotDeg,cx,cy,sz){
+  const c=SHP_COLORS[color]||color;
+  const s=sz||36;
+  const w=s*0.5,h=s*0.5,t=s*0.15;
+  const pts=[[-w,-h],[w,-h],[w,-h+t],[-w+t,h-t],[w,h-t],[w,h],[-w,h],[-w,h-t],[w-t,-h+t],[-w,-h+t]];
+  return `<g transform="rotate(${rotDeg},${cx},${cy})"><polygon points="${pts.map(([x,y])=>`${x+cx},${y+cy}`).join(' ')}" fill="${c}" stroke="white" stroke-width="1.5"/></g>`;
+}
+
+// =============================================================
+// Lv1: 6〜8個の図形の中から色+形+大きさ3条件で選ぶ
+// =============================================================
+function genShapeQ1(){
+  const allColors=['red','blue','yellow','green','orange','purple','pink'];
+  const allShapes=['circle','triangle','square','star','diamond'];
+  const allSizes=['small','medium','large'];
+  const tc=allColors[rn(0,allColors.length-1)];
+  const ts=allShapes[rn(0,allShapes.length-1)];
+  const tz=allSizes[rn(0,allSizes.length-1)];
+  // 問題文：サイズ・色・形を自然につなぐ
+  // medium→「ふつうの」なので「〜くて ふつうの〜」より「ふつうサイズの〜」が自然
+  // → 問題文パターンを複数用意して自然なものを選ぶ
+  let q;
+  if(tz === 'medium'){
+    // 「ふつうの」は「〜くて ふつうの〜」より「ふつうサイズの〜の中から」が自然
+    q = `${SHP_COLOR_ADJ[tc]}ふつうサイズの${SHP_NAMES_JP[ts]}はどれ？`;
+  } else {
+    // small/large → 「〜くて ちいさい〜」「〜くて おおきい〜」が自然
+    q = `${SHP_COLOR_CONN[tc]}${SHP_SIZES_JP[tz]}${SHP_NAMES_JP[ts]}はどれ？`;
+  }
+  const hintObj={type:'shp_l1',tc,ts,tz};
+  const wrongSz=allSizes.filter(s=>s!==tz)[rn(0,1)];
+  const wrongS=allShapes.filter(s=>s!==ts)[rn(0,3)];
+  const wrongC=allColors.filter(c=>c!==tc)[rn(0,5)];
+  const correctOpt={c:tc,s:ts,z:tz,ok:true};
+  const distractors=[{c:tc,s:ts,z:wrongSz,ok:false},{c:tc,s:wrongS,z:tz,ok:false},{c:wrongC,s:ts,z:tz,ok:false}];
+  const used=new Set([`${tc}-${ts}-${tz}`,`${tc}-${ts}-${wrongSz}`,`${tc}-${wrongS}-${tz}`,`${wrongC}-${ts}-${tz}`]);
+  const extras=[];
+  let tries=0;
+  while(extras.length<rn(2,3)&&tries<50){
+    tries++;
+    const ec=allColors[rn(0,allColors.length-1)];
+    const es=allShapes[rn(0,allShapes.length-1)];
+    const ez=allSizes[rn(0,allSizes.length-1)];
+    const key=`${ec}-${es}-${ez}`;
+    if(!used.has(key)){used.add(key);extras.push({c:ec,s:es,z:ez,ok:false});}
+  }
+  const allItems=shuffle([correctOpt,...distractors,...extras]);
+  const opts=shuffle([correctOpt,...distractors]);
+  return {type:'shp',lv:1,qtype:'find3',q,hintObj,allItems,opts,e:'🎨'};
+}
+
+// =============================================================
+// Lv2: 複合仲間外れ ＋ 差1〜2の数え比較
+// =============================================================
+function genShapeQ2(){
+  const allColors=['red','blue','yellow','green','orange','purple'];
+  const allShapes=['circle','triangle','square','star','diamond'];
+  const qtype=rn(0,1);
+  if(qtype===0){
+    const mc=allColors[rn(0,allColors.length-1)];
+    const ms=allShapes[rn(0,allShapes.length-1)];
+    let oc,os;
+    do{oc=allColors[rn(0,allColors.length-1)];}while(oc===mc);
+    do{os=allShapes[rn(0,allShapes.length-1)];}while(os===ms);
+    const count=rn(4,5);
+    const oddIdx=rn(0,count-1);
+    const items=Array.from({length:count},(_,i)=>i===oddIdx?{shape:os,color:oc,size:'medium'}:{shape:ms,color:mc,size:'medium'});
+    const hintObj={type:'shp_l2_odd',mainShape:ms,mainColor:mc,oddShape:os,oddColor:oc};
+    return {type:'shp',lv:2,qtype:'odd2',q:'なかまはずれはどれ？',hintObj,items,correctIdx:oddIdx,e:'🔢'};
+  } else {
+    const diff=rn(1,2);
+    const n1=rn(4,9);
+    const n2=n1+(rn(0,1)===0?diff:-diff);
+    if(n2<1||n2>10) return genShapeQ2();
+    const s1=allShapes[rn(0,allShapes.length-1)];
+    let s2; do{s2=allShapes[rn(0,allShapes.length-1)];}while(s2===s1);
+    const c1=allColors[rn(0,allColors.length-1)];
+    let c2; do{c2=allColors[rn(0,allColors.length-1)];}while(c2===c1);
+    const isMore=rn(0,1)===0;
+    const okLeft=isMore?(n1>n2):(n1<n2);
+    const hintObj={type:'shp_l2_count',s1,c1,n1,s2,c2,n2,isMore};
+    return {type:'shp',lv:2,qtype:'count2',
+      q:isMore?'かずがおおいのはどっち？':'かずがすくないのはどっち？',
+      hintObj,left:{shape:s1,color:c1,count:n1},right:{shape:s2,color:c2,count:n2},okLeft,e:'🔢'};
+  }
+}
+
+// =============================================================
+// Lv3: 複合パターン ＋ 増減 ＋ グリッド穴埋め
+// =============================================================
+function genShapeQ3(){
+  const allColors=['red','blue','yellow','green','orange','purple'];
+  const allShapes=['circle','triangle','square','star','diamond'];
+  const ptype=rn(0,2);
+  if(ptype===0){
+    const c1=allColors[rn(0,allColors.length-1)];
+    let c2; do{c2=allColors[rn(0,allColors.length-1)];}while(c2===c1);
+    const s1=allShapes[rn(0,allShapes.length-1)];
+    let s2; do{s2=allShapes[rn(0,allShapes.length-1)];}while(s2===s1);
+    const use3=rn(0,1)===0;
+    let pairs=[{color:c1,shape:s1},{color:c2,shape:s2}];
+    if(use3){
+      let c3; do{c3=allColors[rn(0,allColors.length-1)];}while(c3===c1||c3===c2);
+      let s3; do{s3=allShapes[rn(0,allShapes.length-1)];}while(s3===s1||s3===s2);
+      pairs.push({color:c3,shape:s3});
+    }
+    const seqLen=rn(4,6);
+    const seq=Array.from({length:seqLen},(_,i)=>({...pairs[i%pairs.length],size:'medium'}));
+    const next=pairs[seqLen%pairs.length];
+    const wrongPool=[
+      {color:next.color,shape:allShapes.filter(s=>s!==next.shape)[rn(0,3)],size:'medium',ok:false},
+      {color:allColors.filter(c=>c!==next.color)[rn(0,4)],shape:next.shape,size:'medium',ok:false},
+      {color:allColors.filter(c=>c!==next.color)[rn(0,4)],shape:allShapes.filter(s=>s!==next.shape)[rn(0,3)],size:'medium',ok:false},
+    ];
+    const opts=shuffle([{...next,size:'medium',ok:true},...shuffle(wrongPool).slice(0,3)]);
+    const hintObj={type:'shp_l3_pattern',pairs,seqLen};
+    return {type:'shp',lv:3,qtype:'pattern_both',q:'このならびのつぎはどれ？（いろとかたちに注目！）',hintObj,seq,opts,e:'🌈'};
+  } else if(ptype===1){
+    const shape=allShapes[rn(0,allShapes.length-1)];
+    const color=allColors[rn(0,allColors.length-1)];
+    const increasing=rn(0,1)===0;
+    const startCount=rn(1,3);
+    const step=rn(1,2);
+    const seqLen=4;
+    const seq=Array.from({length:seqLen},(_,i)=>({count:startCount+i*step*(increasing?1:-1),shape,color}));
+    if(seq.some(s=>s.count<1||s.count>9)) return genShapeQ3();
+    const nextCount=startCount+seqLen*step*(increasing?1:-1);
+    if(nextCount<1||nextCount>9) return genShapeQ3();
+    // step=1のとき候補が重複するため、Setで重複を除いてから3つ選ぶ
+    const wrongCounts=shuffle([...new Set([nextCount-1,nextCount+1,nextCount+step,nextCount-step,nextCount+2,nextCount-2].filter(n=>n>=1&&n<=9&&n!==nextCount))]).slice(0,3);
+    let pad=1;
+    while(wrongCounts.length<3){ const c=nextCount+pad; if(c>=1&&c<=9&&!wrongCounts.includes(c)&&c!==nextCount) wrongCounts.push(c); pad=pad>0?-pad:-pad+1; if(Math.abs(pad)>12)break; }
+    const opts=shuffle([{count:nextCount,ok:true},...wrongCounts.map(c=>({count:c,ok:false}))]);
+    const hintObj={type:'shp_l3_count',shape,color,step,increasing,nextCount};
+    return {type:'shp',lv:3,qtype:'pattern_count',
+      q:`${SHP_NAMES_JP[shape]}が${step}こずつ${increasing?'ふえて':'へって'}いくよ。つぎはなんこ？`,
+      hintObj,seq,opts,shape,color,e:'🌈'};
+  } else {
+    const rowColors=[allColors[rn(0,2)],allColors[rn(3,5)]];
+    // 2行が同じ形だと「ちがう形」の不正解が正解と同一になるため、必ず別の形にする
+    const rowShape0=allShapes[rn(0,4)];
+    const rowShapes=[rowShape0, allShapes.filter(s=>s!==rowShape0)[rn(0,3)]];
+    const sz=['small','medium','large'];
+    const grid3=sz.map((_,ri)=>sz.map((sz2)=>({shape:rowShapes[ri%2],color:rowColors[ri%2],size:sz2})));
+    const holeR=rn(0,2),holeC=rn(0,2);
+    const correct=grid3[holeR][holeC];
+    grid3[holeR][holeC]={...correct,isHole:true};
+    const wrong1={shape:rowShapes[1-(holeR%2)],color:rowColors[holeR%2],size:correct.size,ok:false};
+    const wrong2={shape:correct.shape,color:rowColors[1-(holeR%2)],size:correct.size,ok:false};
+    const wrongSz=sz.find(s=>s!==correct.size&&s!==sz[(sz.indexOf(correct.size)+1)%3]);
+    const wrong3={shape:correct.shape,color:correct.color,size:wrongSz,ok:false};
+    const opts=shuffle([{...correct,ok:true},wrong1,wrong2,wrong3]);
+    const hintObj={type:'shp_l3_grid',correct,rowShapes,rowColors,holeR};
+    return {type:'shp',lv:3,qtype:'grid_hole',q:'？のマスに入るのはどれ？',hintObj,grid3,opts,e:'🌈'};
+  }
+}
+
+// =============================================================
+// Lv4: 回転シルエット ＋ 3ピース合成 ＋ さいころ展開図
+// =============================================================
+function genShapeQ4(){
+  const allShapes=['circle','triangle','square','star','diamond','heart'];
+  const qtype=rn(0,2);
+  if(qtype===0){
+    // circle/squareは90°回転しても見た目が変わらず「かたむいてるよ」と矛盾するため、かげクイズの正解からは除外
+    const rotTargets=['triangle','star','diamond','heart'];
+    const target=rotTargets[rn(0,rotTargets.length-1)];
+    const rotDeg=rn(1,3)*90;
+    const wrongs=shuffle(allShapes.filter(s=>s!==target)).slice(0,3);
+    const opts=shuffle([{s:target,ok:true},...wrongs.map(s=>({s,ok:false}))]);
+    const hintObj={type:'shp_l4_sil',target,rotDeg};
+    return {type:'shp',lv:4,qtype:'rot_sil',
+      q:`このかげは どんなかたち？（${rotDeg}ど かたむいてるよ）`,
+      hintObj,target,rotDeg,opts,e:'🔲'};
+  } else if(qtype===1){
+    const combos=[
+      // △＋△ → しかく（斜めに合わせると四角）
+      {pieces:['triangle','triangle'],     result:'square2tri',  resultJP:'しかく',
+       hint:'さんかくを2つ合わせると しかくになるよ！'},
+      // □＋△ → いえ（壁＋屋根）
+      {pieces:['square','triangle'],       result:'house',       resultJP:'いえのかたち',
+       hint:'しかくの上にさんかくをのせると いえになるよ！'},
+      // □＋□ → ながしかく
+      {pieces:['square','square'],         result:'rectangle2',  resultJP:'ながしかく',
+       hint:'しかくを2つ横に並べると ながしかくになるよ！'},
+      // △＋△＋△ → おおきなさんかく
+      {pieces:['triangle','triangle','triangle'], result:'bigtri', resultJP:'おおきなさんかく',
+       hint:'さんかくを3つ合わせると おおきなさんかくになるよ！'},
+      // □＋□＋□ → ながいしかく
+      {pieces:['square','square','square'], result:'rectangle3', resultJP:'ながいしかく',
+       hint:'しかくを3つ横に並べると ながいしかくになるよ！'},
+    ];
+    const combo=combos[rn(0,combos.length-1)];
+    const allResults=['square2tri','house','rectangle2','bigtri','rectangle3'];
+    const wrongR=shuffle(allResults.filter(r=>r!==combo.result)).slice(0,3);
+    const resultJPmap={
+      square2tri:'しかく', house:'いえのかたち',
+      rectangle2:'ながしかく', bigtri:'おおきなさんかく', rectangle3:'ながいしかく'
+    };
+    const opts=shuffle([{r:combo.result,jp:combo.resultJP,ok:true},...wrongR.map(r=>({r,jp:resultJPmap[r],ok:false}))]);
+    const hintObj={type:'shp_l4_combine',combo,result:combo.result};
+    const pieceCount=combo.pieces.length;
+    return {type:'shp',lv:4,qtype:'combine3',
+      q:`この${pieceCount===2?'2':'3'}つのかたちをあわせると？`,
+      hint:combo.hint,hintObj,combo,opts,e:'🔲'};
+  } else {
+    const faces=['⭐','❤️','🔵','🟡','🟢','🔺'];
+    const shuffled=shuffle([...faces]);
+    const pairSets=[[0,5],[1,3],[2,4]];
+    const pairIdx=rn(0,2);
+    const [a,b]=pairSets[pairIdx];
+    const correct=shuffled[b];
+    const wrongs=shuffled.filter((_,i)=>i!==b&&i!==a).slice(0,3);
+    const opts=shuffle([{f:correct,ok:true},...wrongs.map(f=>({f,ok:false}))]);
+    const hintObj={type:'shp_l4_dice',faces:shuffled,a,b};
+    return {type:'shp',lv:4,qtype:'dice',q:`「${shuffled[a]}」のむかい側にある面はどれ？`,hintObj,faces:shuffled,correct,opts,e:'🎲'};
+  }
+}
+
+// =============================================================
+// Lv5: L字Z字回転 ＋ 矢印反転 ＋ 立体断面
+// =============================================================
+function genShapeQ5(){
+  const qtype=rn(0,2);
+  if(qtype===0){
+    // Zの字は180°回転で同じ見た目になり、選択肢が正解と重複してしまう。
+    // 左右非対称のLの字のみ使い、4つの回転がすべて見分けられるようにする。
+    const isL=true;
+    const baseRot=rn(0,3)*90;
+    const rotStep=[90,180,270][rn(0,2)];
+    const resultRot=(baseRot+rotStep)%360;
+    const wrongRots=shuffle([0,90,180,270].filter(r=>r!==resultRot)).slice(0,3);
+    const opts=shuffle([{rot:resultRot,ok:true},...wrongRots.map(r=>({rot:r,ok:false}))]);
+    const shapeName=isL?'Lの字':'Zの字';
+    const hintObj={type:'shp_l5_rotate',isL,baseRot,rotStep,resultRot};
+    return {type:'shp',lv:5,qtype:'lz_rotate',q:`${shapeName}を 時計まわりに ${rotStep}ど まわすとどうなる？`,hintObj,isL,baseRot,rotStep,resultRot,opts,e:'🔄'};
+  } else if(qtype===1){
+    const arrows4=['→','↑','←','↓'];
+    const flipH=rn(0,1)===0;
+    // flipH(左右): →↔← のみ変化、↑↓は変わらない → ↑↓は除外
+    // flipV(上下): ↑↔↓ のみ変化、→←は変わらない → →←は除外
+    const validBases = flipH ? [0,2] : [1,3]; // 変化する矢印のみ
+    const base = validBases[rn(0,1)];
+    const result = flipH ? [2,1,0,3][base] : [0,3,2,1][base];
+    // 不正解3つ：result以外の3方向
+    const wrongs = shuffle([0,1,2,3].filter(i=>i!==result)).slice(0,3);
+    const opts = shuffle([{i:result,ok:true},...wrongs.map(i=>({i,ok:false}))]);
+    const flipDesc = flipH ? 'ひだりみぎに はんてん' : 'うえしたに はんてん';
+    const hintText = flipH
+      ? `ひだりみぎに はんてんすると、→は←に、←は→になるよ！`
+      : `うえしたに はんてんすると、↑は↓に、↓は↑になるよ！`;
+    const hintObj = {type:'shp_l5_flip',base,flipH,result,arrows4};
+    return {type:'shp',lv:5,qtype:'flip',
+      q:`このやじるしを ${flipDesc} すると？`,
+      hint:hintText, hintObj,
+      baseArrow:arrows4[base], flipH,
+      opts:opts.map(o=>({...o,arrow:arrows4[o.i]})), e:'🪞'};
+  } else {
+    const solids=[
+      {name:'ボール',icon:'🏀',cut:'よこ',result:'circle',resultJP:'まる',wrong:['square','triangle','rectangle'],hint:'ボールはどこで切っても断面はまるになるよ！'},
+      {name:'さいころ',icon:'🎲',cut:'よこ',result:'square',resultJP:'しかく',wrong:['circle','triangle','rectangle'],hint:'さいころを横に切るとしかくになるよ！'},
+      {name:'かんづめ',icon:'🥫',cut:'よこ',result:'circle',resultJP:'まる',wrong:['square','rectangle','triangle'],hint:'かんづめを横に切るとまるになるよ！'},
+      {name:'かんづめ',icon:'🥫',cut:'たて',result:'rectangle',resultJP:'ながしかく',wrong:['circle','triangle','square'],hint:'かんづめを縦に切るとながしかくになるよ！'},
+    ];
+    const solid=solids[rn(0,solids.length-1)];
+    const wrongShapes=shuffle(solid.wrong).slice(0,3);
+    const jpMap={circle:'まる',square:'しかく',triangle:'さんかく',rectangle:'ながしかく'};
+    const opts=shuffle([{s:solid.result,jp:solid.resultJP,ok:true},...wrongShapes.map(s=>({s,jp:jpMap[s]||s,ok:false}))]);
+    const hintObj={type:'shp_l5_solid',solid};
+    return {type:'shp',lv:5,qtype:'cross_section',q:`${solid.name}を${solid.cut}に きると、きりくちはどんなかたち？`,hint:solid.hint,hintObj,solid,opts,e:'✂️'};
+  }
+}
+
+// =============================================================
+// ヒント表示（SVG画像付き）
+// =============================================================
+function showShapeHintVisual(hintObj,fallbackText){
+  const existing=document.getElementById('shp-hint-box');
+  if(existing){existing.style.display='block';return;}
+  let html='';
+  if(hintObj&&hintObj.type==='shp_l1'){
+    html=`<div style="text-align:center"><div style="font-size:12px;font-weight:900;margin-bottom:4px">これをさがしてね！</div>${shapeToSVG(hintObj.ts,hintObj.tc,hintObj.tz,64,64)}<div style="font-size:12px;font-weight:700;color:#5D4037;margin-top:4px">${SHP_COLOR_ADJ[hintObj.tc]}・${SHP_NAMES_JP[hintObj.ts]}・${SHP_SIZES_JP[hintObj.tz]}</div></div>`;
+  } else if(hintObj&&hintObj.type==='shp_l2_odd'){
+    html=`<div style="text-align:center"><div style="font-size:12px;font-weight:900;margin-bottom:4px">なかまはこの形！</div><div style="display:flex;gap:4px;justify-content:center">${[0,1,2].map(()=>shapeToSVG(hintObj.mainShape,hintObj.mainColor,'medium',44,44)).join('')}</div><div style="font-size:11px;color:#888;margin-top:4px">これと違うものをさがそう！</div></div>`;
+  } else if(hintObj&&hintObj.type==='shp_l2_count'){
+    html=`<div style="font-size:12px;font-weight:700;text-align:center">ひとつずつゆびでかぞえてみよう！<br>ひだり：${hintObj.n1}こ、みぎ：${hintObj.n2}こ だよ</div>`;
+  } else if(hintObj&&hintObj.type==='shp_l3_pattern'){
+    const {pairs}=hintObj;
+    html=`<div style="text-align:center"><div style="font-size:12px;font-weight:900;margin-bottom:4px">このまとまりがくりかえし！</div><div style="display:flex;gap:4px;justify-content:center;align-items:center">${pairs.map(p=>shapeToSVG(p.shape,p.color,'medium',44,44)).join('<span style="font-size:14px;color:#CCC">→</span>')}<span style="font-size:12px;color:#CCC">→くりかえし</span></div></div>`;
+  } else if(hintObj&&hintObj.type==='shp_l3_count'){
+    html=`<div style="text-align:center"><div style="font-size:12px;font-weight:900;margin-bottom:4px">${hintObj.step}こずつ${hintObj.increasing?'ふえて':'へって'}いるよ！つぎは${hintObj.nextCount}こ！</div><div style="display:flex;gap:2px;justify-content:center;flex-wrap:wrap">${Array.from({length:Math.min(hintObj.nextCount,9)},()=>shapeToSVG(hintObj.shape,hintObj.color,'small',32,32)).join('')}</div></div>`;
+  } else if(hintObj&&hintObj.type==='shp_l3_grid'){
+    const {correct}=hintObj;
+    html=`<div style="text-align:center"><div style="font-size:12px;font-weight:900;margin-bottom:4px">これが入るよ！</div>${shapeToSVG(correct.shape,correct.color,correct.size,60,60)}<div style="font-size:11px;color:#888;margin-top:4px">${SHP_COLOR_ADJ[correct.color]}${SHP_NAMES_JP[correct.shape]}（${SHP_SIZES_JP[correct.size]}）</div></div>`;
+  } else if(hintObj&&hintObj.type==='shp_l4_sil'){
+    html=`<div style="text-align:center"><div style="font-size:12px;font-weight:900;margin-bottom:4px">かげの正体はこれ！</div>${shapeToSVG(hintObj.target,'blue','large',64,64)}</div>`;
+  } else if(hintObj&&hintObj.type==='shp_l4_combine'){
+    const svgContent = hintObj.hintSVG || '';
+    html=`<div style="text-align:center">
+      <div style="font-size:12px;font-weight:900;margin-bottom:6px">こうやってあわさるよ！</div>
+      ${svgContent}
+      <div style="font-size:11px;color:#888;margin-top:4px">${hintObj.combo.resultJP}になるよ！</div>
+    </div>`;
+  } else if(hintObj&&hintObj.type==='shp_l4_dice'){
+    html=`<div style="font-size:12px;font-weight:700;text-align:center">さいころは向かい合う面が決まってるよ！<br>「${hintObj.faces[hintObj.a]}」の反対側を探してね</div>`;
+  } else if(hintObj&&hintObj.type==='shp_l5_rotate'){
+    const W=64,H=64;
+    let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
+    if(hintObj.isL) s+=drawLShape('blue',hintObj.resultRot,W/2,H/2,26);
+    else s+=drawZShape('red',hintObj.resultRot,W/2,H/2,24);
+    s+='</svg>';
+    html=`<div style="text-align:center"><div style="font-size:12px;font-weight:900;margin-bottom:4px">こうなるよ！</div>${s}</div>`;
+  } else if(hintObj&&hintObj.type==='shp_l5_flip'){
+    html=`<div style="text-align:center"><div style="font-size:12px;font-weight:900;margin-bottom:4px">こうなるよ！</div><div style="font-size:48px">${hintObj.arrows4[hintObj.result]}</div></div>`;
+  } else if(hintObj&&hintObj.type==='shp_l5_solid'){
+    const resMap={circle:shapeToSVG('circle','#66BB6A','medium',56,56),square:shapeToSVG('square','#66BB6A','medium',56,56),rectangle:`<svg width="56" height="56" viewBox="0 0 56 56"><rect x="2" y="14" width="52" height="28" fill="#66BB6A" rx="4" stroke="white" stroke-width="2"/></svg>`};
+    html=`<div style="text-align:center"><div style="font-size:12px;font-weight:900;margin-bottom:4px">きりくちはこの形！</div>${resMap[hintObj.solid.result]||''}<div style="font-size:11px;color:#888;margin-top:4px">${hintObj.solid.resultJP}</div></div>`;
+  } else {
+    html=`<div style="font-size:13px;font-weight:700">${fallbackText||'もう一度よく見てみよう！'}</div>`;
+    if(fallbackText) spJa(fallbackText);
+  }
+  const box=document.createElement('div');
+  box.id='shp-hint-box';
+  box.style.cssText='margin-top:10px;background:linear-gradient(135deg,#FFF9C4,#FFF3E0);border:2.5px solid #FFE082;border-radius:16px;padding:10px 14px;animation:fadeUp .3s ease;';
+  box.innerHTML='💡 '+html;
+  const qcard=$('qcard');
+  if(qcard) qcard.appendChild(box);
+}
+
+// ── buildShape ──
+function buildShape(){
+  const q=CQ;
+  const old=document.getElementById('shp-hint-box');
+  if(old) old.remove();
+  switch(q.lv){
+    case 1:buildShapeL1(q);break;
+    case 2:buildShapeL2(q);break;
+    case 3:buildShapeL3(q);break;
+    case 4:buildShapeL4(q);break;
+    case 5:buildShapeL5(q);break;
+  }
+}
+
+function setChoicesGrid(grid){
+  $('choices').replaceWith(grid);
+  grid.id='choices';
+}
+
+function buildShapeL1(q){
+  $('qcard').innerHTML=`
+    <div class="q-label">さがしてみよう！</div>
+    <div class="q-sub" style="font-size:18px;font-weight:900;color:var(--shp);margin:6px 0">${q.q}</div>
+    <div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin:4px 0">
+      ${q.allItems.map(o=>`<span>${shapeToSVG(o.s,o.c,o.z,50,50)}</span>`).join('')}
+    </div>
+    <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+      <button class="speak-btn" onclick="spJa('${esc(q.q)}')">🔊 よんで！</button>
+      <button class="hint-btn" onclick="showShapeHintVisual(CQ.hintObj,'')">💡 ヒント</button>
+    </div>`;
+  const grid=mk('div','choices');
+  q.opts.forEach(o=>{
+    const b=mk('button','ch-svg');
+    b.innerHTML=shapeToSVG(o.s,o.c,o.z,80,80);
+    b.onclick=()=>ansShape(b,o.ok,q.q,'🎨','');
+    grid.appendChild(b);
+  });
+  setChoicesGrid(grid);
+  setTimeout(()=>spJa(q.q),500);
+}
+
+function buildShapeL2(q){
+  const qcard=$('qcard');
+  if(q.qtype==='odd2'){
+    qcard.innerHTML=`
+      <div class="q-label">なかまはずれをさがそう！</div>
+      <div class="q-sub" style="font-size:18px;font-weight:900;color:var(--shp)">${q.q}</div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:6px 0">
+        ${q.items.map(item=>shapeToSVG(item.shape,item.color,item.size,48,48)).join('')}
+      </div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+        <button class="speak-btn" onclick="spJa('${esc(q.q)}')">🔊 よんで！</button>
+        <button class="hint-btn" onclick="showShapeHintVisual(CQ.hintObj,'')">💡 ヒント</button>
+      </div>`;
+    const grid=mk('div','choices');
+    q.items.forEach((item,i)=>{
+      const b=mk('button','ch-svg');
+      b.innerHTML=shapeToSVG(item.shape,item.color,item.size,72,72);
+      b.onclick=()=>ansShape(b,i===q.correctIdx,q.q,'🔢','');
+      grid.appendChild(b);
+    });
+    setChoicesGrid(grid);
+  } else {
+    const mkDots=(shape,color,count)=>{
+      const W=112,H=84;
+      let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
+      const cols=Math.ceil(Math.sqrt(count)),rows=Math.ceil(count/cols);
+      let n=0;
+      for(let r=0;r<rows&&n<count;r++) for(let c2=0;c2<cols&&n<count;c2++){s+=drawShape(shape,color,16,12+(c2*(W-4)/cols),10+(r*(H-4)/rows));n++;}
+      return s+'</svg>';
+    };
+    qcard.innerHTML=`
+      <div class="q-label">かずをかぞえよう！</div>
+      <div class="q-sub" style="font-size:18px;font-weight:900;color:var(--shp)">${q.q}</div>
+      <div style="display:flex;gap:8px;justify-content:center;align-items:center;margin:6px 0">
+        <div style="background:#FFF0F0;border-radius:12px;padding:6px">${mkDots(q.left.shape,q.left.color,q.left.count)}</div>
+        <div style="font-size:18px;font-weight:900;color:#CCC">vs</div>
+        <div style="background:#F0F0FF;border-radius:12px;padding:6px">${mkDots(q.right.shape,q.right.color,q.right.count)}</div>
+      </div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+        <button class="speak-btn" onclick="spJa('${esc(q.q)}')">🔊 よんで！</button>
+        <button class="hint-btn" onclick="showShapeHintVisual(CQ.hintObj,'')">💡 ヒント</button>
+      </div>`;
+    const grid=mk('div','choices');
+    [{label:'ひだり',ok:q.okLeft},{label:'みぎ',ok:!q.okLeft}].forEach(({label,ok})=>{
+      const b=mk('button','ch-svg');
+      b.innerHTML=`<div style="font-size:22px;font-weight:900">${label}</div>`;
+      b.onclick=()=>ansShape(b,ok,q.q,'🔢',label);
+      grid.appendChild(b);
+    });
+    setChoicesGrid(grid);
+  }
+  setTimeout(()=>spJa(q.q),500);
+}
+
+function buildShapeL3(q){
+  if(q.qtype==='pattern_both'){
+    const mkSeq=()=>{
+      const W=q.seq.length*52+50,H=58;
+      let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
+      q.seq.forEach((item,i)=>{s+=drawShape(item.shape,item.color,'medium',26+i*52,29);});
+      s+=`<rect x="${W-46}" y="4" width="42" height="50" rx="8" fill="#EEF" stroke="#C0C8FF" stroke-width="2"/>`;
+      s+=`<text x="${W-25}" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#AAB">?</text>`;
+      return s+'</svg>';
+    };
+    $('qcard').innerHTML=`
+      <div class="q-label">パターンをみつけよう！（いろとかたち両方！）</div>
+      <div class="q-sub" style="font-size:16px;font-weight:900;color:var(--shp)">${q.q}</div>
+      <div style="overflow-x:auto;padding:4px 0;margin:4px 0">${mkSeq()}</div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+        <button class="speak-btn" onclick="spJa('${esc(q.q)}')">🔊 よんで！</button>
+        <button class="hint-btn" onclick="showShapeHintVisual(CQ.hintObj,'')">💡 ヒント</button>
+      </div>`;
+    const grid=mk('div','choices');
+    q.opts.forEach(o=>{
+      const b=mk('button','ch-svg');
+      b.innerHTML=shapeToSVG(o.shape,o.color,'medium',72,72);
+      b.onclick=()=>ansShape(b,o.ok,q.q,'🌈','');
+      grid.appendChild(b);
+    });
+    setChoicesGrid(grid);
+  } else if(q.qtype==='pattern_count'){
+    const mkCountSeq=()=>{
+      const maxC=Math.max(...q.seq.map(s=>s.count));
+      const cW=60,W=q.seq.length*cW+cW,H=maxC*14+24;
+      let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
+      q.seq.forEach((item,i)=>{
+        for(let j=0;j<item.count;j++) s+=drawShape(item.shape,item.color,11,cW/2+i*cW,H-12-j*13);
+        s+=`<text x="${cW/2+i*cW}" y="${H-1}" text-anchor="middle" font-size="10" fill="#999">${item.count}こ</text>`;
+      });
+      s+=`<rect x="${q.seq.length*cW+2}" y="4" width="${cW-8}" height="${H-8}" rx="8" fill="#EEF" stroke="#C0C8FF" stroke-width="2"/>`;
+      s+=`<text x="${q.seq.length*cW+cW/2-2}" y="${H/2+6}" text-anchor="middle" font-size="20" font-weight="bold" fill="#AAB">?</text>`;
+      return s+'</svg>';
+    };
+    $('qcard').innerHTML=`
+      <div class="q-label">ふえかた・へりかたのパターン！</div>
+      <div class="q-sub" style="font-size:16px;font-weight:900;color:var(--shp)">${q.q}</div>
+      <div style="overflow-x:auto;padding:4px 0;margin:4px 0">${mkCountSeq()}</div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+        <button class="speak-btn" onclick="spJa('${esc(q.q)}')">🔊 よんで！</button>
+        <button class="hint-btn" onclick="showShapeHintVisual(CQ.hintObj,'')">💡 ヒント</button>
+      </div>`;
+    const grid=mk('div','choices');
+    q.opts.forEach(o=>{
+      const W2=72,H2=72;
+      let dotSVG=`<svg width="${W2}" height="${H2}" viewBox="0 0 ${W2} ${H2}">`;
+      const cols2=Math.ceil(Math.sqrt(o.count)),rows2=Math.ceil(o.count/cols2);
+      let n=0;
+      for(let r=0;r<rows2&&n<o.count;r++) for(let c2=0;c2<cols2&&n<o.count;c2++){dotSVG+=drawShape(q.shape,q.color,11,8+(c2*(W2-8)/cols2),10+(r*(H2-8)/rows2));n++;}
+      dotSVG+='</svg>';
+      const b=mk('button','ch-svg');
+      b.innerHTML=dotSVG+`<div class="ch-svg-label">${o.count}こ</div>`;
+      b.onclick=()=>ansShape(b,o.ok,q.q,'🌈',`${o.count}こ`);
+      grid.appendChild(b);
+    });
+    setChoicesGrid(grid);
+  } else {
+    const mkGrid=()=>{
+      const sz2=62,W=3*sz2+8,H=3*sz2+8;
+      let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
+      s+=`<rect x="0" y="0" width="${W}" height="${H}" rx="10" fill="#F8F8FF" stroke="#D8D8FF" stroke-width="1.5"/>`;
+      q.grid3.forEach((row,ri)=>row.forEach((cell,ci)=>{
+        const cx=sz2/2+4+ci*sz2,cy=sz2/2+4+ri*sz2;
+        if(cell.isHole){
+          s+=`<rect x="${cx-sz2/2+2}" y="${cy-sz2/2+2}" width="${sz2-4}" height="${sz2-4}" rx="8" fill="#FFFFEE" stroke="#FFE082" stroke-dasharray="5,3" stroke-width="2"/>`;
+          s+=`<text x="${cx}" y="${cy+8}" text-anchor="middle" font-size="24" font-weight="bold" fill="#CCA">?</text>`;
+        } else {
+          s+=drawShape(cell.shape,cell.color,cell.size,cx,cy);
+        }
+      }));
+      return s+'</svg>';
+    };
+    $('qcard').innerHTML=`
+      <div class="q-label">グリッドの穴うめ！</div>
+      <div class="q-sub" style="font-size:16px;font-weight:900;color:var(--shp)">${q.q}</div>
+      <div style="margin:6px auto;text-align:center">${mkGrid()}</div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+        <button class="speak-btn" onclick="spJa('${esc(q.q)}')">🔊 よんで！</button>
+        <button class="hint-btn" onclick="showShapeHintVisual(CQ.hintObj,'')">💡 ヒント</button>
+      </div>`;
+    const grid=mk('div','choices');
+    q.opts.forEach(o=>{
+      const b=mk('button','ch-svg');
+      b.innerHTML=shapeToSVG(o.shape,o.color,o.size,72,72);
+      b.onclick=()=>ansShape(b,o.ok,q.q,'🌈','');
+      grid.appendChild(b);
+    });
+    setChoicesGrid(grid);
+  }
+  setTimeout(()=>spJa(q.q),500);
+}
+
+function buildShapeL4(q){
+  if(q.qtype==='rot_sil'){
+    const silSVG=`<svg width="88" height="88" viewBox="0 0 88 88" style="transform:rotate(${q.rotDeg}deg)">${drawShape(q.target,'#333','large',44,44)}</svg>`;
+    $('qcard').innerHTML=`
+      <div class="q-label">かげクイズ！もとのかたちは？</div>
+      <div class="q-sub" style="font-size:17px;font-weight:900;color:var(--shp)">${q.q}</div>
+      <div style="margin:6px auto;text-align:center;filter:brightness(0)">${silSVG}</div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+        <button class="speak-btn" onclick="spJa('${esc(q.q)}')">🔊 よんで！</button>
+        <button class="hint-btn" onclick="showShapeHintVisual(CQ.hintObj,'')">💡 ヒント</button>
+      </div>`;
+    const grid=mk('div','choices');
+    q.opts.forEach(o=>{
+      const b=mk('button','ch-svg');
+      b.innerHTML=shapeToSVG(o.s,'#5C7CFA','medium',72,72)+`<div class="ch-svg-label">${SHP_NAMES_JP[o.s]||o.s}</div>`;
+      b.onclick=()=>ansShape(b,o.ok,q.q,'🔲',SHP_NAMES_JP[o.s]||o.s);
+      grid.appendChild(b);
+    });
+    setChoicesGrid(grid);
+  } else if(q.qtype==='combine3'){
+    const colors=['#FF7043','#448AFF','#FFD600'];
+
+    // ピース表示（問題文用）
+    const pieceSVGs = q.combo.pieces.map((p,i) =>
+      shapeToSVG(p, colors[i] || '#888', 'medium', 52, 52)
+    ).join('<span style="font-size:18px;font-weight:900;color:#CCC;align-self:center">＋</span>');
+
+    // 答えの選択肢SVG（正確な合成形・一色で分かりやすく）
+    const rsvg = {
+      // △＋△ → しかく（2つの三角を合わせると四角）
+      square2tri: `<svg width="72" height="72" viewBox="0 0 72 72">
+        <rect x="8" y="8" width="56" height="56" fill="#66BB6A" rx="3" stroke="white" stroke-width="2"/>
+        <line x1="8" y1="8" x2="64" y2="64" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+      </svg>`,
+      // □＋△ → いえ
+      house: `<svg width="72" height="72" viewBox="0 0 72 72">
+        <polygon points="36,6 66,30 6,30" fill="#FF7043" stroke="white" stroke-width="2"/>
+        <rect x="10" y="30" width="52" height="36" fill="#448AFF" stroke="white" stroke-width="2"/>
+        <rect x="28" y="44" width="16" height="22" fill="rgba(255,255,255,0.5)" rx="2"/>
+      </svg>`,
+      // □＋□ → ながしかく
+      rectangle2: `<svg width="72" height="72" viewBox="0 0 72 72">
+        <rect x="2" y="18" width="68" height="36" fill="#66BB6A" rx="3" stroke="white" stroke-width="2"/>
+        <line x1="36" y1="18" x2="36" y2="54" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+      </svg>`,
+      // △＋△＋△ → おおきなさんかく
+      bigtri: `<svg width="72" height="72" viewBox="0 0 72 72">
+        <polygon points="36,4 70,68 2,68" fill="#66BB6A" stroke="white" stroke-width="2"/>
+        <line x1="36" y1="36" x2="2" y2="68" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+        <line x1="36" y1="36" x2="70" y2="68" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+        <line x1="19" y1="68" x2="36" y2="36" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+      </svg>`,
+      // □＋□＋□ → ながいしかく
+      rectangle3: `<svg width="72" height="72" viewBox="0 0 72 72">
+        <rect x="2" y="22" width="68" height="28" fill="#66BB6A" rx="3" stroke="white" stroke-width="2"/>
+        <line x1="25" y1="22" x2="25" y2="50" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+        <line x1="47" y1="22" x2="47" y2="50" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+      </svg>`,
+    };
+
+    // ヒント：ピースが合わさる様子（左：ピース群 → 右：合成後）
+    const hintSVG = {
+      square2tri: `<svg width="170" height="64" viewBox="0 0 170 64">
+        <polygon points="4,60 32,8 60,60" fill="#FF7043" stroke="white" stroke-width="1.5"/>
+        <polygon points="60,8 88,60 60,60" fill="#448AFF" stroke="white" stroke-width="1.5" transform="scale(-1,1) translate(-148,0)"/>
+        <polygon points="60,8 88,60 32,60" fill="#448AFF" stroke="white" stroke-width="1.5"/>
+        <text x="100" y="38" text-anchor="middle" font-size="26" font-weight="bold" fill="#66BB6A">→</text>
+        <rect x="118" y="8" width="48" height="48" fill="#66BB6A" rx="3" stroke="white" stroke-width="1.5"/>
+        <line x1="118" y1="8" x2="166" y2="56" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+      </svg>`,
+      house: `<svg width="170" height="64" viewBox="0 0 170 64">
+        <rect x="4" y="30" width="36" height="30" fill="#448AFF" stroke="white" stroke-width="1.5"/>
+        <polygon points="22,4 56,30 4,30" fill="#FF7043" stroke="white" stroke-width="1.5" transform="translate(-14,0)"/>
+        <text x="88" y="38" text-anchor="middle" font-size="26" font-weight="bold" fill="#66BB6A">→</text>
+        <polygon points="130,6 154,26 106,26" fill="#FF7043" stroke="white" stroke-width="1.5"/>
+        <rect x="106" y="26" width="48" height="34" fill="#448AFF" stroke="white" stroke-width="1.5"/>
+        <rect x="122" y="38" width="14" height="22" fill="rgba(255,255,255,0.5)" rx="1"/>
+      </svg>`,
+      rectangle2: `<svg width="170" height="64" viewBox="0 0 170 64">
+        <rect x="4" y="16" width="30" height="30" fill="#FF7043" stroke="white" stroke-width="1.5" rx="2"/>
+        <rect x="36" y="16" width="30" height="30" fill="#448AFF" stroke="white" stroke-width="1.5" rx="2"/>
+        <text x="88" y="38" text-anchor="middle" font-size="26" font-weight="bold" fill="#66BB6A">→</text>
+        <rect x="106" y="16" width="60" height="30" fill="#66BB6A" stroke="white" stroke-width="1.5" rx="2"/>
+        <line x1="136" y1="16" x2="136" y2="46" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+      </svg>`,
+      bigtri: `<svg width="170" height="64" viewBox="0 0 170 64">
+        <polygon points="18,56 32,28 46,56" fill="#FF7043" stroke="white" stroke-width="1.5"/>
+        <polygon points="46,56 60,28 74,56" fill="#448AFF" stroke="white" stroke-width="1.5"/>
+        <polygon points="32,28 46,56 60,28" fill="#FFD600" stroke="white" stroke-width="1.5"/>
+        <text x="94" y="38" text-anchor="middle" font-size="26" font-weight="bold" fill="#66BB6A">→</text>
+        <polygon points="130,6 162,60 98,60" fill="#66BB6A" stroke="white" stroke-width="1.5"/>
+        <line x1="114" y1="60" x2="130" y2="32" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+        <line x1="146" y1="60" x2="130" y2="32" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+      </svg>`,
+      rectangle3: `<svg width="170" height="64" viewBox="0 0 170 64">
+        <rect x="2" y="20" width="20" height="22" fill="#FF7043" stroke="white" stroke-width="1.5" rx="2"/>
+        <rect x="24" y="20" width="20" height="22" fill="#448AFF" stroke="white" stroke-width="1.5" rx="2"/>
+        <rect x="46" y="20" width="20" height="22" fill="#FFD600" stroke="white" stroke-width="1.5" rx="2"/>
+        <text x="84" y="36" text-anchor="middle" font-size="26" font-weight="bold" fill="#66BB6A">→</text>
+        <rect x="100" y="20" width="66" height="22" fill="#66BB6A" stroke="white" stroke-width="1.5" rx="2"/>
+        <line x1="122" y1="20" x2="122" y2="42" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+        <line x1="144" y1="20" x2="144" y2="42" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+      </svg>`,
+    };
+
+    q.hintObj.hintSVG = hintSVG[q.combo.result] || '';
+
+    $('qcard').innerHTML=`
+      <div class="q-label">かたちをあわせると？</div>
+      <div class="q-sub" style="font-size:17px;font-weight:900;color:var(--shp)">${q.q}</div>
+      <div style="display:flex;gap:4px;justify-content:center;align-items:center;margin:6px 0;flex-wrap:wrap">${pieceSVGs}</div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+        <button class="speak-btn" onclick="spJa('${esc(q.q)}')">🔊 よんで！</button>
+        <button class="hint-btn" onclick="showShapeHintVisual(CQ.hintObj,'${esc(q.hint||'')}')">💡 ヒント</button>
+      </div>`;
+    const grid=mk('div','choices');
+    q.opts.forEach(o=>{
+      const b=mk('button','ch-svg');
+      b.innerHTML=(rsvg[o.r]||shapeToSVG('square','#66BB6A','medium',72,72))+`<div class="ch-svg-label">${o.jp}</div>`;
+      b.onclick=()=>ansShape(b,o.ok,q.q,'🔲',o.jp);
+      grid.appendChild(b);
+    });
+    setChoicesGrid(grid);
+  } else {
+    const diceLayout=()=>{
+      const f=q.faces,sz=44;
+      const layout=[[null,f[0],null,null],[f[1],f[2],f[3],f[4]],[null,f[5],null,null]];
+      const W=4*sz+8,H=3*sz+8;
+      let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
+      layout.forEach((row,ri)=>row.forEach((cell,ci)=>{
+        if(!cell) return;
+        const x=4+ci*sz,y=4+ri*sz;
+        s+=`<rect x="${x}" y="${y}" width="${sz-2}" height="${sz-2}" rx="6" fill="white" stroke="#DDD" stroke-width="1.5"/>`;
+        s+=`<text x="${x+sz/2-1}" y="${y+sz/2+8}" text-anchor="middle" font-size="22">${cell}</text>`;
+      }));
+      return s+'</svg>';
+    };
+    $('qcard').innerHTML=`
+      <div class="q-label">さいころてんかいずクイズ！</div>
+      <div class="q-sub" style="font-size:16px;font-weight:900;color:var(--shp)">${q.q}</div>
+      <div style="margin:6px auto;text-align:center">${diceLayout()}</div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+        <button class="speak-btn" onclick="spJa('${esc(q.q)}')">🔊 よんで！</button>
+        <button class="hint-btn" onclick="showShapeHintVisual(CQ.hintObj,'')">💡 ヒント</button>
+      </div>`;
+    const grid=mk('div','choices');
+    q.opts.forEach(o=>{
+      const b=mk('button','ch-svg');
+      b.innerHTML=`<div style="font-size:36px">${o.f}</div>`;
+      b.onclick=()=>ansShape(b,o.ok,q.q,'🎲',o.f);
+      grid.appendChild(b);
+    });
+    setChoicesGrid(grid);
+  }
+  setTimeout(()=>spJa(q.q),500);
+}
+
+function buildShapeL5(q){
+  if(q.qtype==='lz_rotate'){
+    const mkLZ=(rotDeg,isL)=>{
+      const W=72,H=72;
+      let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
+      if(isL) s+=drawLShape('blue',rotDeg,W/2,H/2,28);
+      else s+=drawZShape('red',rotDeg,W/2,H/2,26);
+      return s+'</svg>';
+    };
+    $('qcard').innerHTML=`
+      <div class="q-label">${q.isL?'L':'Z'}の字を回転させよう！</div>
+      <div class="q-sub" style="font-size:16px;font-weight:900;color:var(--shp)">${q.q}</div>
+      <div style="text-align:center;margin:6px 0">
+        <div style="font-size:11px;font-weight:900;color:#888;margin-bottom:2px">もとの形（${q.baseRot}ど）</div>
+        ${mkLZ(q.baseRot,q.isL)}
+        <div style="font-size:11px;font-weight:900;color:var(--shp);margin-top:2px">↓ 時計まわりに ${q.rotStep}ど まわすと？</div>
+      </div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+        <button class="speak-btn" onclick="spJa('${esc(q.q)}')">🔊 よんで！</button>
+        <button class="hint-btn" onclick="showShapeHintVisual(CQ.hintObj,'')">💡 ヒント</button>
+      </div>`;
+    const grid=mk('div','choices');
+    q.opts.forEach(o=>{
+      const b=mk('button','ch-svg');
+      b.innerHTML=mkLZ(o.rot,q.isL);
+      b.onclick=()=>ansShape(b,o.ok,q.q,'🔄','');
+      grid.appendChild(b);
+    });
+    setChoicesGrid(grid);
+  } else if(q.qtype==='flip'){
+    const flipDesc=q.flipH?'ひだりみぎに はんてん':'うえしたに はんてん';
+    $('qcard').innerHTML=`
+      <div class="q-label">はんてんもんだい！</div>
+      <div class="q-sub" style="font-size:17px;font-weight:900;color:var(--shp)">${q.q}</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin:10px 0">
+        <div style="text-align:center">
+          <div style="font-size:56px">${q.baseArrow}</div>
+          <div style="font-size:11px;font-weight:900;color:#888">もとのやじるし</div>
+        </div>
+        <div style="font-size:18px;color:#CCC;font-weight:900;text-align:center">→<br><span style="font-size:11px">${flipDesc}</span></div>
+        <div style="font-size:48px;color:#CCC">？</div>
+      </div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+        <button class="speak-btn" onclick="spJa('${esc(q.q)}')">🔊 よんで！</button>
+        <button class="hint-btn" onclick="showShapeHintVisual(CQ.hintObj,'${esc(q.hint||'')}')">💡 ヒント</button>
+      </div>`;
+    const grid=mk('div','choices');
+    q.opts.forEach(o=>{
+      const b=mk('button','ch-svg');
+      b.innerHTML=`<div style="font-size:44px">${o.arrow}</div>`;
+      b.onclick=()=>ansShape(b,o.ok,q.q,'🪞',o.arrow);
+      grid.appendChild(b);
+    });
+    setChoicesGrid(grid);
+  } else {
+    const solidIcons={ボール:'🏀',さいころ:'🎲',かんづめ:'🥫'};
+    const resMap={circle:shapeToSVG('circle','#66BB6A','medium',64,64),square:shapeToSVG('square','#66BB6A','medium',64,64),triangle:shapeToSVG('triangle','#66BB6A','medium',64,64),rectangle:`<svg width="64" height="64" viewBox="0 0 64 64"><rect x="4" y="16" width="56" height="32" fill="#66BB6A" rx="4" stroke="white" stroke-width="2"/></svg>`};
+    $('qcard').innerHTML=`
+      <div class="q-label">立体をきったときのかたちは？</div>
+      <div class="q-sub" style="font-size:16px;font-weight:900;color:var(--shp)">${q.q}</div>
+      <div style="font-size:56px;text-align:center;margin:4px 0">${solidIcons[q.solid.name]||'📦'}</div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+        <button class="speak-btn" onclick="spJa('${esc(q.q)}')">🔊 よんで！</button>
+        <button class="hint-btn" onclick="showShapeHintVisual(CQ.hintObj,'${esc(q.hint||'')}')">💡 ヒント</button>
+      </div>`;
+    const grid=mk('div','choices');
+    q.opts.forEach(o=>{
+      const b=mk('button','ch-svg');
+      b.innerHTML=(resMap[o.s]||shapeToSVG('circle','#66BB6A','medium',64,64))+`<div class="ch-svg-label">${o.jp}</div>`;
+      b.onclick=()=>ansShape(b,o.ok,q.q,'✂️',o.jp);
+      grid.appendChild(b);
+    });
+    setChoicesGrid(grid);
+  }
+  setTimeout(()=>spJa(q.q),500);
+}
+
+
+// ── かたちクイズ回答処理 ──
+function ansShape(btn,ok,questionText,emoji,correctSp){
+  if(ANS)return; ANS=true;
+  if(ok){
+    btn.classList.add('ok');
+    document.querySelectorAll('.ch-svg').forEach(b=>{ if(b!==btn) b.classList.add('dim'); });
+    SS++; TS++; $('total-star').textContent=TS;
+    showFB(true);
+    playCorrectSFX(); zeztzReact(true);
+    updateStreak(true);
+    if(REVIEW) removeWrongCurrent();
+    const hatching = addStarToEgg(1);
+    // 孵化演出中はnextQをcloseEggHatchに任せる
+    if(!hatching){
+      Promise.all([spJa(praise()), showEpop(emoji)]).then(nextQ);
+    } else {
+      Promise.all([spJa(praise()), showEpop(emoji)]);
+    }
+  } else {
+    btn.classList.add('ng');
+    showFB(false);
+    playWrongSFX(); zeztzReact(false);
+    updateStreak(false);
+    recordWrong();
+    spJa('もういちどやってみよう！').then(()=>{
+      btn.classList.remove('ng');
+      ANS=false;
+    });
+  }
+}
+
+
 function ans(btn,ok,correctText,emoji,correctSp,mode){
   if(ANS)return; ANS=true;
   if(ok){
-    // 正解：緑ハイライト・褒め・次へ
     btn.classList.add('ok');
     document.querySelectorAll('.ch').forEach(b=>{ if(b!==btn) b.disabled=true; });
     SS++; TS++; $('total-star').textContent=TS;
     showFB(true);
     playCorrectSFX(); zeztzReact(true);
-    updateStreak(true); // ① ストリーク加算
+    updateStreak(true);
+    if(REVIEW) removeWrongCurrent();
     const sp=mode==='eng'?spEn2(correctSp):spJa(praise());
     const epopTarget = mode==='eng' ? 'eng-emoji' : null;
-    Promise.all([sp, showEpop(emoji, epopTarget)]).then(nextQ);
+    const hatching = addStarToEgg(1);
+    // 孵化演出中はnextQをcloseEggHatchに任せる
+    if(!hatching){
+      Promise.all([sp, showEpop(emoji, epopTarget)]).then(nextQ);
+    } else {
+      Promise.all([sp, showEpop(emoji, epopTarget)]);
+    }
   } else {
-    // 不正解：赤フラッシュのみ→音声→リセットして再挑戦
     btn.classList.add('ng');
     btn.disabled=true;
     showFB(false);
     playWrongSFX(); zeztzReact(false);
-    updateStreak(false); // ① ストリーク中断
+    updateStreak(false);
+    recordWrong();
     spJa('もういちどやってみよう！').then(()=>{
       btn.classList.remove('ng');
       btn.disabled=false;
@@ -2129,7 +3192,7 @@ function resetChoices(){
   });
 }
 
-function nextQ(){ QI++; QI>=10?showResult():renderQ(); }
+function nextQ(){ QI++; QI>=QS.length?showResult():renderQ(); }
 
 // ============================================================
 // FEEDBACK
@@ -2204,25 +3267,28 @@ function confetti(){
 // ============================================================
 function showResult(){
   const s=SS;
+  const total=QS.length||10;
+  const pct=s/total;
   let em,ti,sc;
-  if(s>=9){em='🏆';ti='かんぺき！すごすぎる！';sc=5;}
-  else if(s>=7){em='🎉';ti='やったね！さいこう！';sc=4;}
-  else if(s>=5){em='😊';ti='よくがんばったよ！';sc=3;}
-  else if(s>=3){em='🌱';ti='もうすこしだよ！';sc=2;}
+  if(pct>=0.9){em='🏆';ti='かんぺき！すごすぎる！';sc=5;}
+  else if(pct>=0.7){em='🎉';ti='やったね！さいこう！';sc=4;}
+  else if(pct>=0.5){em='😊';ti='よくがんばったよ！';sc=3;}
+  else if(pct>=0.3){em='🌱';ti='もうすこしだよ！';sc=2;}
   else{em='💪';ti='つぎはがんばろう！';sc=1;}
   $('r-emo').textContent=em;
-  $('r-title').textContent=ti;
-  $('r-sub').textContent='10もん ちょうせんしたよ！';
+  $('r-title').textContent= REVIEW ? 'ふくしゅう おわり！' : ti;
+  $('r-sub').textContent=`${total}もん ちょうせんしたよ！`;
   $('r-stars').textContent='⭐'.repeat(sc)+'☆'.repeat(5-sc);
   $('r-sc').textContent=s;
+  const totEl=$('r-tot'); if(totEl) totEl.textContent='/'+total;
   $('res').classList.add('on');
-  if(s>=7) confetti();
-  // ── 記録保存 ──
-  recordClear(CM, CL, s);   // クリア判定（7問以上）
-  addStar(s);                // 正解数分スター加算
-  const msg=s>=9?`${s}もんせいかい！かんぺき！すごすぎる！`:
-            s>=7?`${s}もんせいかい！やったね！`:
-            s>=5?`${s}もんせいかい！よくがんばったよ！`:
+  if(pct>=0.7) confetti();
+  // ── 記録保存（復習モードは進捗カウントしない）──
+  if(!REVIEW) recordClear(CM, CL, s);   // クリア判定
+  addStar(s);                            // 正解数分スター加算
+  const msg=pct>=0.9?`${s}もんせいかい！かんぺき！すごすぎる！`:
+            pct>=0.7?`${s}もんせいかい！やったね！`:
+            pct>=0.5?`${s}もんせいかい！よくがんばったよ！`:
                  `${s}もんせいかい！つぎはがんばろうね！`;
   setTimeout(()=>spJa(msg),500);
 }
@@ -2258,7 +3324,7 @@ function genClock(lv){
       if(lv===5){ wh=(h+d)%24; }
       else{ wh=(h+d-1)%12+1; }
     }
-    else if(which===1){wm=(m+(lv<=2?d*5:d)+60)%60;}
+    else if(which===1){wm=(m+(lv===1?d*10:(lv<=2?d*5:d))+60)%60;}
     else{ws=(s+d*10+60)%60;}
     let wl;
     if(lv===4) wl=`${wh}じ${pad(wm)}ふん${pad(ws)}びょう`;
@@ -2555,6 +3621,241 @@ function drawHand(ctx,cx,cy,angle,len,width,color){
 }
 
 // ============================================================
+// 数字 → ひらがな読み（おかね・大きい数の読み上げ用）
+// ============================================================
+function numUnder10000(n){
+  const ones=['','いち','に','さん','よん','ご','ろく','なな','はち','きゅう'];
+  let out='';
+  const sen=Math.floor(n/1000); n%=1000;
+  const hyaku=Math.floor(n/100); n%=100;
+  const juu=Math.floor(n/10); const ichi=n%10;
+  if(sen>0)   out+=({1:'せん',2:'にせん',3:'さんぜん',4:'よんせん',5:'ごせん',6:'ろくせん',7:'ななせん',8:'はっせん',9:'きゅうせん'})[sen];
+  if(hyaku>0) out+=({1:'ひゃく',2:'にひゃく',3:'さんびゃく',4:'よんひゃく',5:'ごひゃく',6:'ろっぴゃく',7:'ななひゃく',8:'はっぴゃく',9:'きゅうひゃく'})[hyaku];
+  if(juu>0)   out+=(juu===1?'じゅう':ones[juu]+'じゅう');
+  if(ichi>0)  out+=ones[ichi];
+  return out;
+}
+function numJa(num){
+  num=Math.floor(Math.abs(num));
+  if(num===0) return 'れい';
+  let out='', n=num;
+  const man=Math.floor(n/10000); n%=10000;
+  if(man>0) out+=(man===1?'いち':numUnder10000(man))+'まん';
+  if(n>0)   out+=numUnder10000(n);
+  return out;
+}
+
+// ============================================================
+// 💰 おかねモード（コイン・お札のがぞうで なんえんか かぞえる）
+// ============================================================
+const MONEY_DENOMS={
+  1:[10,1],
+  2:[100,10,5,1],
+  3:[500,100,10,5,1],
+  4:[1000,500,100,10,5,1],
+  5:[10000,5000,1000,500,100,10,5,1],
+};
+const MONEY_META={
+  1:    {bg:'#E6E6E6', line:'#9E9E9E', fg:'#555555'},
+  5:    {bg:'#EACF55', line:'#B7960F', fg:'#6B5300'},
+  10:   {bg:'#CC8C5E', line:'#8C5A33', fg:'#FFFFFF'},
+  100:  {bg:'#C9C9D2', line:'#8E8E9C', fg:'#3A3A45'},
+  500:  {bg:'#DBBB4C', line:'#A8860C', fg:'#5B4500'},
+  1000: {bg:'#AFC4DE', line:'#5E7C9E', fg:'#2E4A6E', bill:true},
+  5000: {bg:'#CBAFD8', line:'#8E6BA0', fg:'#5A3A70', bill:true},
+  10000:{bg:'#D9BF9E', line:'#A8895E', fg:'#6B5230', bill:true},
+};
+function drawMoney(v,size){
+  const m=MONEY_META[v]; const s=size||48;
+  if(m.bill){
+    const w=s*1.55, h=s*0.92;
+    return `<svg width="${w.toFixed(0)}" height="${h.toFixed(0)}" viewBox="0 0 ${w} ${h}" style="margin:3px;vertical-align:middle;filter:drop-shadow(0 2px 3px rgba(0,0,0,.18))">
+      <rect x="1.5" y="1.5" width="${w-3}" height="${h-3}" rx="6" fill="${m.bg}" stroke="${m.line}" stroke-width="2"/>
+      <rect x="5" y="5" width="${w-10}" height="${h-10}" rx="4" fill="none" stroke="${m.line}" stroke-width="1" opacity=".5"/>
+      <text x="${w/2}" y="${h*0.46}" text-anchor="middle" dominant-baseline="central" font-size="${(s*0.4).toFixed(0)}" font-weight="900" fill="${m.fg}" font-family="sans-serif">${v}</text>
+      <text x="${w/2}" y="${h*0.76}" text-anchor="middle" dominant-baseline="central" font-size="${(s*0.2).toFixed(0)}" font-weight="900" fill="${m.fg}">えん</text>
+    </svg>`;
+  }
+  const r=s/2;
+  return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" style="margin:3px;vertical-align:middle;filter:drop-shadow(0 2px 3px rgba(0,0,0,.18))">
+    <circle cx="${r}" cy="${r}" r="${r-1.5}" fill="${m.bg}" stroke="${m.line}" stroke-width="2"/>
+    <circle cx="${r}" cy="${r}" r="${r-5}" fill="none" stroke="${m.line}" stroke-width="1" opacity=".4"/>
+    <text x="${r}" y="${r*0.92}" text-anchor="middle" dominant-baseline="central" font-size="${(s*0.34).toFixed(0)}" font-weight="900" fill="${m.fg}" font-family="sans-serif">${v}</text>
+    <text x="${r}" y="${r*1.42}" text-anchor="middle" dominant-baseline="central" font-size="${(s*0.17).toFixed(0)}" font-weight="900" fill="${m.fg}">えん</text>
+  </svg>`;
+}
+function genMoney(lv){
+  const denoms=MONEY_DENOMS[lv]||MONEY_DENOMS[1];
+  const maxFor=v=> v>=5000?1 : v>=1000?2 : v>=500?2 : v>=100?3 : 4;
+  let pieces=[], sum=0, tries=0;
+  do{
+    pieces=[];
+    denoms.forEach(v=>{ const c=rn(0,maxFor(v)); for(let i=0;i<c;i++) pieces.push(v); });
+    sum=pieces.reduce((a,b)=>a+b,0);
+    tries++;
+  }while((pieces.length<2 || pieces.length>7 || sum===0) && tries<80);
+  if(pieces.length<2){ pieces=[10,1]; sum=11; }
+  pieces.sort((a,b)=>b-a);
+  const present=[...new Set(pieces)];
+  const wrong=new Set(); let g=0;
+  while(wrong.size<3 && g<300){
+    g++;
+    const v=present[rn(0,present.length-1)];
+    const w=sum + v*(rn(0,1)?1:-1)*rn(1,2);
+    if(w>0 && w!==sum) wrong.add(w);
+  }
+  let pad=1;
+  while(wrong.size<3){ const w=sum+pad*((sum>10)?10:1); if(w>0&&w!==sum) wrong.add(w); pad++; if(pad>30)break; }
+  const choices=shuffle([sum,...[...wrong].slice(0,3)]);
+  return {type:'mon',lv,pieces,sum,choices,e:'💰'};
+}
+function buildMoneyQ(lv){
+  const qs=[]; let prev=null;
+  for(let i=0;i<10;i++){
+    let q,retry=0;
+    do{ q=genMoney(lv); retry++; }while(prev!==null && q.sum===prev.sum && retry<30);
+    qs.push(q); prev=q;
+  }
+  return qs;
+}
+function buildMoney(){
+  const q=CQ;
+  const coinsH=q.pieces.map(v=>drawMoney(v,48)).join('');
+  $('qcard').innerHTML=`
+    <div class="q-label">ぜんぶで なんえん？</div>
+    <div class="mon-area">${coinsH}</div>
+    <div class="q-sub" style="font-size:14px;margin-top:4px">🪙 おかねを かぞえてね</div>
+    <div style="display:flex;gap:0;justify-content:center;flex-wrap:wrap">
+      <button class="speak-btn" onclick="spJa('ぜんぶで なんえんかな？')">🔊 よんで！</button>
+      <button class="hint-btn" onclick="showMoneyHint()">💡 ヒント</button>
+    </div>
+    <div class="hint-box" id="hbox" style="margin-top:10px"></div>`;
+  q.choices.forEach(c=>{
+    const b=mk('button','ch');
+    b.style.fontSize='19px';
+    b.textContent=c+'えん';
+    b.onclick=()=>ans(b, c===q.sum, q.sum+'えん', '💰', numJa(q.sum)+'えん', 'mon');
+    $('choices').appendChild(b);
+  });
+  setTimeout(()=>spJa('ぜんぶで なんえんかな？'),400);
+}
+function showMoneyHint(){
+  const box=$('hbox'); if(!box||!CQ) return;
+  box.classList.add('show');
+  const q=CQ; const groups={};
+  q.pieces.forEach(v=>groups[v]=(groups[v]||0)+1);
+  const rows=Object.keys(groups).map(Number).sort((a,b)=>b-a).map(v=>{
+    const c=groups[v];
+    return `<div style="display:flex;align-items:center;justify-content:center;gap:6px;margin:4px 0;font-size:14px;font-weight:900">
+      ${drawMoney(v,30)}<span>×${c}</span><span style="color:#999">=</span><span style="color:#E65100">${v*c}えん</span></div>`;
+  }).join('');
+  box.innerHTML=`<div style="font-size:12px;font-weight:900;color:#D84315;text-align:center;margin-bottom:6px">💡 おなじ おかね ごとに かぞえよう</div>${rows}
+    <div style="text-align:center;margin-top:6px;font-size:13px;font-weight:900;color:#555">ぜんぶ たすと…？</div>`;
+  spJa('おなじ おかねを まとめて かぞえてみよう！');
+}
+
+// ============================================================
+// 📝 まちがい ふくしゅう（まちがえた問題を保存して もう一度）
+// ============================================================
+function loadWrong(){
+  try{ WRONG=JSON.parse(localStorage.getItem('kanato_wrong_v1')||'[]'); }catch(e){ WRONG=[]; }
+  if(!Array.isArray(WRONG)) WRONG=[];
+}
+function saveWrong(){
+  try{ localStorage.setItem('kanato_wrong_v1', JSON.stringify(WRONG.slice(-40))); }catch(e){}
+}
+function wrongKey(mode,lv,q){
+  const core = q.label||q.q||q.t||q.w||(q.sum!=null?('mon'+q.sum+'_'+(q.pieces||[]).join('-')):'')||'';
+  return mode+'|'+lv+'|'+core;
+}
+function recordWrong(){
+  if(REVIEW || !CQ) return;
+  loadWrong();
+  const key=wrongKey(CM,CL,CQ);
+  if(WRONG.some(x=>x._key===key)) return;
+  let qc; try{ qc=JSON.parse(JSON.stringify(CQ)); }catch(e){ return; }
+  WRONG.push({_key:key,_mode:CM,_lv:CL,q:qc});
+  saveWrong();
+}
+function removeWrongCurrent(){
+  if(!CQ || !CQ._reviewKey) return;
+  loadWrong();
+  WRONG=WRONG.filter(x=>x._key!==CQ._reviewKey);
+  saveWrong();
+}
+function updateReviewBtn(){
+  loadWrong();
+  const rb=$('review-btn'); if(!rb) return;
+  if(WRONG.length>0){ rb.style.display='flex'; const c=$('review-count'); if(c) c.textContent=WRONG.length; }
+  else rb.style.display='none';
+}
+function startReview(){
+  loadWrong();
+  if(WRONG.length===0){ spJa('まちがえた もんだいは ないよ！'); return; }
+  const pick=shuffle([...WRONG]).slice(0,10);
+  QS=pick.map(e=>({...e.q,_mode:e._mode,_lv:e._lv,_reviewKey:e._key}));
+  REVIEW=true; QI=0; SS=0; ANS=false; STREAK=0;
+  scr('scr-qz'); updateHdrBtn('quiz');
+  renderQ();
+}
+function resGoBack(){ closeRes(); if(REVIEW){ REVIEW=false; goHome(); } else { showLevel(CM); } }
+function resRetry(){ closeRes(); if(REVIEW){ startReview(); } else { startQuiz(CM,CL); } }
+
+// ============================================================
+// 自然な音声選択：端末にある一番自然な音声を自動で選ぶ
+//   1) Microsoft Neural（Edge:「〜Online (Natural)」）を最優先
+//   2) iOSの Kyoko / Siri、Chromeの Google 日本語 など
+//   3) どれも無ければ Google翻訳TTS にフォールバック
+// ============================================================
+function pickBestVoice(lang){
+  if(!window.speechSynthesis) return null;
+  const vs=speechSynthesis.getVoices();
+  if(!vs || !vs.length) return null;
+  const want=lang.startsWith('ja')?'ja':'en';
+  const cands=vs.filter(v=>v.lang && v.lang.toLowerCase().startsWith(want));
+  if(!cands.length) return null;
+  const score=v=>{
+    const n=(v.name||'').toLowerCase();
+    let s=0;
+    if(/natural|neural|online/.test(n)) s+=100;   // Microsoft Neural（最も自然）
+    if(want==='ja' && /kyoko|o-?ren|nanami|ayumi|haruka|siri|sayaka/.test(n)) s+=60;
+    if(want==='en' && /samantha|aria|jenny|natasha|emma|siri|karen/.test(n)) s+=50;
+    if(/google/.test(n)) s+=40;                    // Chromeの Google 音声
+    if(/female|woman/.test(n)) s+=8;
+    if(v.localService===false) s+=10;              // クラウド音声は高品質なことが多い
+    return s;
+  };
+  let best=cands[0], bs=score(cands[0]);
+  cands.forEach(v=>{ const sc=score(v); if(sc>bs){ bs=sc; best=v; } });
+  return {voice:best, score:bs};
+}
+function speakWith(text, lang, voice){
+  return new Promise(resolve=>{
+    if(!window.speechSynthesis){ resolve(); return; }
+    function doSpeak(){
+      if(speechSynthesis.speaking || speechSynthesis.pending){
+        speechSynthesis.cancel();
+        setTimeout(doSpeak, 150);
+        return;
+      }
+      const u=new SpeechSynthesisUtterance(text);
+      u.lang=lang;
+      const neural=voice && /natural|neural|online/i.test(voice.name||'');
+      // 子ども向け：自然な音声はほぼ等速、合成っぽい音声は少し高め＆ゆっくり
+      u.rate  = lang.startsWith('ja') ? (neural?0.96:0.92) : (neural?0.92:0.85);
+      u.pitch = neural ? 1.0 : 1.08;
+      u.volume= 1;
+      if(voice) u.voice=voice;
+      let done=false; const finish=()=>{ if(!done){ done=true; resolve(); } };
+      u.onend=finish; u.onerror=finish;
+      speechSynthesis.speak(u);
+      setTimeout(finish, text.length*150+3000);
+    }
+    doSpeak();
+  });
+}
+
+// ============================================================
 // TTS
 // ============================================================
 // TTS: returns Promise that resolves when speech ends (or immediately if no TTS)
@@ -2596,56 +3897,41 @@ function googleTTS(text, lang){
   });
 }
 
-// フォールバック: ブラウザ内蔵 Web Speech API（Android対応）
+// フォールバック: ブラウザ内蔵 Web Speech API（端末で一番自然な音声を使う）
 function fallbackTTS(text, lang){
-  return new Promise(resolve=>{
-    if(!window.speechSynthesis){ resolve(); return; }
-
-    function doSpeak(){
-      // 喋り中なら止める（cancel直後は少し待つ必要がある）
-      if(speechSynthesis.speaking || speechSynthesis.pending){
-        speechSynthesis.cancel();
-        setTimeout(doSpeak, 150);
-        return;
-      }
-
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang   = lang;
-      u.rate   = lang.startsWith('ja') ? 0.85 : 0.82;
-      u.pitch  = 1.1;
-      u.volume = 1;
-
-      // ボイス選択
-      const vs = speechSynthesis.getVoices();
-      if(lang.startsWith('ja')){
-        const fv = vs.find(v=>v.lang.startsWith('ja')&&/female|woman|kyoko|haruka/i.test(v.name))
-                || vs.find(v=>v.lang.startsWith('ja'));
-        if(fv) u.voice = fv;
-      } else {
-        const fv = vs.find(v=>v.lang.startsWith('en')&&/female|woman|samantha|karen/i.test(v.name))
-                || vs.find(v=>v.lang.startsWith('en'));
-        if(fv) u.voice = fv;
-      }
-
-      let done = false;
-      const finish = ()=>{ if(!done){ done=true; resolve(); } };
-      u.onend  = finish;
-      u.onerror= finish;
-      speechSynthesis.speak(u);
-
-      // Android: onendが発火しない場合のタイムアウト保険
-      // 文字数×150ms + 余裕3秒
-      const ms = text.length * 150 + 3000;
-      setTimeout(finish, ms);
-    }
-
-    // 喋り中かチェックしてからspeak
-    doSpeak();
-  });
+  const bv=pickBestVoice(lang);
+  return speakWith(text, lang, bv && bv.voice);
 }
 
-function spJa(t){ return googleTTS(t,'ja'); }
-function spEn(t){ return googleTTS(t,'en'); }
+// 自然音声を優先しつつ、無ければGoogle翻訳TTSを使う
+function naturalTTS(text, lang){
+  if(!text) return Promise.resolve();
+  const bv=pickBestVoice(lang);
+  // 内蔵に十分自然な音声（Neural / Kyoko など）があればそれを使う
+  if(bv && bv.score>=60){
+    if(window._currentAudio){ try{ window._currentAudio.pause(); }catch(e){} }
+    return speakWith(text, lang, bv.voice);
+  }
+  // それ以外は Google翻訳TTS（失敗時は内蔵にフォールバック）
+  return googleTTS(text, lang);
+}
+
+// 読み上げテキストを自然な日本語に正規化
+function normalizeSpText(t){
+  if(!t) return '';
+  return t
+    .replace(/[？\?]$/g, '')          // 文末の？は削除（読まない）
+    .replace(/[？\?]/g, 'はてな')     // 文中の？は「はてな」に変換
+    .replace(/！/g, '')
+    .replace(/[、。]/g, ' ')
+    .replace(/[（(][^）)]*[）)]/g, '')
+    .replace(/[【】「」『』]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function spJa(t){ return naturalTTS(normalizeSpText(t),'ja'); }
+function spEn(t){ return naturalTTS(t,'en'); }
 // 英語を2回連続で読む（例：dog → "dog. dog."）
 function spEn2(t){ return spEn(t).then(()=>new Promise(r=>setTimeout(r,400))).then(()=>spEn(t)); }
 
@@ -3180,6 +4466,11 @@ function loadRecord(){
   try{
     const d=localStorage.getItem('kanato_record');
     if(d) Object.assign(REC, JSON.parse(d));
+    // 既存データにshpが欠けている場合の補完
+    if(!REC.cleared) REC.cleared={};
+    if(!REC.cleared.shp) REC.cleared.shp={'1':false,'2':false,'3':false,'4':false,'5':false};
+    if(!REC.maxLv) REC.maxLv={};
+    if(REC.maxLv.shp===undefined) REC.maxLv.shp=0;
   }catch(e){}
 }
 
@@ -3193,9 +4484,10 @@ let REC = {
     eng:{'1':false,'2':false,'3':false,'4':false,'5':false},
     kan:{'1':false,'2':false,'3':false,'4':false,'5':false},
     clk:{'1':false,'2':false,'3':false,'4':false,'5':false},
+    shp:{'1':false,'2':false,'3':false,'4':false,'5':false},
   },
   kanjiMastered: {},      // {kanji: true} 習得済み漢字
-  maxLv: {add:0,sub:0,eng:0,kan:0,clk:0}, // 各コース最高クリアLv
+  maxLv: {add:0,sub:0,eng:0,kan:0,clk:0,shp:0}, // 各コース最高クリアLv
   eggs: null,             // 🥚 たまごそだてデータ
 };
 // ============================================================
@@ -3224,35 +4516,89 @@ function renderStudyRecord(){
   const rec=$('study-record');
   if(!rec) return;
 
-  // ── 学習記録 ──
   const modeInfo={
-    add:{name:'たしざん',col:'var(--add)',ic:'➕'},
-    sub:{name:'ひきざん',col:'var(--sub)',ic:'➖'},
-    eng:{name:'えいご',  col:'var(--eng)',ic:'🔤'},
-    kan:{name:'かんじ',  col:'var(--kan)',ic:'漢'},
-    clk:{name:'とけい',  col:'var(--clk)',ic:'🕐'},
+    add:{name:'たしざん', col:'#FF6B6B', ic:'➕'},
+    sub:{name:'ひきざん', col:'#FF9F43', ic:'➖'},
+    eng:{name:'えいご',   col:'#48DBFB', ic:'🔤'},
+    kan:{name:'かんじ',   col:'#FF9FF3', ic:'漢'},
+    clk:{name:'とけい',   col:'#C87FFF', ic:'🕐'},
+    shp:{name:'かたち',   col:'#FF7043', ic:'🔺'},
+    mon:{name:'おかね',   col:'#14B8A6', ic:'💰'},
   };
+
+  // クリア回数を取得するヘルパー（後方互換: true→1, false/未定義→0）
+  const getCount=(mode,lv)=>{
+    const v=(REC.cleared[mode]||{})[String(lv)];
+    if(typeof v==='number') return v;
+    return v===true ? 1 : 0;
+  };
+
+  // 全レベルの総クリア回数
+  const totalClears=Object.keys(modeInfo).reduce((sum,mode)=>{
+    for(let lv=1;lv<=5;lv++) sum+=getCount(mode,lv);
+    return sum;
+  },0);
+
   let cards='';
   Object.entries(modeInfo).forEach(([mode,info])=>{
+    const counts=Array.from({length:5},(_,i)=>getCount(mode,i+1));
+    const clearedLvs=counts.filter(c=>c>0).length;
+    const totalMode=counts.reduce((a,b)=>a+b,0);
     const maxL=REC.maxLv[mode]||0;
-    const pct=(maxL/5)*100;
-    let detail='';
-    if(mode==='kan'){
-      const n=Object.keys(REC.kanjiMastered).length;
-      detail=`かんじ ${n}/80もじ`;
-    } else {
-      detail=maxL>0?`Lv${maxL} クリア！`:'まだちょうせんしていないよ';
-    }
-    const lvText=maxL>=5?'ぜんぶクリア🏆':maxL>0?`Lv${maxL} クリア`:'---';
-    cards+=`<div class="rec-card" style="border-color:${info.col}44">
-      <div class="rec-mode" style="color:${info.col}">${info.ic} ${info.name}</div>
-      <div class="rec-lv" style="color:${info.col}">${lvText}</div>
-      <div class="rec-bar-wrap"><div class="rec-bar" style="width:${pct}%;background:${info.col}"></div></div>
-      <div class="rec-detail">${detail}</div>
+
+    // レベルバッジ: 各Lv の回数を丸バッジで表示
+    const badges=counts.map((cnt,i)=>{
+      const lv=i+1;
+      if(cnt===0){
+        return `<div class="rec-lv-badge rec-lv-badge--none" title="Lv${lv}：未クリア">
+          <span class="rec-lv-badge-num">Lv${lv}</span>
+          <span class="rec-lv-badge-cnt">-</span>
+        </div>`;
+      }
+      // 回数に応じて色の濃さを変える（1回〜5回以上）
+      const intensity=Math.min(cnt,5);
+      const opacity=0.25+intensity*0.15;
+      // 称賛コメント
+      const praise= cnt>=10?'🏆':cnt>=5?'🌟':cnt>=3?'⭐':'✅';
+      return `<div class="rec-lv-badge rec-lv-badge--done" 
+        style="background:${info.col}${Math.round(opacity*255).toString(16).padStart(2,'0')};border-color:${info.col}88"
+        title="Lv${lv}：${cnt}かいクリア！">
+        <span class="rec-lv-badge-num">Lv${lv}</span>
+        <span class="rec-lv-badge-cnt">${praise}${cnt}かい</span>
+      </div>`;
+    }).join('');
+
+    // 称賛メッセージ
+    let praise='';
+    if(totalMode===0) praise='まだちょうせんしていないよ！';
+    else if(clearedLvs>=5) praise=`ぜんぶクリア！あわせて${totalMode}かいも！🏆`;
+    else praise=`Lv${clearedLvs}まで クリア！のべ${totalMode}かい！`;
+
+    // 特別に多くクリアしたレベルを褒める
+    const bestLv=counts.indexOf(Math.max(...counts))+1;
+    const bestCnt=counts[bestLv-1];
+    let special='';
+    if(bestCnt>=3) special=`<div class="rec-special">🎉 Lv${bestLv}を${bestCnt}かいもクリアしたね！すごい！</div>`;
+
+    cards+=`
+    <div class="rec-card" style="border-color:${info.col}55">
+      <div class="rec-mode-row">
+        <span class="rec-mode-ic">${info.ic}</span>
+        <span class="rec-mode-name" style="color:${info.col}">${info.name}</span>
+        ${totalMode>0?`<span class="rec-mode-total" style="background:${info.col}22;color:${info.col}">のべ${totalMode}かい</span>`:''}
+      </div>
+      <div class="rec-lv-row">${badges}</div>
+      <div class="rec-praise">${praise}</div>
+      ${special}
     </div>`;
   });
-  rec.innerHTML=`<div class="rec-title">📊 がくしゅうきろく</div><div class="rec-grid">${cards}</div>`;
 
+  // ホーム画面の簡易表示エリア
+  rec.innerHTML=`
+    <div class="rec-title">📊 がくしゅうきろく
+      ${totalClears>0?`<span class="rec-total-badge">ごうけい ${totalClears}かいクリア！</span>`:''}
+    </div>
+    <div class="rec-grid">${cards}</div>`;
 }
 
 
@@ -3448,10 +4794,13 @@ function addStarToEgg(n){
   initEggState();
   REC.eggs.starsInCurrentEgg += n;
   saveRecord();
-  // 割れるか判定
   if(REC.eggs.starsInCurrentEgg >= EGG_STARS_NEEDED){
-    setTimeout(()=>hatchEgg(), 600);
+    // 正解演出（epopのアニメ）が終わった後に孵化演出を表示
+    // nextQはcloseEggHatch()で呼ばれるのでここでは呼ばない
+    setTimeout(()=>hatchEgg(), 800);
+    return true; // 孵化フラグ
   }
+  return false;
 }
 
 // 割れる演出
@@ -3486,6 +4835,10 @@ function hatchEgg(){
 
 function closeEggHatch(){
   $('egg-hatch-popup').classList.remove('show');
+  // 問題画面（scr-qz）が表示中なら次の問題へ進む
+  if($('scr-qz') && $('scr-qz').classList.contains('on')){
+    nextQ();
+  }
 }
 
 // ── スター加算 & 進化チェック ──
@@ -3498,15 +4851,14 @@ function addStar(n=1){
 
 // ── クリア記録 ──
 function recordClear(mode, lv, score){
-  // ③修正: lvをString()で文字列化しJSON.parse後のキー型と統一
   const lvKey = String(lv);
-  if(score>=7){  // 7問以上正解でクリア
-    if(!REC.cleared[mode]||!REC.cleared[mode][lvKey]){
-      if(!REC.cleared[mode]) REC.cleared[mode]={};
-      REC.cleared[mode][lvKey]=true;
-      REC.maxLv[mode]=Math.max(REC.maxLv[mode]||0, lv);
-      saveRecord();
-    }
+  if(score>=7){
+    if(!REC.cleared[mode]) REC.cleared[mode]={};
+    // 回数カウント（後方互換: trueの場合は1に変換）
+    const prev = REC.cleared[mode][lvKey];
+    REC.cleared[mode][lvKey] = (typeof prev === 'number' ? prev : prev ? 1 : 0) + 1;
+    REC.maxLv[mode] = Math.max(REC.maxLv[mode]||0, lv);
+    saveRecord();
   }
 }
 
@@ -3846,10 +5198,10 @@ function mathOK(){
   }
 }
 function openParentPage(){
-  // start-screenを隠してからscr-parentを表示
   const ss = document.getElementById('start-screen');
   if(ss){ ss.style.display = 'none'; }
   scr('scr-parent');
+  updateHdrBtn('parent');
   renderParentPage();
 }
 function renderParentPage(){
@@ -3858,15 +5210,29 @@ function renderParentPage(){
   if(nameInput) nameInput.value = getChildName() === 'かなとくん' ? '' : getChildName();
   // 学習記録グリッド
   const grid = $('parent-rec-grid');
-  const modeNames = {add:'たしざん',sub:'ひきざん',eng:'えいご',kan:'かんじ',clk:'とけい'};
+  const modeNames = {add:'たしざん',sub:'ひきざん',eng:'えいご',kan:'かんじ',clk:'とけい',shp:'かたち'};
   if(grid){
+    const getCount=(mode,lv)=>{
+      const v=(REC.cleared[mode]||{})[String(lv)];
+      return typeof v==='number'?v:v===true?1:0;
+    };
     grid.innerHTML = Object.entries(modeNames).map(([mode,name])=>{
       const lv = REC.maxLv[mode] || 0;
-      const cleared = Object.values(REC.cleared[mode]||{}).filter(Boolean).length;
+      const counts = Array.from({length:5},(_,i)=>getCount(mode,i+1));
+      const total = counts.reduce((a,b)=>a+b,0);
+      const clearedLvs = counts.filter(c=>c>0).length;
+      const lvBars = counts.map((cnt,i)=>
+        `<div style="display:flex;align-items:center;gap:4px;font-size:10px;font-weight:700">
+          <span style="min-width:22px;color:#999">Lv${i+1}</span>
+          <span style="color:${cnt>0?'#E65100':'#CCC'}">${cnt>0?'✅'.repeat(Math.min(cnt,5))+(cnt>5?`+${cnt-5}`:''):'−'}</span>
+          ${cnt>0?`<span style="color:#888">${cnt}かい</span>`:''}
+        </div>`
+      ).join('');
       return `<div class="parent-card">
         <div class="parent-card-title">${name}</div>
-        <div class="parent-card-val">Lv${lv}</div>
-        <div style="font-size:11px;color:#888;font-weight:700">${cleared}/5 クリア</div>
+        <div class="parent-card-val" style="font-size:14px">のべ ${total}かい</div>
+        <div style="margin:4px 0">${lvBars}</div>
+        <div style="font-size:11px;color:#888;font-weight:700">${clearedLvs}/5レベル クリア</div>
       </div>`;
     }).join('');
   }
@@ -3882,36 +5248,101 @@ function renderParentPage(){
     ei.textContent = 'たまごをまだあつめていないよ';
   }
 }
-function confirmResetEggs(){
-  if(confirm('たまごのデータをリセットしますか？\n（もとにもどせません）')){
+// ── リセット確認モーダル ──
+let _resetTarget = '';
+
+function showResetModal(target){
+  _resetTarget = target;
+  const overlay = $('reset-modal-overlay');
+  const icon    = $('reset-modal-icon');
+  const title   = $('reset-modal-title');
+  const msg     = $('reset-modal-msg');
+  if(!overlay) return;
+
+  if(target === 'egg'){
+    icon.textContent  = '🥚';
+    title.textContent = 'たまごをリセットしますか？';
+    msg.textContent   = 'コレクションや そだて中のたまごが\nすべて消えます。\nがくしゅうきろくは のこります。';
+  } else {
+    icon.textContent  = '🗑️';
+    title.textContent = 'がくしゅうきろくをリセットしますか？';
+    msg.textContent   = 'クリアきろく・スター・かんじきろくが\nすべて消えます。\nたまごは のこります。';
+  }
+
+  overlay.style.display = 'flex';
+}
+
+function closeResetModal(){
+  const overlay = $('reset-modal-overlay');
+  if(overlay) overlay.style.display = 'none';
+  _resetTarget = '';
+}
+
+function execReset(){
+  if(_resetTarget === 'egg'){
+    // たまごのみリセット（がくしゅうきろくは保持）
     REC.eggs = null;
     saveRecord();
     initEggState();
     renderEggWidget();
     renderParentPage();
-    alert('たまごのデータをリセットしました！');
+    closeResetModal();
+    // 完了フィードバック
+    showResetDone('🥚 たまごをリセットしました！');
+
+  } else if(_resetTarget === 'study'){
+    // がくしゅうきろくのみリセット（たまごは保持）
+    const savedEggs = REC.eggs; // たまごデータを退避
+    REC = {
+      totalStars: 0, lastStage: 0,
+      cleared: {
+        add:{'1':false,'2':false,'3':false,'4':false,'5':false},
+        sub:{'1':false,'2':false,'3':false,'4':false,'5':false},
+        eng:{'1':false,'2':false,'3':false,'4':false,'5':false},
+        kan:{'1':false,'2':false,'3':false,'4':false,'5':false},
+        clk:{'1':false,'2':false,'3':false,'4':false,'5':false},
+        shp:{'1':false,'2':false,'3':false,'4':false,'5':false},
+      },
+      kanjiMastered: {},
+      maxLv: {add:0,sub:0,eng:0,kan:0,clk:0,shp:0},
+      eggs: savedEggs, // たまごデータを復元
+    };
+    TS = 0; SS = 0;
+    saveRecord();
+    renderParentPage();
+    closeResetModal();
+    showResetDone('📚 がくしゅうきろくをリセットしました！');
   }
 }
+
+function showResetDone(msg){
+  // モーダルを完了メッセージに切り替えて自動クローズ
+  const overlay = $('reset-modal-overlay');
+  const box     = $('reset-modal-box');
+  if(!overlay || !box) return;
+  box.innerHTML = `
+    <div style="font-size:44px;text-align:center;margin-bottom:10px">✅</div>
+    <div style="font-size:16px;font-weight:900;text-align:center;color:#388E3C">${msg}</div>`;
+  overlay.style.display = 'flex';
+  setTimeout(()=>{
+    overlay.style.display = 'none';
+    // boxを元に戻す（次回用）
+    box.innerHTML = `
+      <div id="reset-modal-icon" style="font-size:44px;text-align:center;margin-bottom:8px"></div>
+      <div id="reset-modal-title" style="font-size:17px;font-weight:900;text-align:center;color:#333;margin-bottom:6px"></div>
+      <div id="reset-modal-msg" style="font-size:13px;font-weight:700;color:#888;text-align:center;margin-bottom:20px;line-height:1.6"></div>
+      <div style="display:flex;gap:10px">
+        <button onclick="closeResetModal()" style="flex:1;padding:12px;border-radius:14px;border:2.5px solid #E0E0E0;background:#F5F5F5;font-size:15px;font-weight:900;color:#888;font-family:inherit;cursor:pointer;">キャンセル</button>
+        <button id="reset-modal-ok" onclick="execReset()" style="flex:1;padding:12px;border-radius:14px;border:none;background:linear-gradient(135deg,#FF5252,#D32F2F);font-size:15px;font-weight:900;color:white;font-family:inherit;cursor:pointer;box-shadow:0 5px 0 #B71C1C;">リセットする</button>
+      </div>`;
+  }, 1800);
+}
+
+function confirmResetEggs(){
+  showResetModal('egg');
+}
 function confirmResetAll(){
-  if(confirm('すべての学習きろくをリセットしますか？\n（もとにもどせません）')){
-    if(confirm('本当によいですか？')){
-      REC = {
-        totalStars: 0, lastStage: 0,
-        cleared: {
-          add:{'1':false,'2':false,'3':false,'4':false,'5':false},
-          sub:{'1':false,'2':false,'3':false,'4':false,'5':false},
-          eng:{'1':false,'2':false,'3':false,'4':false,'5':false},
-          kan:{'1':false,'2':false,'3':false,'4':false,'5':false},
-          clk:{'1':false,'2':false,'3':false,'4':false,'5':false},
-        },
-        kanjiMastered: {}, maxLv:{add:0,sub:0,eng:0,kan:0,clk:0}, eggs:null,
-      };
-      TS = 0; SS = 0;
-      saveRecord();
-      goTop();
-      alert('すべてリセットしました！');
-    }
-  }
+  showResetModal('study');
 }
 function changePin(){
   const input = $('new-pin');
@@ -3942,5 +5373,36 @@ function saveChildName(){
 }
 
 </script>
+<!-- ── リセット確認モーダル ── -->
+<div id="reset-modal-overlay" style="
+  display:none;position:fixed;inset:0;z-index:9000;
+  background:rgba(0,0,0,.55);backdrop-filter:blur(3px);
+  align-items:center;justify-content:center;">
+  <div id="reset-modal-box" style="
+    background:#fff;border-radius:24px;padding:24px 20px;
+    max-width:300px;width:90%;margin:auto;
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
+    animation:fadeUp .25s ease;">
+    <div id="reset-modal-icon" style="font-size:44px;text-align:center;margin-bottom:8px"></div>
+    <div id="reset-modal-title" style="font-size:17px;font-weight:900;text-align:center;color:#333;margin-bottom:6px"></div>
+    <div id="reset-modal-msg" style="font-size:13px;font-weight:700;color:#888;text-align:center;margin-bottom:20px;line-height:1.6"></div>
+    <div style="display:flex;gap:10px">
+      <button onclick="closeResetModal()" style="
+        flex:1;padding:12px;border-radius:14px;border:2.5px solid #E0E0E0;
+        background:#F5F5F5;font-size:15px;font-weight:900;color:#888;
+        font-family:inherit;cursor:pointer;">
+        キャンセル
+      </button>
+      <button id="reset-modal-ok" onclick="execReset()" style="
+        flex:1;padding:12px;border-radius:14px;border:none;
+        background:linear-gradient(135deg,#FF5252,#D32F2F);
+        font-size:15px;font-weight:900;color:white;
+        font-family:inherit;cursor:pointer;
+        box-shadow:0 5px 0 #B71C1C;">
+        リセットする
+      </button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
