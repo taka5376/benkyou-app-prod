@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -122,6 +122,43 @@ body{
 #hero-emoji svg{width:100px;height:120px;}
 .hero-name{font-size:22px;font-weight:900;color:var(--text);margin-top:10px}
 .hero-sub{font-size:13px;color:#A0836E;margin-top:4px}
+
+/* ═══════════════════════════════════════
+   まちがい ふくしゅう ボタン（マスコット入りカード）
+═══════════════════════════════════════ */
+#review-btn{
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;gap:12px;width:100%;margin-top:16px;
+  background:linear-gradient(135deg,#FFF1D6,#FFD89B);
+  border:3px solid #FFB74D;border-radius:24px;
+  padding:14px 16px;font-family:inherit;cursor:pointer;text-align:left;
+  box-shadow:0 7px 0 #E59A2E55, 0 12px 26px rgba(255,160,40,.25);
+  transition:transform .14s,box-shadow .14s;
+}
+#review-btn:active{transform:translateY(5px);box-shadow:0 2px 0 #E59A2E55, 0 4px 12px rgba(255,160,40,.2)}
+#review-btn:hover{transform:translateY(-3px)}
+/* 飾りのキラキラ */
+.rev-sparkle{position:absolute;pointer-events:none;animation:twinkle ease-in-out infinite}
+.rev-sparkle.s1{top:8px;right:16px;font-size:14px;animation-duration:2.2s}
+.rev-sparkle.s2{bottom:10px;right:64px;font-size:11px;animation-duration:2.8s;animation-delay:.6s}
+/* 左：マスコット */
+.rev-mascot{flex-shrink:0;width:50px;height:62px;
+  animation:floatSlow 3s ease-in-out infinite;
+  filter:drop-shadow(0 4px 7px rgba(0,0,0,.18))}
+.rev-mascot svg{display:block;width:100%;height:100%}
+/* 中央：テキスト */
+.rev-text{flex:1;min-width:0;position:relative;z-index:1;display:flex;flex-direction:column}
+.rev-title{font-size:17px;font-weight:900;color:#7A4F00;line-height:1.2;white-space:nowrap}
+.rev-sub{font-size:11.5px;font-weight:800;color:#B07A2E;margin-top:3px;line-height:1.35}
+/* 右：問題数バッジ */
+.rev-badge{flex-shrink:0;position:relative;z-index:1;
+  min-width:52px;height:52px;padding:0 8px;border-radius:16px;
+  background:linear-gradient(135deg,#FFB74D,#FF9100);
+  border:2.5px solid #fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:0 3px 8px rgba(255,140,0,.4)}
+.rev-badge b{font-size:24px;font-weight:900;color:#fff;line-height:1;text-shadow:0 1px 2px rgba(0,0,0,.15)}
+.rev-badge span{font-size:10px;font-weight:900;color:#fff;margin-top:1px}
 
 /* ──── カードグリッド ──── */
 .grid4{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -811,6 +848,7 @@ body{
 :root{
   --shp:#FF7043; --shp-l:#FFF3EF; --shp-d:#D84315;
   --mon:#14B8A6; --mon-l:#ECFDF8; --mon-d:#0E8C7E;
+  --kot:#F06292; --kot-l:#FFEEF4; --kot-d:#C2185B;
 }
 .c-mon{
   background:linear-gradient(155deg,#ECFDF8,#C8F2E9);
@@ -819,6 +857,13 @@ body{
 }
 .c-mon .card-name{color:var(--mon-d)}
 .c-mon:active{box-shadow:0 2px 0 #5FD9C488, 0 3px 10px #14B8A618 !important}
+.c-kot{
+  background:linear-gradient(155deg,#FFEEF4,#FFD6E5);
+  border-color:#FBA1C2;
+  box-shadow:0 8px 0 #FBA1C288, 0 12px 28px #F0629218;
+}
+.c-kot .card-name{color:var(--kot-d)}
+.c-kot:active{box-shadow:0 2px 0 #FBA1C288, 0 3px 10px #F0629218 !important}
 .mon-area{
   display:flex;flex-wrap:wrap;gap:2px;
   justify-content:center;align-items:center;
@@ -830,6 +875,7 @@ body{
   box-shadow:0 8px 0 #FF9E7A88, 0 12px 28px #FF704318;
 }
 .c-shp .card-name{color:var(--shp-d)}
+.c-shp .card-ic{display:flex;align-items:center;justify-content:center;height:1.2em}
 .c-shp:active{box-shadow:0 2px 0 #FF9E7A88, 0 3px 10px #FF704318 !important}
 
 /* SVGクイズ表示エリア */
@@ -947,7 +993,7 @@ body{
     </div>
     <div class="card c-shp" onclick="showLevel('shp')">
       <span class="card-ic">
-        <svg width="54" height="44" viewBox="0 0 54 44" style="display:block;margin:0 auto">
+        <svg width="52" height="52" viewBox="0 0 54 44" style="display:block;margin:0 auto">
           <!-- 左：赤いまる -->
           <circle cx="10" cy="28" r="9" fill="#FF5252" opacity=".93"/>
           <!-- 中央上：青いさんかく -->
@@ -966,9 +1012,50 @@ body{
       <div class="card-name">おかね</div>
       <div class="card-hint">Lv1〜5 なんえん？</div>
     </div>
+    <div class="card c-kot" onclick="showLevel('kot')">
+      <span class="card-ic">💬</span>
+      <div class="card-name">ことば</div>
+      <div class="card-hint">Lv1〜5 よみ・つづり</div>
+    </div>
   </div>
-  <button id="review-btn" onclick="startReview()" style="display:none;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:14px;background:linear-gradient(135deg,#FFE0A3,#FFC368);color:#7A4F00;border:3px solid #FFB74D;border-radius:20px;padding:14px;font-size:16px;font-weight:900;font-family:inherit;cursor:pointer;box-shadow:0 6px 0 #E59A2E66, 0 10px 24px rgba(255,160,40,.25)">
-    📝 まちがい ふくしゅう（<span id="review-count">0</span>もん）
+  <button id="review-btn" onclick="startReview()" style="display:none">
+    <span class="rev-sparkle s1">⭐</span>
+    <span class="rev-sparkle s2">✨</span>
+    <span class="rev-mascot">
+      <svg viewBox="0 0 80 100" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="40" cy="98" rx="22" ry="4" fill="rgba(0,0,0,.12)"/>
+        <ellipse cx="40" cy="65" rx="24" ry="28" fill="#1a1a1a"/>
+        <ellipse cx="40" cy="68" rx="13" ry="18" fill="#f0f0f0"/>
+        <ellipse cx="16" cy="50" rx="7" ry="5" fill="#e8c000" transform="rotate(-20,16,50)"/>
+        <ellipse cx="64" cy="50" rx="7" ry="5" fill="#e8c000" transform="rotate(20,64,50)"/>
+        <ellipse cx="13" cy="63" rx="8" ry="16" fill="#1a1a1a" transform="rotate(-12,13,58)"/>
+        <ellipse cx="67" cy="63" rx="8" ry="16" fill="#1a1a1a" transform="rotate(12,67,58)"/>
+        <ellipse cx="30" cy="94" rx="10" ry="5" fill="#e8c000" transform="rotate(-8,30,94)"/>
+        <ellipse cx="50" cy="94" rx="10" ry="5" fill="#e8c000" transform="rotate(8,50,94)"/>
+        <ellipse cx="40" cy="45" rx="14" ry="5" fill="#e8c000"/>
+        <circle cx="40" cy="30" r="22" fill="#1a1a1a"/>
+        <ellipse cx="40" cy="33" rx="14" ry="13" fill="#f5e0c8"/>
+        <ellipse cx="40" cy="20" rx="16" ry="8" fill="#1a1a1a"/>
+        <ellipse cx="23" cy="30" rx="5" ry="9" fill="#1a1a1a"/>
+        <ellipse cx="57" cy="30" rx="5" ry="9" fill="#1a1a1a"/>
+        <ellipse cx="28" cy="37" rx="5" ry="3.5" fill="#ffb3c6" opacity=".65"/>
+        <ellipse cx="52" cy="37" rx="5" ry="3.5" fill="#ffb3c6" opacity=".65"/>
+        <ellipse cx="33" cy="31" rx="5" ry="5.5" fill="white"/>
+        <ellipse cx="47" cy="31" rx="5" ry="5.5" fill="white"/>
+        <circle cx="33" cy="32" r="3.5" fill="#333"/>
+        <circle cx="47" cy="32" r="3.5" fill="#333"/>
+        <circle cx="32" cy="30" r="1.5" fill="white"/>
+        <circle cx="46" cy="30" r="1.5" fill="white"/>
+        <path d="M36 38 Q40 43 44 38" stroke="#cc6677" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <polygon points="36,18 44,18 40,13" fill="#e8c000"/>
+        <path d="M28,44 Q40,48 52,44" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <span class="rev-text">
+      <span class="rev-title">まちがい ふくしゅう</span>
+      <span class="rev-sub">もういちど ちょうせんしよう！</span>
+    </span>
+    <span class="rev-badge"><b id="review-count">0</b><span>もん</span></span>
   </button>
   <div id="home-score-wrap"></div>
   <!-- 🥚 たまごそだて -->
@@ -1278,7 +1365,7 @@ body{
 const $=id=>document.getElementById(id);
 const rn=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
 function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=rn(0,i);[b[i],b[j]]=[b[j],b[i]]}return b}
-function scr(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));$(id).classList.add('on')}
+function scr(id){stopAllSpeech();document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));$(id).classList.add('on')}
 
 const JN=["れい","いち","に","さん","よん","ご","ろく","なな","はち","きゅう","じゅう",
   "じゅういち","じゅうに","じゅうさん","じゅうよん","じゅうご","じゅうろく","じゅうなな",
@@ -1551,6 +1638,91 @@ const KAN={
 };
 
 // ============================================================
+// 💬 KOTOBA DATA — かなの よみ・つづり (Lv1〜5)
+//   schema: {q, target?, a, w:[3], e, read?, ex, exs}
+//   q       … 大きく表示する文/語（L2〜は表示せず emoji を主役に）
+//   target  … L1で色付け強調する文字
+//   read    … 🔊で読み上げるテキスト（省略時は q）
+// ============================================================
+const KOTOBA={
+  // ── Lv1: じょし「は・へ・を」のよみ ──
+  1:[
+    {q:"きょうは いい てんき", target:"は", a:"わ", w:["は","あ","や"], e:"☀️", read:"きょうは いい てんき", ex:"ことばの あとの「は」は『わ』と よむよ！", exs:"ことばの あとの「は」は、わと よむよ！"},
+    {q:"ぼくは げんきだ", target:"は", a:"わ", w:["は","ば","あ"], e:"💪", read:"ぼくは げんきだ", ex:"「ぼくは」の「は」は『わ』！", exs:"ぼくは の は は、わと よむよ！"},
+    {q:"これは なに？", target:"は", a:"わ", w:["は","へ","え"], e:"❓", read:"これは なに？", ex:"「これは」の「は」も『わ』と よむよ！", exs:"これは の は は、わと よむよ！"},
+    {q:"わたしは ほんが すき", target:"は", a:"わ", w:["は","さ","あ"], e:"📚", read:"わたしは ほんが すき", ex:"ことばの あとの「は」は『わ』！", exs:"ことばの あとの は は、わと よむよ！"},
+    {q:"がっこうへ いく", target:"へ", a:"え", w:["へ","け","せ"], e:"🏫", read:"がっこうへ いく", ex:"いくさきの「へ」は『え』と よむよ！", exs:"いくさきの へ は、えと よむよ！"},
+    {q:"うみへ あそびに いく", target:"へ", a:"え", w:["へ","け","ね"], e:"🌊", read:"うみへ あそびに いく", ex:"「うみへ」の「へ」は『え』！", exs:"うみへ の へ は、えと よむよ！"},
+    {q:"おうちへ かえる", target:"へ", a:"え", w:["へ","て","け"], e:"🏠", read:"おうちへ かえる", ex:"いくさきの「へ」は『え』だよ！", exs:"いくさきの へ は、えと よむよ！"},
+    {q:"ほんを よむ", target:"を", a:"お", w:["を","と","ろ"], e:"📖", read:"ほんを よむ", ex:"「を」は いつも『お』と よむよ！", exs:"を は、いつも おと よむよ！"},
+    {q:"ごはんを たべる", target:"を", a:"お", w:["を","ぬ","と"], e:"🍚", read:"ごはんを たべる", ex:"「ごはんを」の「を」は『お』！", exs:"ごはんを の を は、おと よむよ！"},
+    {q:"えを かく", target:"を", a:"お", w:["を","ち","と"], e:"🎨", read:"えを かく", ex:"「を」は『お』と おなじ おと！", exs:"を は、おと おなじ おとだよ！"},
+    {q:"みずを のむ", target:"を", a:"お", w:["を","す","ろ"], e:"💧", read:"みずを のむ", ex:"「みずを」の「を」も『お』だよ！", exs:"みずを の を も、おと よむよ！"},
+    {q:"ともだちへ てがみ", target:"へ", a:"え", w:["へ","く","け"], e:"✉️", read:"ともだちへ てがみ", ex:"あいての「へ」も『え』と よむよ！", exs:"あいての へ も、えと よむよ！"},
+  ],
+  // ── Lv2: のばすおと① ア・イ・ウ段＋オ段「う」 ──
+  2:[
+    {q:"ぼうし", a:"ぼうし", w:["ぼおし","ぼし","ぼーし"], e:"🧢", ex:"のばすおとは『う』。ぼ→う で「ぼうし」！", exs:"のばすおとは う。ぼうし が ただしいよ！"},
+    {q:"おとうさん", a:"おとうさん", w:["おとおさん","おとさん","おとうさ"], e:"👨", ex:"「と」を のばすときは『う』。おとうさん！", exs:"とを のばすときは う。おとうさん が ただしいよ！"},
+    {q:"おかあさん", a:"おかあさん", w:["おかさん","おかわさん","おかあさ"], e:"👩", ex:"「か」を のばすときは『あ』。おかあさん！", exs:"かを のばすときは あ。おかあさん が ただしいよ！"},
+    {q:"おにいさん", a:"おにいさん", w:["おにさん","おにえさん","おにいさ"], e:"👦", ex:"「に」を のばすときは『い』。おにいさん！", exs:"にを のばすときは い。おにいさん が ただしいよ！"},
+    {q:"ふうせん", a:"ふうせん", w:["ふせん","ふうせ","ふおせん"], e:"🎈", ex:"「ふ」を のばすときは『う』。ふうせん！", exs:"ふを のばすときは う。ふうせん が ただしいよ！"},
+    {q:"くうき", a:"くうき", w:["くき","こうき","くうきい"], e:"💨", ex:"「く」を のばすときは『う』。くうき！", exs:"くを のばすときは う。くうき が ただしいよ！"},
+    {q:"ありがとう", a:"ありがとう", w:["ありがとお","ありがと","ありがとー"], e:"🙏", ex:"さいごの「と」は『う』で のばすよ。ありがとう！", exs:"さいごの とは うで のばすよ。ありがとう が ただしいよ！"},
+    {q:"がっこう", a:"がっこう", w:["がっこお","がこう","がっこー"], e:"🏫", ex:"「こ」を のばすときは『う』。がっこう！", exs:"こを のばすときは う。がっこう が ただしいよ！"},
+    {q:"ぞう", a:"ぞう", w:["ぞお","ぞ","ぞー"], e:"🐘", ex:"「ぞ」を のばすときは『う』。ぞう！", exs:"ぞを のばすときは う。ぞう が ただしいよ！"},
+    {q:"そうじ", a:"そうじ", w:["そおじ","そじ","そうぢ"], e:"🧹", ex:"「そ」を のばすときは『う』。そうじ！", exs:"そを のばすときは う。そうじ が ただしいよ！"},
+    {q:"すうじ", a:"すうじ", w:["すじ","すうぢ","そうじ"], e:"🔢", ex:"「す」を のばすときは『う』。すうじ！", exs:"すを のばすときは う。すうじ が ただしいよ！"},
+    {q:"きょうりゅう", a:"きょうりゅう", w:["きょおりゅう","きょうりゅ","きょうりゆう"], e:"🦖", ex:"「きょ」も「りゅ」も『う』で のばすよ。きょうりゅう！", exs:"きょうりゅう が ただしいよ！うで のばすんだ。"},
+  ],
+  // ── Lv3: のばすおと② エ段「い」＋オ段の れいがい「お」 ──
+  3:[
+    {q:"せんせい", a:"せんせい", w:["せんせえ","せんせ","せんせーい"], e:"👩‍🏫", ex:"エだんの のばすおとは『い』。せんせい！", exs:"せんせい が ただしいよ。えだんは いで のばすんだ。"},
+    {q:"とけい", a:"とけい", w:["とけえ","とけ","とけーい"], e:"⏰", ex:"「け」を のばすときは『い』。とけい！", exs:"とけい が ただしいよ。けを のばすときは いだよ。"},
+    {q:"えいが", a:"えいが", w:["ええが","えが","えいか"], e:"🎬", ex:"「え」を のばすときは『い』。えいが！", exs:"えいが が ただしいよ。えを のばすときは いだよ。"},
+    {q:"けいさん", a:"けいさん", w:["けえさん","けさん","けいざん"], e:"➗", ex:"「け」を のばすときは『い』。けいさん！", exs:"けいさん が ただしいよ。けを のばすときは いだよ。"},
+    {q:"すいとう", a:"すいとう", w:["すいとお","すいと","すいどう"], e:"🥤", ex:"ふつうの オだんは『う』。すいとう が ただしいよ！", exs:"すいとう が ただしいよ。オだんは うで のばすんだ。"},
+    {q:"ほうき", a:"ほうき", w:["ほおき","ほき","ほうぎ"], e:"🧹", ex:"「ほ」を のばすときは『う』。ほうき！", exs:"ほうき が ただしいよ。ほを のばすときは うだよ。"},
+    {q:"おおきい", a:"おおきい", w:["おうきい","おおき","おきい"], e:"🐘", ex:"「おおきい」は とくべつ！『お』で のばすよ。", exs:"おおきい は とくべつ。おで のばすんだ！"},
+    {q:"こおり", a:"こおり", w:["こうり","こり","こおーり"], e:"🧊", ex:"「こおり」は とくべつ！『お』で のばすよ。", exs:"こおり は とくべつ。おで のばすんだ！"},
+    {q:"とおい", a:"とおい", w:["とうい","とい","とおーい"], e:"🛣️", ex:"「とおい」は とくべつ！『お』で のばすよ。", exs:"とおい は とくべつ。おで のばすんだ！"},
+    {q:"おおかみ", a:"おおかみ", w:["おうかみ","おかみ","おおがみ"], e:"🐺", ex:"「おおかみ」は とくべつ！『お』で のばすよ。", exs:"おおかみ は とくべつ。おで のばすんだ！"},
+    {q:"とお（10）", a:"とお", w:["とう","と","とー"], e:"🔟", ex:"かずの「とお」は とくべつ！『お』で のばすよ。", exs:"かずの とお は とくべつ。おで のばすんだ！"},
+    {q:"えいご", a:"えいご", w:["ええご","えご","えいこ"], e:"🔤", ex:"「え」を のばすときは『い』。えいご！", exs:"えいご が ただしいよ。えを のばすときは いだよ。"},
+  ],
+  // ── Lv4: カタカナの にているかたち（シツ・ソン・小さい字）──
+  4:[
+    {q:"スシ", a:"スシ", w:["スツ","スソ","ヌシ"], e:"🍣", read:"すし", ex:"「シ」は したから うえへ。スシ！", exs:"スシ が ただしいよ。シと ツは にてるね！"},
+    {q:"タクシー", a:"タクシー", w:["タクツー","タワシー","タクシ"], e:"🚕", read:"たくしー", ex:"「シ」と「ツ」を まちがえないでね。タクシー！", exs:"タクシー が ただしいよ。シと ツに きをつけて！"},
+    {q:"ソフトクリーム", a:"ソフトクリーム", w:["ンフトクリーム","ソフトワリーム","ソフトクリー"], e:"🍦", read:"そふとくりーむ", ex:"「ソ」は うえから ちょん。ソフト！", exs:"ソフトクリーム が ただしいよ。ソと ンは にてるね！"},
+    {q:"ライオン", a:"ライオン", w:["ライオソ","ライオワ","ラインオ"], e:"🦁", read:"らいおん", ex:"「ン」は したから はらう。ライオン！", exs:"ライオン が ただしいよ。ンと ソに きをつけて！"},
+    {q:"パンダ", a:"パンダ", w:["パソダ","バンダ","パンタ"], e:"🐼", read:"ぱんだ", ex:"「ン」と「ソ」に きをつけて。パンダ！", exs:"パンダ が ただしいよ。ンと ソは にてるね！"},
+    {q:"メロン", a:"メロン", w:["メロソ","メロワ","メロヌ"], e:"🍈", read:"めろん", ex:"さいごは「ン」。メロン！", exs:"メロン が ただしいよ。ンと ソに きをつけて！"},
+    {q:"クリスマス", a:"クリスマス", w:["ワリスマス","クリヌマス","クリスマヌ"], e:"🎄", read:"くりすます", ex:"「ク」と「ワ」を まちがえないでね。クリスマス！", exs:"クリスマス が ただしいよ。クと ワに きをつけて！"},
+    {q:"ラッパ", a:"ラッパ", w:["ラツパ","ラッバ","ラパ"], e:"🎺", read:"らっぱ", ex:"ちいさい「ッ」だよ。ラッパ！", exs:"ラッパ が ただしいよ。ちいさい ッに きをつけて！"},
+    {q:"コップ", a:"コップ", w:["コツプ","コップ゜","コプ"], e:"🥤", read:"こっぷ", ex:"ちいさい「ッ」。コップ！", exs:"コップ が ただしいよ。ちいさい ッだよ！"},
+    {q:"キャベツ", a:"キャベツ", w:["キヤベツ","キャベシ","キャベヅ"], e:"🥬", read:"きゃべつ", ex:"ちいさい「ャ」だよ。キャベツ！", exs:"キャベツ が ただしいよ。ちいさい ャに きをつけて！"},
+    {q:"シーソー", a:"シーソー", w:["ツーソー","シーンー","シーゾー"], e:"🛝", read:"しーそー", ex:"「シ」と「ソ」の りょうほうに ちゅうい！", exs:"シーソー が ただしいよ。シと ソに きをつけて！"},
+    {q:"ジュース", a:"ジュース", w:["ジユース","ジューヌ","チュース"], e:"🧃", read:"じゅーす", ex:"ちいさい「ュ」だよ。ジュース！", exs:"ジュース が ただしいよ。ちいさい ュに きをつけて！"},
+  ],
+  // ── Lv5: ただしいつづり ＆ ぎおん・ぎたいご ──
+  5:[
+    {q:"スリッパ", a:"スリッパ", w:["ヌリッパ","スリッバ","スリパ"], e:"🩴", read:"すりっぱ", ex:"「ス」だよ。「ヌ」と まちがえやすいね。スリッパ！", exs:"スリッパ が ただしいよ。スと ヌは にてるね！"},
+    {q:"バナナ", a:"バナナ", w:["バナサ","パナナ","バサナ"], e:"🍌", read:"ばなな", ex:"「ナ」が ふたつ。バナナ！", exs:"バナナ が ただしいよ。ナと サに きをつけて！"},
+    {q:"リボン", a:"リボン", w:["リポン","リボソ","リホン"], e:"🎀", read:"りぼん", ex:"「ボ」は てんてん。リボン！", exs:"リボン が ただしいよ。ボと ポに きをつけて！"},
+    {q:"テレビ", a:"テレビ", w:["テわビ","テレヒ","チレビ"], e:"📺", read:"てれび", ex:"「ビ」は てんてん。テレビ！", exs:"テレビ が ただしいよ！"},
+    {q:"いぬの こえ", a:"ワンワン", w:["ニャーニャー","モーモー","コケコッコー"], e:"🐕", read:"いぬは なんて なくかな？", ex:"いぬは「ワンワン」と なくよ！", exs:"いぬは、ワンワンと なくよ！"},
+    {q:"ねこの こえ", a:"ニャーニャー", w:["ワンワン","ブーブー","コケコッコー"], e:"🐱", read:"ねこは なんて なくかな？", ex:"ねこは「ニャーニャー」と なくよ！", exs:"ねこは、ニャーニャーと なくよ！"},
+    {q:"うしの こえ", a:"モーモー", w:["メーメー","ワンワン","ニャーニャー"], e:"🐮", read:"うしは なんて なくかな？", ex:"うしは「モーモー」と なくよ！", exs:"うしは、モーモーと なくよ！"},
+    {q:"にわとりの こえ", a:"コケコッコー", w:["ワンワン","モーモー","チューチュー"], e:"🐔", read:"にわとりは なんて なくかな？", ex:"にわとりは「コケコッコー」と なくよ！", exs:"にわとりは、コケコッコーと なくよ！"},
+    {q:"あめの おと", a:"ザーザー", w:["ピカピカ","ゴロゴロ","フワフワ"], e:"🌧️", read:"あめは どんな おと？", ex:"つよい あめは「ザーザー」だよ！", exs:"つよい あめは、ザーザーと ふるよ！"},
+    {q:"かみなりの おと", a:"ゴロゴロ", w:["ザーザー","チクタク","パチパチ"], e:"⚡", read:"かみなりは どんな おと？", ex:"かみなりは「ゴロゴロ」だよ！", exs:"かみなりは、ゴロゴロと なるよ！"},
+    {q:"とけいの おと", a:"チクタク", w:["ゴロゴロ","ザーザー","ドキドキ"], e:"⏰", read:"とけいは どんな おと？", ex:"とけいは「チクタク」だよ！", exs:"とけいは、チクタクと うごくよ！"},
+    {q:"むねの おと", a:"ドキドキ", w:["チクタク","ザーザー","フワフワ"], e:"💗", read:"きんちょうすると むねは どうなる？", ex:"どきどきすると むねは「ドキドキ」だよ！", exs:"きんちょうすると、むねは ドキドキするよ！"},
+  ],
+};
+
+// ============================================================
 // MATH — addition & subtraction stories
 // ============================================================
 const ADD_ST=[
@@ -1646,6 +1818,14 @@ const MC={
       {n:"1000えんさつ",      d:"1000円札も かぞえよう"},
       {n:"5000・10000えん",   d:"おさつ いっぱい！なんえん？"},
     ]},
+  kot:{name:"ことば", ic:"💬", col:"var(--kot)", pcol:"#F06292",
+    lv:[
+      {n:"は・へ・を のよみ",  d:"「は」を『わ』とよむ？じょしのよみかた"},
+      {n:"のばすおと①",       d:"ぼうし・おとうさん つづりはどっち？"},
+      {n:"のばすおと②",       d:"せんせい・こおり えやおの れいがい"},
+      {n:"カタカナのかたち",   d:"シとツ・ソとン にてる字の みわけ"},
+      {n:"つづり・ぎおんご",   d:"スリッパ・ワンワン ただしいのは？"},
+    ]},
 };
 
 // ============================================================
@@ -1654,6 +1834,7 @@ const MC={
 const HEMO=['🐣','🐥','🐤','🦊','🐰','🐻','🦁','🐸','🐧','🐨'];
 // ── トップページへ戻る ──
 function goTop(){
+  stopAllSpeech();
   const ss = document.getElementById('start-screen');
   if(!ss) return;
   ss.style.display = '';
@@ -1797,6 +1978,7 @@ function buildQ(mode,lv){
   }
   if(mode==='eng') return shuffle([...ENG[lv]]).slice(0,10);
   if(mode==='kan') return shuffle([...KAN[lv]]).slice(0,10);
+  if(mode==='kot') return shuffle([...KOTOBA[lv]]).slice(0,10);
   if(mode==='clk'){
     // 連続で同じ時刻が出ないよう生成
     return (()=>{
@@ -1893,6 +2075,7 @@ function renderQ(){
 
   if(CM==='eng') buildEng();
   else if(CM==='kan') buildKan();
+  else if(CM==='kot') buildKotoba();
   else if(CM==='clk') buildClock();
   else if(CM==='shp') buildShape();
   else if(CM==='mon') buildMoney();
@@ -2024,6 +2207,96 @@ function ansKan(btn,ok,q){
     btn.classList.add('ng');
     btn.disabled=true;
     spJa('もういちどやってみよう！').then(()=>{
+      btn.classList.remove('ng');
+      btn.disabled=false;
+      ANS=false;
+    });
+  }
+}
+
+// ── KOTOBA（ことば：よみ・つづり）──
+function buildKotoba(){
+  const q=CQ;
+  const opts=shuffle([{t:q.a,ok:true},...q.w.map(x=>({t:x,ok:false}))]);
+  const isL1=(CL===1);
+  const readText = q.read || q.q;
+
+  let qLabel, questionHTML;
+  if(isL1){
+    // 文の中の対象文字を色付け強調（最初の1つだけ）
+    qLabel = 'この字は どう よむ？';
+    let disp = q.q;
+    if(q.target){
+      disp = q.q.replace(q.target,
+        `<span style="color:var(--kot);font-size:1.25em;font-weight:900;text-decoration:underline wavy var(--kot)">${q.target}</span>`);
+    }
+    questionHTML = `<div style="font-size:26px;font-weight:900;line-height:1.7;margin:4px 0">${disp}</div>`;
+  } else {
+    // L2〜5：emojiを主役に、つづり/おとを4択（正解の文字は見せない）
+    qLabel = (CL===5 && /こえ|おと/.test(q.q||''))
+      ? 'こたえは どれ？'
+      : (CL===4 ? 'ただしい カタカナは どれ？' : 'ただしい つづりは どれ？');
+    questionHTML = `<div class="q-main" style="font-size:72px;min-height:84px;display:flex;align-items:center;justify-content:center">${q.e}</div>`;
+  }
+
+  $('qcard').innerHTML=`
+    <div class="q-label">${qLabel}</div>
+    ${questionHTML}
+    <div style="display:flex;gap:0;justify-content:center;flex-wrap:wrap">
+      <button class="speak-btn" onclick="spJa('${esc(readText)}')">🔊 よんで！</button>
+      <button class="hint-btn" onclick="showKotHint('${q.e}')">💡 ヒント</button>
+    </div>
+    <div class="kan-extra" id="kanex"></div>`;
+
+  opts.forEach(o=>{
+    const b=mk('button','ch');
+    b.style.fontSize='20px';
+    b.textContent=o.t;
+    b.onclick=()=>ansKotoba(b,o.ok,q);
+    $('choices').appendChild(b);
+  });
+
+  // 問題文（文/読み）は自動で1回読み上げる
+  setTimeout(()=>spJa(readText),500);
+}
+
+function showKotHint(emoji){
+  const ex=$('kanex');
+  if(ex){
+    ex.classList.add('show');
+    ex.style.textAlign='center';
+    ex.innerHTML='<span style="font-size:64px;display:block;animation:popIn .4s ease">'+emoji+'</span>';
+  }
+}
+
+function ansKotoba(btn,ok,q){
+  if(ANS)return; ANS=true;
+  if(ok){
+    btn.classList.add('ok');
+    document.querySelectorAll('.ch').forEach(b=>{ if(b!==btn) b.disabled=true; });
+    SS++; TS++; $('total-star').textContent=TS;
+    showFB(true);
+    playCorrectSFX(); zeztzReact(true);
+    updateStreak(true);
+    if(REVIEW) removeWrongCurrent();
+    Promise.all([spJa(q.a), showEpopKan(q.e)]).then(()=>{
+      document.querySelectorAll('.hint-btn').forEach(b=>b.style.display='none');
+      const ex=$('kanex');
+      if(ex&&q.ex){
+        ex.classList.add('show');
+        ex.style.textAlign='center';
+        ex.innerHTML=`💡 ${q.ex}`;
+      }
+      setTimeout(()=>spJa(q.exs||q.ex||'').then(nextQ), 500);
+    });
+  } else {
+    showFB(false);
+    playWrongSFX(); zeztzReact(false);
+    updateStreak(false);
+    recordWrong();
+    btn.classList.add('ng');
+    btn.disabled=true;
+    spJa('もういちど かんがえてみよう！').then(()=>{
       btn.classList.remove('ng');
       btn.disabled=false;
       ANS=false;
@@ -2903,8 +3176,9 @@ function buildShapeL4(q){
     const rsvg = {
       // △＋△ → しかく（2つの三角を合わせると四角）
       square2tri: `<svg width="72" height="72" viewBox="0 0 72 72">
-        <rect x="8" y="8" width="56" height="56" fill="#66BB6A" rx="3" stroke="white" stroke-width="2"/>
-        <line x1="8" y1="8" x2="64" y2="64" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+        <polygon points="8,8 64,8 64,64" fill="#FF7043" stroke="white" stroke-width="1.5"/>
+        <polygon points="8,8 8,64 64,64" fill="#448AFF" stroke="white" stroke-width="1.5"/>
+        <line x1="8" y1="8" x2="64" y2="64" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>
       </svg>`,
       // □＋△ → いえ
       house: `<svg width="72" height="72" viewBox="0 0 72 72">
@@ -2914,21 +3188,20 @@ function buildShapeL4(q){
       </svg>`,
       // □＋□ → ながしかく
       rectangle2: `<svg width="72" height="72" viewBox="0 0 72 72">
-        <rect x="2" y="18" width="68" height="36" fill="#66BB6A" rx="3" stroke="white" stroke-width="2"/>
-        <line x1="36" y1="18" x2="36" y2="54" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+        <rect x="2" y="18" width="33" height="36" fill="#FF7043" stroke="white" stroke-width="1.5" rx="2"/>
+        <rect x="37" y="18" width="33" height="36" fill="#448AFF" stroke="white" stroke-width="1.5" rx="2"/>
       </svg>`,
       // △＋△＋△ → おおきなさんかく
       bigtri: `<svg width="72" height="72" viewBox="0 0 72 72">
-        <polygon points="36,4 70,68 2,68" fill="#66BB6A" stroke="white" stroke-width="2"/>
-        <line x1="36" y1="36" x2="2" y2="68" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
-        <line x1="36" y1="36" x2="70" y2="68" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
-        <line x1="19" y1="68" x2="36" y2="36" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+        <polygon points="36,4 2,68 36,47" fill="#FF7043" stroke="white" stroke-width="1.5"/>
+        <polygon points="36,4 70,68 36,47" fill="#448AFF" stroke="white" stroke-width="1.5"/>
+        <polygon points="2,68 70,68 36,47" fill="#FFD600" stroke="white" stroke-width="1.5"/>
       </svg>`,
       // □＋□＋□ → ながいしかく
       rectangle3: `<svg width="72" height="72" viewBox="0 0 72 72">
-        <rect x="2" y="22" width="68" height="28" fill="#66BB6A" rx="3" stroke="white" stroke-width="2"/>
-        <line x1="25" y1="22" x2="25" y2="50" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
-        <line x1="47" y1="22" x2="47" y2="50" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+        <rect x="2" y="22" width="21" height="28" fill="#FF7043" stroke="white" stroke-width="1.5" rx="2"/>
+        <rect x="25" y="22" width="22" height="28" fill="#448AFF" stroke="white" stroke-width="1.5" rx="2"/>
+        <rect x="49" y="22" width="21" height="28" fill="#FFD600" stroke="white" stroke-width="1.5" rx="2"/>
       </svg>`,
     };
 
@@ -3920,8 +4193,8 @@ function naturalTTS(text, lang){
 function normalizeSpText(t){
   if(!t) return '';
   return t
-    .replace(/[？\?]$/g, '')          // 文末の？は削除（読まない）
-    .replace(/[？\?]/g, 'はてな')     // 文中の？は「はてな」に変換
+    .replace(/^[？?]/, 'はてな')        // 文頭の？だけ「はてな」に変換
+    .replace(/[？?]/g, '')             // それ以外の？は削除（読まない）
     .replace(/！/g, '')
     .replace(/[、。]/g, ' ')
     .replace(/[（(][^）)]*[）)]/g, '')
@@ -3930,10 +4203,52 @@ function normalizeSpText(t){
     .trim();
 }
 
-function spJa(t){ return naturalTTS(normalizeSpText(t),'ja'); }
-function spEn(t){ return naturalTTS(t,'en'); }
+// ── 再生中の音声を全部とめる（画面遷移・戻るボタンで使用）──
+// _speakGen を進めることで、連続再生（文ごと・英語2回読み）の続きもキャンセルする
+window._speakGen = 0;
+function stopAllSpeech(){
+  window._speakGen++;
+  try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
+  if(window._currentAudio){ try{ window._currentAudio.pause(); }catch(e){} window._currentAudio=null; }
+}
+
+// 文の配列を順番に読み、文末ごとに少し間をあけて自然に聞こえるようにする
+function speakSeq(parts, lang, gap){
+  parts = (parts||[]).filter(s=>s && s.trim());
+  if(!parts.length) return Promise.resolve();
+  const gen = window._speakGen;            // この再生シーケンスの世代
+  let p = Promise.resolve();
+  parts.forEach((seg, idx)=>{
+    p = p.then(()=>{
+      if(gen !== window._speakGen) return; // 画面遷移などで中断された
+      return naturalTTS(seg, lang);
+    }).then(()=>{
+      if(gen !== window._speakGen) return;
+      if(idx < parts.length-1) return new Promise(r=>setTimeout(r, gap)); // 文末で少し待つ
+    });
+  });
+  return p;
+}
+
+function spJa(t){
+  if(!t) return Promise.resolve();
+  // 文末（。．!?！？）で区切り、各文を正規化してから順に読む
+  const parts = String(t).split(/(?<=[。．.!?！？])/).map(normalizeSpText);
+  return speakSeq(parts, 'ja', 350);
+}
+function spEn(t){
+  if(!t) return Promise.resolve();
+  // 文末（.!?）で区切り、文末ごとに少し間をあける（ピリオドで自然に区切る）
+  const parts = (String(t).match(/[^.!?]+[.!?]*/g) || [String(t)]).map(s=>s.trim());
+  return speakSeq(parts, 'en', 350);
+}
 // 英語を2回連続で読む（例：dog → "dog. dog."）
-function spEn2(t){ return spEn(t).then(()=>new Promise(r=>setTimeout(r,400))).then(()=>spEn(t)); }
+function spEn2(t){
+  const gen = window._speakGen;
+  return spEn(t)
+    .then(()=> (gen===window._speakGen) ? new Promise(r=>setTimeout(r,400)) : null)
+    .then(()=> (gen===window._speakGen) ? spEn(t) : null);
+}
 
 if(window.speechSynthesis){
   speechSynthesis.getVoices();
@@ -4172,9 +4487,9 @@ function playWrongSFX(){
 // ============================================================
 // GUGUGAGA PENGUIN CHARACTER SYSTEM
 // ============================================================
-const GUGU_PRAISE=['ぐぐがが〜！すごい！','やったね！ぐぐがが！','かんぺき！ぐぐがが〜♪','てんさい！ぐぐがが！','さいこう！ぐぐ〜！','ぐぐがが〜！かなとすごい！'];
 const GUGU_RETRY=['ぐぐ…もういちど！','がが！がんばれ！','ぐぐがが、あきらめないで！','もう一回！ぐぐ！'];
-const GUGU_HELLO=['ぐぐがが〜！','いっしょにがんばろう！ぐぐ！','ぐぐがが！かなとー！','がが〜！きょうも元気？','ぐぐ！まなぼう！'];
+function getGuguPraise(){ const n=getChildName(); return ['ぐぐがが〜！すごい！','やったね！ぐぐがが！','かんぺき！ぐぐがが〜♪','てんさい！ぐぐがが！','さいこう！ぐぐ〜！',`ぐぐがが〜！${n}すごい！`]; }
+function getGuguHello(){ const n=getChildName(); return ['ぐぐがが〜！','いっしょにがんばろう！ぐぐ！',`ぐぐがが！${n}ー！`,'がが〜！きょうも元気？','ぐぐ！まなぼう！']; }
 
 // ぐぐがが かわいい声 (TikTok風: 高くてやわらか、ビブラート付き)
 function playGuguGaga(variant){
@@ -4255,7 +4570,7 @@ function playGuguGaga(variant){
 }
 
 function guguTalk(side){
-  const txt = GUGU_HELLO[Math.floor(Math.random()*GUGU_HELLO.length)];
+  const txt = getGuguHello()[Math.floor(Math.random()*getGuguHello().length)];
   showGuguSpeech(txt, side);
   playGuguGaga('normal');
   spawnHeart(side);
@@ -4279,7 +4594,7 @@ function showGuguSpeech(txt, side){
 
 function zeztzReact(ok){  // 後方互換のためzeztzReactのまま
   const txt = ok
-    ? GUGU_PRAISE[Math.floor(Math.random()*GUGU_PRAISE.length)]
+    ? getGuguPraise()[Math.floor(Math.random()*getGuguPraise().length)]
     : GUGU_RETRY[Math.floor(Math.random()*GUGU_RETRY.length)];
   const side = Math.random()<.5?'left':'right';
   showGuguSpeech(txt, side);
@@ -4498,6 +4813,7 @@ const CHILD_NAME_KEY = 'kanato_child_name';
 function getChildName(){
   return localStorage.getItem(CHILD_NAME_KEY) || 'かなとくん';
 }
+function resolveMsg(msg){ return msg.replace(/\[NAME\]/g, getChildName()); }
 
 function applyChildName(){
   const name = getChildName();
@@ -4609,7 +4925,7 @@ function renderStudyRecord(){
 // 18種類のキャラ定義
 const EGG_CHARS = [
   {char:'🐣', name:'ひよこ',           msg:'ぴよぴよ！うまれたよ！'},
-  {char:'🐥', name:'ちびひよこ',       msg:'かなとだいすき！'},
+  {char:'🐥', name:'ちびひよこ',       msg:'[NAME]だいすき！'},
   {char:'🐤', name:'まるひよこ',       msg:'まんまるだよ！'},
   {char:'🦆', name:'あひる',           msg:'がーがー！'},
   {char:'🐸', name:'かえる',           msg:'ぴょこぴょこ〜！'},
@@ -4622,7 +4938,7 @@ const EGG_CHARS = [
   {char:'🦅', name:'わし',             msg:'たかくとぶよ！'},
   {char:'🦉', name:'ふくろう',         msg:'ほーほー！かしこいね！'},
   {char:'🦚', name:'くじゃく',         msg:'きれいでしょ〜！'},
-  {char:'🦜', name:'オウム',           msg:'かなとすごい！かなとすごい！'},
+  {char:'🦜', name:'オウム',           msg:'[NAME]すごい！[NAME]すごい！'},
   {char:'🐉', name:'ドラゴン',         msg:'まほうがつかえるよ！'},
   {char:'🦄', name:'ユニコーン',       msg:'きらきら！まほうのこ！'},
   {char:'🐨', name:'コアラ',           msg:'のんびりだよ〜！'},
@@ -4757,7 +5073,7 @@ function renderEggCollection(){
   let html = '';
   EGG_CHARS.forEach((c,i)=>{
     const got = collected.includes(i);
-    html += `<div class="ecol-item${got?'':' locked'}" title="${got?c.name+'「'+c.msg+'」':'？？？'}" onclick="ecollTap(${i},${got})">
+    html += `<div class="ecol-item${got?'':' locked'}" title="${got?c.name+'「'+resolveMsg(c.msg)+'」':'？？？'}" onclick="ecollTap(${i},${got})">
       <span class="ecol-no">${i+1}</span>
       ${got ? c.char : '❓'}
     </div>`;
@@ -4769,7 +5085,7 @@ function renderEggCollection(){
 function ecollTap(i, got){
   if(!got) return;
   const c = EGG_CHARS[i];
-  spJa(c.name + '！' + c.msg);
+  spJa(c.name + '！' + resolveMsg(c.msg));
   // ぷるぷる
   const items = document.querySelectorAll('.ecol-item');
   const el = items[i];
@@ -4824,12 +5140,12 @@ function hatchEgg(){
   // ポップアップ表示
   $('ehp-char').textContent = c.char;
   $('ehp-name').textContent = c.name;
-  $('ehp-msg').textContent  = c.msg;
+  $('ehp-msg').textContent  = resolveMsg(c.msg);
   $('ehp-title').textContent = '🎉 うまれた！！';
   $('ehp-sub').textContent   = 'たまごから とびだしたよ！';
   $('egg-hatch-popup').classList.add('show');
   confetti();
-  spJa('やったー！たまごがわれた！' + c.name + 'だよ！' + c.msg);
+  spJa('やったー！たまごがわれた！' + c.name + 'だよ！' + resolveMsg(c.msg));
   renderEggWidget();
 }
 
@@ -4891,16 +5207,14 @@ function resumeBGM(){
 document.addEventListener('visibilitychange',()=>{
   if(document.hidden){
     suspendBGM();
-    if(window.speechSynthesis) speechSynthesis.cancel();
-    if(window._currentAudio){ try{window._currentAudio.pause();}catch(e){} }
+    stopAllSpeech();
   } else {
     resumeBGM();
   }
 });
 window.addEventListener('blur',()=>{
   suspendBGM();
-  if(window.speechSynthesis) speechSynthesis.cancel();
-  if(window._currentAudio){ try{window._currentAudio.pause();}catch(e){} }
+  stopAllSpeech();
 });
 window.addEventListener('focus',()=>{
   if(bgmPlaying && audioCtx){
