@@ -1645,20 +1645,21 @@ const KAN={
 //   read    … 🔊で読み上げるテキスト（省略時は q）
 // ============================================================
 const KOTOBA={
-  // ── Lv1: じょし「は・へ・を」のよみ ──
+  // ── Lv1: ただしい つづりは どっち？（文まるごと2択・助詞＋名詞ミックス）──
+  //   a=ただしい文 / w=[まちがいの文（1字だけちがう）]
   1:[
-    {q:"きょうは いい てんき", target:"は", a:"わ", w:["は","あ","や"], e:"☀️", read:"きょうは いい てんき", ex:"ことばの あとの「は」は『わ』と よむよ！", exs:"ことばの あとの「は」は、わと よむよ！"},
-    {q:"ぼくは げんきだ", target:"は", a:"わ", w:["は","ば","あ"], e:"💪", read:"ぼくは げんきだ", ex:"「ぼくは」の「は」は『わ』！", exs:"ぼくは の は は、わと よむよ！"},
-    {q:"これは なに？", target:"は", a:"わ", w:["は","へ","え"], e:"❓", read:"これは なに？", ex:"「これは」の「は」も『わ』と よむよ！", exs:"これは の は は、わと よむよ！"},
-    {q:"わたしは ほんが すき", target:"は", a:"わ", w:["は","さ","あ"], e:"📚", read:"わたしは ほんが すき", ex:"ことばの あとの「は」は『わ』！", exs:"ことばの あとの は は、わと よむよ！"},
-    {q:"がっこうへ いく", target:"へ", a:"え", w:["へ","け","せ"], e:"🏫", read:"がっこうへ いく", ex:"いくさきの「へ」は『え』と よむよ！", exs:"いくさきの へ は、えと よむよ！"},
-    {q:"うみへ あそびに いく", target:"へ", a:"え", w:["へ","け","ね"], e:"🌊", read:"うみへ あそびに いく", ex:"「うみへ」の「へ」は『え』！", exs:"うみへ の へ は、えと よむよ！"},
-    {q:"おうちへ かえる", target:"へ", a:"え", w:["へ","て","け"], e:"🏠", read:"おうちへ かえる", ex:"いくさきの「へ」は『え』だよ！", exs:"いくさきの へ は、えと よむよ！"},
-    {q:"ほんを よむ", target:"を", a:"お", w:["を","と","ろ"], e:"📖", read:"ほんを よむ", ex:"「を」は いつも『お』と よむよ！", exs:"を は、いつも おと よむよ！"},
-    {q:"ごはんを たべる", target:"を", a:"お", w:["を","ぬ","と"], e:"🍚", read:"ごはんを たべる", ex:"「ごはんを」の「を」は『お』！", exs:"ごはんを の を は、おと よむよ！"},
-    {q:"えを かく", target:"を", a:"お", w:["を","ち","と"], e:"🎨", read:"えを かく", ex:"「を」は『お』と おなじ おと！", exs:"を は、おと おなじ おとだよ！"},
-    {q:"みずを のむ", target:"を", a:"お", w:["を","す","ろ"], e:"💧", read:"みずを のむ", ex:"「みずを」の「を」も『お』だよ！", exs:"みずを の を も、おと よむよ！"},
-    {q:"ともだちへ てがみ", target:"へ", a:"え", w:["へ","く","け"], e:"✉️", read:"ともだちへ てがみ", ex:"あいての「へ」も『え』と よむよ！", exs:"あいての へ も、えと よむよ！"},
+    {q:"これは なに？", a:"これは なに？", w:["これわ なに？"], e:"❓", read:"これは なに？", ex:"じょしの「は」は、わ と よむけど かくのは『は』だよ！", exs:"これは が ただしいよ。じょしの は は、よむときだけ わと よむんだ。"},
+    {q:"ほんを よむ", a:"ほんを よむ", w:["ほんお よむ"], e:"📖", read:"ほんを よむ", ex:"「を」は じょし。お と よむけど かくのは『を』だよ！", exs:"ほんを よむ が ただしいよ。じょしの を は、かくのは を だよ。"},
+    {q:"がっこうへ いく", a:"がっこうへ いく", w:["がっこうえ いく"], e:"🏫", read:"がっこうへ いく", ex:"いくさきの「へ」は、え と よむけど かくのは『へ』だよ！", exs:"がっこうへ いく が ただしいよ。じょしの へ は、かくのは へ だよ。"},
+    {q:"ごはんを たべる", a:"ごはんを たべる", w:["ごはんお たべる"], e:"🍚", read:"ごはんを たべる", ex:"「を」は じょし。お と よむけど かくのは『を』だよ！", exs:"ごはんを たべる が ただしいよ。じょしの を は、かくのは を だよ。"},
+    {q:"うみへ いく", a:"うみへ いく", w:["うみえ いく"], e:"🌊", read:"うみへ いく", ex:"いくさきの「へ」は、え と よむけど かくのは『へ』だよ！", exs:"うみへ いく が ただしいよ。じょしの へ は、かくのは へ だよ。"},
+    {q:"おかしを たべる", a:"おかしを たべる", w:["をかしを たべる"], e:"🍪", read:"おかしを たべる", ex:"ことばの はじめは『お』。「を」は じょしの ときだけ！", exs:"おかし が ただしいよ。ことばの はじめは お。を は じょしだけ だよ。"},
+    {q:"わなげを する", a:"わなげを する", w:["はなげを する"], e:"🎯", read:"わなげを する", ex:"「わなげ」は『わ』で はじまるよ。「は」じゃ ないよ！", exs:"わなげ が ただしいよ。わで はじまる ことばだよ。"},
+    {q:"えいがを みる", a:"えいがを みる", w:["へいがを みる"], e:"🎬", read:"えいがを みる", ex:"「えいが」は『え』で はじまるよ。「へ」じゃ ないよ！", exs:"えいが が ただしいよ。えで はじまる ことばだよ。"},
+    {q:"おりがみを おる", a:"おりがみを おる", w:["をりがみを おる"], e:"🦢", read:"おりがみを おる", ex:"ことばの はじめは『お』。「を」は じょしの ときだけ！", exs:"おりがみ が ただしいよ。ことばの はじめは お だよ。"},
+    {q:"えんぴつで かく", a:"えんぴつで かく", w:["へんぴつで かく"], e:"✏️", read:"えんぴつで かく", ex:"「えんぴつ」は『え』で はじまるよ。「へ」じゃ ないよ！", exs:"えんぴつ が ただしいよ。えで はじまる ことばだよ。"},
+    {q:"わたあめを たべる", a:"わたあめを たべる", w:["はたあめを たべる"], e:"🍬", read:"わたあめを たべる", ex:"「わたあめ」は『わ』で はじまるよ。「は」じゃ ないよ！", exs:"わたあめ が ただしいよ。わで はじまる ことばだよ。"},
+    {q:"おもちゃで あそぶ", a:"おもちゃで あそぶ", w:["をもちゃで あそぶ"], e:"🧸", read:"おもちゃで あそぶ", ex:"ことばの はじめは『お』。「を」は じょしの ときだけ！", exs:"おもちゃ が ただしいよ。ことばの はじめは お だよ。"},
   ],
   // ── Lv2: のばすおと① ア・イ・ウ段＋オ段「う」 ──
   2:[
@@ -2223,14 +2224,9 @@ function buildKotoba(){
 
   let qLabel, questionHTML;
   if(isL1){
-    // 文の中の対象文字を色付け強調（最初の1つだけ）
-    qLabel = 'この字は どう よむ？';
-    let disp = q.q;
-    if(q.target){
-      disp = q.q.replace(q.target,
-        `<span style="color:var(--kot);font-size:1.25em;font-weight:900;text-decoration:underline wavy var(--kot)">${q.target}</span>`);
-    }
-    questionHTML = `<div style="font-size:26px;font-weight:900;line-height:1.7;margin:4px 0">${disp}</div>`;
+    // ただしい つづりを 文まるごと2択で出題（emojiだけ見せて、文は選択肢に）
+    qLabel = 'どっちが ただしい？';
+    questionHTML = `<div class="q-main" style="font-size:72px;min-height:84px;display:flex;align-items:center;justify-content:center">${q.e}</div>`;
   } else {
     // L2〜5：emojiを主役に、つづり/おとを4択（正解の文字は見せない）
     qLabel = (CL===5 && /こえ|おと/.test(q.q||''))
@@ -2244,13 +2240,18 @@ function buildKotoba(){
     ${questionHTML}
     <div style="display:flex;gap:0;justify-content:center;flex-wrap:wrap">
       <button class="speak-btn" onclick="spJa('${esc(readText)}')">🔊 よんで！</button>
-      <button class="hint-btn" onclick="showKotHint('${q.e}')">💡 ヒント</button>
     </div>
     <div class="kan-extra" id="kanex"></div>`;
 
   opts.forEach(o=>{
     const b=mk('button','ch');
-    b.style.fontSize='20px';
+    if(isL1){
+      // 文まるごと2択：横長1列で読みやすく
+      b.style.fontSize='22px';
+      b.style.gridColumn='1 / -1';
+    } else {
+      b.style.fontSize='20px';
+    }
     b.textContent=o.t;
     b.onclick=()=>ansKotoba(b,o.ok,q);
     $('choices').appendChild(b);
@@ -2258,15 +2259,6 @@ function buildKotoba(){
 
   // 問題文（文/読み）は自動で1回読み上げる
   setTimeout(()=>spJa(readText),500);
-}
-
-function showKotHint(emoji){
-  const ex=$('kanex');
-  if(ex){
-    ex.classList.add('show');
-    ex.style.textAlign='center';
-    ex.innerHTML='<span style="font-size:64px;display:block;animation:popIn .4s ease">'+emoji+'</span>';
-  }
 }
 
 function ansKotoba(btn,ok,q){
@@ -2279,16 +2271,8 @@ function ansKotoba(btn,ok,q){
     playCorrectSFX(); zeztzReact(true);
     updateStreak(true);
     if(REVIEW) removeWrongCurrent();
-    Promise.all([spJa(q.a), showEpopKan(q.e)]).then(()=>{
-      document.querySelectorAll('.hint-btn').forEach(b=>b.style.display='none');
-      const ex=$('kanex');
-      if(ex&&q.ex){
-        ex.classList.add('show');
-        ex.style.textAlign='center';
-        ex.innerHTML=`💡 ${q.ex}`;
-      }
-      setTimeout(()=>spJa(q.exs||q.ex||'').then(nextQ), 500);
-    });
+    // ことばモードは 画像アニメ・説明文なし。正解を読み上げて つぎへ
+    spJa(q.a).then(()=>setTimeout(nextQ, 500));
   } else {
     showFB(false);
     playWrongSFX(); zeztzReact(false);
