@@ -700,6 +700,16 @@ body{
 .ehp-btn:active{transform:translateY(6px);box-shadow:0 1px 0 #CC333366}
 #egg-collection{margin-top:12px;}
 .ecol-title{font-size:13px;font-weight:900;color:#8D6E63;margin-bottom:8px;text-align:left;display:flex;align-items:center;gap:5px;}
+.ecol-title #ecol-count{font-size:11px;color:#B0A090;font-weight:900;}
+.ecol-tabs{display:flex;gap:8px;margin-bottom:10px;}
+.ecol-tab{
+  flex:1;padding:8px 6px;border-radius:14px;font-family:inherit;
+  font-size:13px;font-weight:900;cursor:pointer;
+  background:#F2EDE3;border:2.5px solid #E0D6C4;color:#A8987E;
+  box-shadow:0 3px 0 #D8CDB8;transition:transform .1s,box-shadow .1s;
+}
+.ecol-tab.on{background:linear-gradient(160deg,#FFE9A8,#FFD27A);border-color:#F0B84E;color:#7A5A12;box-shadow:0 3px 0 #E0A23C;}
+.ecol-tab:active{transform:translateY(2px);box-shadow:0 1px 0 #D8CDB8;}
 .ecol-grid{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-start;}
 .ecol-item{
   width:48px;height:60px;border-radius:16px;
@@ -1072,7 +1082,11 @@ body{
       </div>
     </div>
     <div id="egg-collection">
-      <div class="ecol-title">🎁 コレクション</div>
+      <div class="ecol-title">🎁 コレクション <span id="ecol-count"></span></div>
+      <div class="ecol-tabs">
+        <button class="ecol-tab on" id="ecol-tab-0" onclick="setEcolPage(0)">1〜50</button>
+        <button class="ecol-tab" id="ecol-tab-1" onclick="setEcolPage(1)">51〜100</button>
+      </div>
       <div class="ecol-grid" id="ecol-grid"></div>
     </div>
   </div>
@@ -1853,8 +1867,7 @@ function goHome(){
     const col = REC.eggs.collected;
     const heroEl = $('hero-emoji');
     if(col && col.length > 0){
-      heroEl.innerHTML = '';
-      heroEl.textContent = EGG_CHARS[col[col.length-1]].char;
+      heroEl.innerHTML = eggCharHTML(EGG_CHARS[col[col.length-1]], 88);
     } else {
       const e = REC.eggs;
       const stars = e.starsInCurrentEgg;
@@ -4908,8 +4921,9 @@ function renderStudyRecord(){
 // 🥚 たまごそだてシステム
 // ============================================================
 
-// 18種類のキャラ定義
+// 100種類のキャラ定義（1〜50＝1だんめ / 51〜100＝2だんめ）
 const EGG_CHARS = [
+  // ── 1だんめ（1〜50）──
   {char:'🐣', name:'ひよこ',           msg:'ぴよぴよ！うまれたよ！'},
   {char:'🐥', name:'ちびひよこ',       msg:'[NAME]だいすき！'},
   {char:'🐤', name:'まるひよこ',       msg:'まんまるだよ！'},
@@ -4939,8 +4953,122 @@ const EGG_CHARS = [
   {char:'🦈', name:'サメ',             msg:'ざぱーん！はやいよ！'},
   {char:'🐙', name:'タコ',             msg:'てがいっぱいだよ！'},
   {char:'🦋', name:'ちょうちょ',       msg:'ひらひら〜きれいでしょ！'},
-  {char:'✨',  name:'でんせつのたまご', msg:'とんでもないものがうまれた！！'},
+  {char:'🐶', name:'こいぬ',           msg:'わんわん！あそぼ！'},
+  {char:'🐱', name:'こねこ',           msg:'にゃーん！なでて！'},
+  {char:'🐰', name:'うさぎ',           msg:'ぴょん！みみがながいよ！'},
+  {char:'🐹', name:'ハムスター',       msg:'ほっぺに ためちゃう！'},
+  {char:'🐭', name:'ねずみ',           msg:'ちゅーちゅー！'},
+  {char:'🐻', name:'くま',             msg:'がおー！はちみつだいすき！'},
+  {char:'🐷', name:'こぶた',           msg:'ぶーぶー！'},
+  {char:'🐮', name:'こうし',           msg:'もーもー！'},
+  {char:'🐵', name:'こざる',           msg:'ウキウキ！きにのぼるよ！'},
+  {char:'🐔', name:'にわとり',         msg:'コケコッコー！'},
+  {char:'🐧', name:'ペンギン',         msg:'よちよち〜！'},
+  {char:'🐦', name:'ことり',           msg:'ちゅんちゅん！'},
+  {char:'🐝', name:'みつばち',         msg:'ぶーん！はちみつあげる！'},
+  {char:'🐞', name:'てんとうむし',     msg:'てんてん もようだよ！'},
+  {char:'🐠', name:'ねったいぎょ',     msg:'すいすい〜カラフル！'},
+  {char:'🐟', name:'おさかな',         msg:'ぴちぴち！'},
+  {char:'🐡', name:'ふぐ',             msg:'ぷくーっ！ふくらむよ！'},
+  {char:'🦀', name:'かに',             msg:'はさみで チョキチョキ！'},
+  {char:'🦐', name:'えび',             msg:'ぴょこん！'},
+  {char:'🦑', name:'いか',             msg:'すいーっ！'},
+  {char:'🐚', name:'かいがら',         msg:'うみの おとが きこえるよ！'},
+  // ── 2だんめ（51〜100）──
+  {char:'🦓', name:'シマウマ',         msg:'しましま もようだよ！'},
+  {char:'🦒', name:'キリン',           msg:'くびが なが〜い！'},
+  {char:'🐘', name:'ぞう',             msg:'ぱお〜ん！おおきいよ！'},
+  {char:'🦏', name:'サイ',             msg:'つのが かっこいい！'},
+  {char:'🦛', name:'カバ',             msg:'おくちが おおきいよ！'},
+  {char:'🐪', name:'らくだ',           msg:'さばくを あるくよ！'},
+  {char:'🐫', name:'ふたこぶらくだ',   msg:'こぶが ふたつ！'},
+  {char:'🦙', name:'アルパカ',         msg:'もこもこ〜！'},
+  {char:'🦘', name:'カンガルー',       msg:'ぴょーん！とぶよ！'},
+  {char:'🦬', name:'バイソン',         msg:'どっしり つよいよ！'},
+  {char:'🐎', name:'うま',             msg:'ぱからっ ぱからっ！'},
+  {char:'🦌', name:'しか',             msg:'もりの にんきもの！'},
+  {char:'🐐', name:'やぎ',             msg:'めぇ〜！'},
+  {char:'🐑', name:'ひつじ',           msg:'もこもこ ふわふわ！'},
+  {char:'🦔', name:'ハリネズミ',       msg:'ちくちく でも やさしいよ！'},
+  {char:'🦇', name:'こうもり',         msg:'よるに とぶよ！'},
+  {char:'🦫', name:'ビーバー',         msg:'ダムを つくるよ！'},
+  {char:'🦡', name:'アナグマ',         msg:'あなを ほるよ！'},
+  {char:'🦨', name:'スカンク',         msg:'くさ〜いけど かわいい！'},
+  {char:'🦥', name:'ナマケモノ',       msg:'ゆっくり いこうね〜！'},
+  {char:'🐿️', name:'リス',            msg:'どんぐり あつめるよ！'},
+  {char:'🦃', name:'しちめんちょう',   msg:'ばさばさ！'},
+  {char:'🦤', name:'ドードー',         msg:'まぼろしの とり！'},
+  {char:'🦣', name:'マンモス',         msg:'むかしの ぞうだよ！'},
+  {char:'🦭', name:'アザラシ',         msg:'ごろ〜ん！'},
+  {char:'🦦', name:'ラッコ',           msg:'おなかで かいを わるよ！'},
+  {char:'🐆', name:'ヒョウ',           msg:'はやく はしるよ！'},
+  {char:'🦂', name:'さそり',           msg:'しっぽに きをつけて！'},
+  {char:'🐍', name:'へび',             msg:'にょろにょろ〜！'},
+  {char:'🕷️', name:'くも',            msg:'すを はるよ！'},
+  {char:'🪲', name:'かぶとむし',       msg:'つのが じまんだよ！'},
+  {char:'🦗', name:'こおろぎ',         msg:'りんりん♪'},
+  {char:'🐌', name:'かたつむり',       msg:'ゆっくり おさんぽ！'},
+  {char:'🐛', name:'いもむし',         msg:'もぐもぐ はっぱ！'},
+  {char:'🦢', name:'はくちょう',       msg:'すい〜っ うつくしい！'},
+  {char:'🦩', name:'フラミンゴ',       msg:'ピンクで きれい！'},
+  {char:'🕊️', name:'はと',            msg:'ぽっぽー！へいわのとり！'},
+  {char:'🐓', name:'おんどり',         msg:'あさを しらせるよ！'},
+  {char:'👾', name:'うちゅうじん',     msg:'ピコピコ〜！'},
+  {char:'👻', name:'おばけ',           msg:'ばあ！おどろいた？'},
+  {char:'🤖', name:'ロボット',         msg:'ピッ ガシャン！'},
+  {char:'👽', name:'エイリアン',       msg:'ほしから きたよ！'},
+  {char:'🎃', name:'おばけかぼちゃ',   msg:'ハロウィン だいすき！'},
+  {char:'🧚', name:'ようせい',         msg:'まほうの こな ふりかけ〜！'},
+  {char:'🧜', name:'にんぎょ',         msg:'うみの おうじょさま！'},
+  {char:'🧞', name:'ランプのせい',     msg:'ねがいを かなえちゃう！'},
+  {char:'🌟', name:'ほしのこ',         msg:'きらーん！ねがいごとして！'},
+  {char:'🌈', name:'にじのこ',         msg:'なな色 きれいでしょ！'},
+  {char:'💎', name:'ダイヤのこ',       msg:'キラキラ たからもの！'},
+  {char:'🐧', name:'ぐぐがが', isGugu:true, msg:'でんせつの ペンギン、ぐぐがが あらわる！！'},
 ];
+// たまごの だんかい（1だんめ＝0〜49 / 2だんめ＝50〜99）
+const EGG_BATCH = 50;
+
+// 相棒ペンギン「ぐぐがが」のSVG（画面下のマスコットと同じ絵）
+function guguPenguinSVG(h){
+  const height = h || 40, width = Math.round(height * 0.8);
+  return `<svg width="${width}" height="${height}" viewBox="0 0 80 100" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle">
+  <ellipse cx="40" cy="98" rx="22" ry="4" fill="rgba(0,0,0,.12)"/>
+  <ellipse cx="40" cy="65" rx="24" ry="28" fill="#1a1a1a"/>
+  <ellipse cx="40" cy="68" rx="13" ry="18" fill="#f0f0f0"/>
+  <ellipse cx="16" cy="50" rx="7" ry="5" fill="#e8c000" transform="rotate(-20,16,50)"/>
+  <ellipse cx="64" cy="50" rx="7" ry="5" fill="#e8c000" transform="rotate(20,64,50)"/>
+  <ellipse cx="13" cy="63" rx="8" ry="16" fill="#1a1a1a" transform="rotate(-12,13,58)"/>
+  <ellipse cx="67" cy="63" rx="8" ry="16" fill="#1a1a1a" transform="rotate(12,67,58)"/>
+  <ellipse cx="30" cy="94" rx="10" ry="5" fill="#e8c000" transform="rotate(-8,30,94)"/>
+  <ellipse cx="50" cy="94" rx="10" ry="5" fill="#e8c000" transform="rotate(8,50,94)"/>
+  <ellipse cx="40" cy="45" rx="14" ry="5" fill="#e8c000"/>
+  <circle cx="40" cy="30" r="22" fill="#1a1a1a"/>
+  <ellipse cx="40" cy="33" rx="14" ry="13" fill="#f5e0c8"/>
+  <ellipse cx="40" cy="20" rx="16" ry="8" fill="#1a1a1a"/>
+  <ellipse cx="23" cy="30" rx="5" ry="9" fill="#1a1a1a"/>
+  <ellipse cx="57" cy="30" rx="5" ry="9" fill="#1a1a1a"/>
+  <path d="M26,22 Q30,28 28,32" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M40,18 Q40,24 38,28" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M54,22 Q50,28 52,32" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <ellipse cx="28" cy="37" rx="5" ry="3.5" fill="#ffb3c6" opacity=".65"/>
+  <ellipse cx="52" cy="37" rx="5" ry="3.5" fill="#ffb3c6" opacity=".65"/>
+  <ellipse cx="33" cy="31" rx="5" ry="5.5" fill="white"/>
+  <ellipse cx="47" cy="31" rx="5" ry="5.5" fill="white"/>
+  <circle cx="33" cy="32" r="3.5" fill="#333"/>
+  <circle cx="47" cy="32" r="3.5" fill="#333"/>
+  <circle cx="32" cy="30" r="1.5" fill="white"/>
+  <circle cx="46" cy="30" r="1.5" fill="white"/>
+  <path d="M37 39 Q40 42 43 39" stroke="#cc6677" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <polygon points="36,18 44,18 40,13" fill="#e8c000"/>
+  <path d="M28,44 Q40,48 52,44" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+</svg>`;
+}
+// たまごキャラの表示HTML（ぐぐがが はSVG、それ以外は絵文字）
+function eggCharHTML(c, px){
+  if(c && c.isGugu) return guguPenguinSVG(px || 40);
+  return c ? c.char : '❓';
+}
 
 // 卵のひびステージ（0〜4）→ SVG描画用
 // 各キャラの「たまごのいろ」 (hue degree for HSL)
@@ -4962,10 +5090,17 @@ function initEggState(){
     REC.eggs = {
       starsInCurrentEgg: 0,
       collected: [],      // 集めたキャラのindex一覧
-      currentEggIdx: Math.floor(Math.random()*EGG_CHARS.length),
+      currentEggIdx: Math.floor(Math.random()*EGG_BATCH), // 最初は1だんめから
     };
     saveRecord();
   }
+}
+
+// いま 出現できる たまごの上限（1だんめを全部集めたら 2だんめ解禁）
+function eggUnlockedMax(){
+  const col = (REC.eggs && REC.eggs.collected) || [];
+  const firstBatchDone = col.filter(i=>i<EGG_BATCH).length >= EGG_BATCH;
+  return firstBatchDone ? EGG_CHARS.length : EGG_BATCH;
 }
 
 // 時間帯グロークラス取得
@@ -5051,19 +5186,47 @@ function renderEggWidget(){
   renderEggCollection();
 }
 
-// コレクション表示
+// コレクション表示（2ページ：1〜50 / 51〜100）
+let ECOL_PAGE = 0;
+function setEcolPage(p){
+  ECOL_PAGE = p;
+  const t0=$('ecol-tab-0'), t1=$('ecol-tab-1');
+  if(t0) t0.classList.toggle('on', p===0);
+  if(t1) t1.classList.toggle('on', p===1);
+  renderEggCollection();
+}
 function renderEggCollection(){
   const grid = $('ecol-grid');
   if(!grid) return;
   const collected = (REC.eggs && REC.eggs.collected) || [];
+  const maxN = eggUnlockedMax();          // 解禁ずみの上限
+  const unlocked2 = maxN > EGG_BATCH;     // 2だんめ解禁ずみ？
+
+  // タブのラベル（2だんめが未解禁なら 🔒）
+  const t1 = $('ecol-tab-1');
+  if(t1) t1.textContent = unlocked2 ? '51〜100' : '🔒 51〜100';
+
+  // ヘッダーの収集数
+  const cnt = $('ecol-count');
+  if(cnt) cnt.textContent = `（${collected.length}/${EGG_CHARS.length}しゅるい）`;
+
+  const start = ECOL_PAGE * EGG_BATCH;
+  const end = Math.min(start + EGG_BATCH, EGG_CHARS.length);
   let html = '';
-  EGG_CHARS.forEach((c,i)=>{
-    const got = collected.includes(i);
-    html += `<div class="ecol-item${got?'':' locked'}" title="${got?c.name+'「'+resolveMsg(c.msg)+'」':'？？？'}" onclick="ecollTap(${i},${got})">
-      <span class="ecol-no">${i+1}</span>
-      ${got ? c.char : '❓'}
-    </div>`;
-  });
+  for(let i=start;i<end;i++){
+    const c = EGG_CHARS[i];
+    const locked = i >= maxN;             // まだ解禁されていないだんかい
+    const got = !locked && collected.includes(i);
+    if(locked){
+      html += `<div class="ecol-item locked" title="1だんめを ぜんぶ あつめると でてくるよ！">
+        <span class="ecol-no">${i+1}</span>🔒</div>`;
+    } else {
+      html += `<div class="ecol-item${got?'':' locked'}" title="${got?c.name+'「'+resolveMsg(c.msg)+'」':'？？？'}" onclick="ecollTap(${i},${got})">
+        <span class="ecol-no">${i+1}</span>
+        ${got ? eggCharHTML(c, 34) : '❓'}
+      </div>`;
+    }
+  }
   grid.innerHTML = html;
 }
 
@@ -5072,9 +5235,9 @@ function ecollTap(i, got){
   if(!got) return;
   const c = EGG_CHARS[i];
   spJa(c.name + '！' + resolveMsg(c.msg));
-  // ぷるぷる
+  // ぷるぷる（表示中ページ内の位置で要素をさがす）
   const items = document.querySelectorAll('.ecol-item');
-  const el = items[i];
+  const el = items[i - ECOL_PAGE*EGG_BATCH];
   if(el){ el.style.animation='none'; void el.offsetWidth; el.style.animation='popIn .4s ease'; }
 }
 
@@ -5115,16 +5278,18 @@ function hatchEgg(){
   // コレクションに追加
   if(!e.collected.includes(idx)) e.collected.push(idx);
 
-  // 次の卵をセット（まだ出ていないものを優先）
-  const notCollected = EGG_CHARS.map((_,i)=>i).filter(i=>!e.collected.includes(i));
+  // 次の卵をセット（解禁ずみのだんかいから・まだ出ていないものを優先）
+  const maxN = eggUnlockedMax();
+  const notCollected = [];
+  for(let i=0;i<maxN;i++){ if(!e.collected.includes(i)) notCollected.push(i); }
   e.currentEggIdx = notCollected.length > 0
     ? notCollected[Math.floor(Math.random()*notCollected.length)]
-    : Math.floor(Math.random()*EGG_CHARS.length);
+    : Math.floor(Math.random()*maxN);
   e.starsInCurrentEgg = 0;
   saveRecord();
 
   // ポップアップ表示
-  $('ehp-char').textContent = c.char;
+  $('ehp-char').innerHTML = eggCharHTML(c, 110);
   $('ehp-name').textContent = c.name;
   $('ehp-msg').textContent  = resolveMsg(c.msg);
   $('ehp-title').textContent = '🎉 うまれた！！';
@@ -5704,5 +5869,6 @@ function saveChildName(){
     </div>
   </div>
 </div>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0bdb9650095d46c08d68a9a11fdf5871"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
