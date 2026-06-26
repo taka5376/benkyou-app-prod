@@ -2329,11 +2329,11 @@ function buildMath(){
       ${dotsH}
       <div class="q-math" style="color:${MC[CM].pcol}">${q.a} ${sign} ${q.b} ＝ ？</div>
       <div style="display:flex;gap:0;justify-content:center;flex-wrap:wrap">
-        <button class="speak-btn" onclick="spJa('${esc(q.sp)}')">🔊 よんで！</button>
+        <button class="speak-btn" onclick="stopAllSpeech();spJaSeq(mathQTokens(CQ))">🔊 よんで！</button>
         ${showHint?`<button class="hint-btn" onclick="showHint(${q.a},${q.b},'${q.type}')">💡 ヒント</button>`:''}
       </div>
       <div class="hint-box" id="hbox"></div>`;
-    setTimeout(()=>spJa(q.sp||''),400);
+    setTimeout(()=>spJaSeq(mathQTokens(q)),400);
   }
   buildMathOpts(q);
 }
@@ -2373,6 +2373,7 @@ function buildMathOpts(q){
 
 // ── HINT (さくらんぼ計算 SVG図解) ──
 function showHint(a,b,type){
+  stopAllSpeech();   // 問題読み上げ等を止めてからヒントを再生
   const box=$('hbox');
   box.classList.add('show');
   const isA=(type==='add');
@@ -2427,33 +2428,39 @@ function showHint(a,b,type){
         </div>
       </div>`;
 
-    // 段階的アニメ＋音声（0を含む計算は表示しない）
-    setTimeout(()=>{
+    // ①②③を順番に：番号(いち/に/さん)を読んでから解説、ステップ間は少しあける
+    const gen = window._speakGen;
+    const alive = () => gen === window._speakGen;
+    const wgap = ms => new Promise(r => setTimeout(r, ms));
+    const sayStep = (n, tokens) =>
+      spJaSeq([n]).then(() => alive() ? wgap(250) : null).then(() => alive() ? spJaSeq(tokens) : null);
+
+    const step1 = () => {
       if(rest===0){
-        // bがちょうどneedと等しい → ステップ①はスキップ（0に分ける説明不要）
         $('skb-s1').style.display='none';
-        spJa(`${b}はそのまま${a}に足せば、${rounded}になるよ！`);
-      } else {
-        $('skb-s1').classList.add('show');
-        for(let i=0;i<need;i++) setTimeout(()=>document.getElementById(`blk-need-${i}`)?.classList.add('show'),i*60);
-        for(let i=0;i<rest;i++) setTimeout(()=>document.getElementById(`blk-rest-${i}`)?.classList.add('show'),need*60+i*60);
-        spJa(`${b}を、${need}と${rest}にわけます`);
+        return sayStep('まず',[b,'はそのまま',a,'に足せば',rounded,'になるよ']);
       }
-    },100);
-    setTimeout(()=>{
+      $('skb-s1').classList.add('show');
+      for(let i=0;i<need;i++) setTimeout(()=>document.getElementById(`blk-need-${i}`)?.classList.add('show'),i*60);
+      for(let i=0;i<rest;i++) setTimeout(()=>document.getElementById(`blk-rest-${i}`)?.classList.add('show'),need*60+i*60);
+      return sayStep('まず',[b,'を',need,'と',rest,'にわけます']);
+    };
+    const step2 = () => {
       $('skb-s2').classList.add('show');
       for(let i=0;i<Math.min(rounded,20);i++) setTimeout(()=>document.getElementById(`blk-r-${i}`)?.classList.add('show'),i*50);
-      spJa(`${a}たす${need}は、${rounded}！きりのいい数になったよ！`);
-    },2200);
-    setTimeout(()=>{
+      return sayStep('つぎに',[a,'たす',need,'は',rounded,'きりのいい数になったよ']);
+    };
+    const step3 = () => {
+      if(rest===0){ $('skb-s3').style.display='none'; return; }
       $('skb-s3').classList.add('show');
-      if(rest===0){
-        // 残りが0の場合はステップ③不要（roundedがそのまま答え）
-        $('skb-s3').style.display='none';
-      } else {
-        spJa(`${rounded}たす${rest}は、${a+b}！これが こたえだよ！`);
-      }
-    },4000);
+      return sayStep('さいごは',[rounded,'たす',rest,'は',a+b,'これが こたえだよ']);
+    };
+    Promise.resolve()
+      .then(() => alive() && step1())
+      .then(() => alive() && wgap(500))
+      .then(() => alive() && step2())
+      .then(() => alive() && wgap(500))
+      .then(() => alive() && step3());
 
   } else {
     // くり下がり
@@ -2501,32 +2508,39 @@ function showHint(a,b,type){
         </div>
       </div>`;
 
-    setTimeout(()=>{
+    // ①②③を順番に：番号(いち/に/さん)を読んでから解説、ステップ間は少しあける
+    const gen = window._speakGen;
+    const alive = () => gen === window._speakGen;
+    const wgap = ms => new Promise(r => setTimeout(r, ms));
+    const sayStep = (n, tokens) =>
+      spJaSeq([n]).then(() => alive() ? wgap(250) : null).then(() => alive() ? spJaSeq(tokens) : null);
+
+    const step1 = () => {
       if(ones===0){
-        // aがちょうど10 → ステップ①はスキップ（0に分ける説明不要）
         $('skb-s1').style.display='none';
-        spJa(`${a}は10だから、そのまま${b}をひくよ！`);
-      } else {
-        $('skb-s1').classList.add('show');
-        for(let i=0;i<10;i++) setTimeout(()=>document.getElementById(`blk-ten-${i}`)?.classList.add('show'),i*50);
-        for(let i=0;i<ones;i++) setTimeout(()=>document.getElementById(`blk-ones-${i}`)?.classList.add('show'),10*50+i*60);
-        spJa(`${a}を、10と${ones}にわけます`);
+        return sayStep('まず',[a,'は',10,'だから そのまま',b,'をひくよ']);
       }
-    },100);
-    setTimeout(()=>{
+      $('skb-s1').classList.add('show');
+      for(let i=0;i<10;i++) setTimeout(()=>document.getElementById(`blk-ten-${i}`)?.classList.add('show'),i*50);
+      for(let i=0;i<ones;i++) setTimeout(()=>document.getElementById(`blk-ones-${i}`)?.classList.add('show'),10*50+i*60);
+      return sayStep('まず',[a,'を',10,'と',ones,'にわけます']);
+    };
+    const step2 = () => {
       $('skb-s2').classList.add('show');
       for(let i=0;i<10;i++) setTimeout(()=>document.getElementById(`blk-s2-${i}`)?.classList.add('show'),i*50);
-      spJa(`10から${b}をひくと、${diff}！`);
-    },2200);
-    setTimeout(()=>{
-      if(ones===0){
-        // 残りが0の場合はステップ③不要（diffがそのまま答え）
-        $('skb-s3').style.display='none';
-      } else {
-        $('skb-s3').classList.add('show');
-        spJa(`${diff}たす${ones}は、${a-b}！これが こたえだよ！`);
-      }
-    },4000);
+      return sayStep('つぎに',[10,'から',b,'をひくと',diff]);
+    };
+    const step3 = () => {
+      if(ones===0){ $('skb-s3').style.display='none'; return; }
+      $('skb-s3').classList.add('show');
+      return sayStep('さいごは',[diff,'たす',ones,'は',a-b,'これが こたえだよ']);
+    };
+    Promise.resolve()
+      .then(() => alive() && step1())
+      .then(() => alive() && wgap(500))
+      .then(() => alive() && step2())
+      .then(() => alive() && wgap(500))
+      .then(() => alive() && step3());
   }
 }
 
@@ -3419,7 +3433,10 @@ function ans(btn,ok,correctText,emoji,correctSp,mode){
     playCorrectSFX(); zeztzReact(true);
     updateStreak(true);
     if(REVIEW) removeWrongCurrent();
-    const sp=mode==='eng'?spEn2(correctSp):spJa(praise());
+    let sp;
+    if(mode==='eng') sp=spEn2(correctSp);
+    else if(mode==='clk') sp=spJa(praise()).then(()=>clockSpeak(CQ));  // 正解を褒めてから時刻を読む
+    else sp=spJa(praise());
     const epopTarget = mode==='eng' ? 'eng-emoji' : null;
     const hatching = addStarToEgg(1);
     // 孵化演出中はnextQをcloseEggHatchに任せる
@@ -4022,7 +4039,7 @@ function showMoneyHint(){
   }).join('');
   box.innerHTML=`<div style="font-size:12px;font-weight:900;color:#D84315;text-align:center;margin-bottom:6px">💡 おなじ おかね ごとに かぞえよう</div>${rows}
     <div style="text-align:center;margin-top:6px;font-size:13px;font-weight:900;color:#555">ぜんぶ たすと…？</div>`;
-  spJa('おなじ おかねを まとめて かぞえてみよう！');
+  spJa('おなじおかねを まとめてかぞえてみよう！');
 }
 
 // ============================================================
@@ -4174,18 +4191,114 @@ function fallbackTTS(text, lang){
   return speakWith(text, lang, bv && bv.voice);
 }
 
-// 自然音声を優先しつつ、無ければGoogle翻訳TTSを使う
+// ── 事前生成音声(VOICEVOX 四国めたん／あまあま)の manifest 読み込み ──
+const AUDIO_MANIFEST = {};
+const _manifestReady = fetch('audio-manifest.json')
+  .then(r => r.json())
+  .then(m => Object.assign(AUDIO_MANIFEST, m))
+  .catch(() => {});   // 取得失敗時は無音（鳴らさない）
+
+// 事前生成mp3を1つ再生（再生中の音声は止める。無ければ無音でresolve）
+function playAudioFile(file){
+  return new Promise(resolve => {
+    if(window._currentAudio){ try{ window._currentAudio.pause(); }catch(e){} }
+    const a = new Audio('audio/' + file);
+    window._currentAudio = a;
+    a.onended = () => { if(window._currentAudio===a) window._currentAudio=null; resolve(); };
+    a.onerror = () => resolve();
+    a.play().catch(() => resolve());
+  });
+}
+
+// 正規化済み1文を事前生成音声で再生。無ければ無音（日本語のTTSフォールバックは廃止）
+function playPregenJa(text){
+  if(!text) return Promise.resolve();
+  return _manifestReady.then(() => {
+    const f = AUDIO_MANIFEST[text];
+    return f ? playAudioFile(f) : undefined;   // 事前生成が無ければ鳴らさない
+  });
+}
+
+// 自然音声: 日本語は事前生成(四国めたん)のみ。英語(en)は従来どおり（変更しない）。
 function naturalTTS(text, lang){
   if(!text) return Promise.resolve();
+  if(lang === 'ja') return playPregenJa(text);
+  // ↓ 英語はこれまでの挙動を完全に維持
   const bv=pickBestVoice(lang);
-  // 内蔵に十分自然な音声（Neural / Kyoko など）があればそれを使う
   if(bv && bv.score>=60){
     if(window._currentAudio){ try{ window._currentAudio.pause(); }catch(e){} }
     return speakWith(text, lang, bv.voice);
   }
-  // それ以外は Google翻訳TTS（失敗時は内蔵にフォールバック）
   return googleTTS(text, lang);
 }
+
+// ── 数字・フレーズの連結再生（計算解説・時計用） ──
+// tokens: 数値→nj()で読みに変換 / 文字列→そのまま。各々を正規化して事前生成mp3を順に再生。
+function spJaSeq(tokens){
+  const norm = (tokens||[])
+    .map(t => (typeof t === 'number') ? nj(t) : t)
+    .map(normalizeSpText)
+    .filter(s => s && s.trim());
+  const gen = window._speakGen;
+  return _manifestReady.then(() => {
+    // 全トークンを先読み（Audio生成・デコードの遅延でできる隙間をなくす）
+    const audios = norm.map(seg => {
+      const f = AUDIO_MANIFEST[seg];
+      if(!f) return null;
+      const a = new Audio('audio/' + f);
+      a.preload = 'auto';
+      return a;
+    });
+    const OVERLAP = 0.04; // 秒：前の音の終わり際に次を少しだけ重ねる（かぶり過ぎ防止）
+    let p = Promise.resolve();
+    audios.forEach(a => {
+      p = p.then(() => new Promise(res => {
+        if(gen !== window._speakGen || !a){ res(); return; }
+        window._currentAudio = a;   // ※詰めるため前の音はpauseせず自然に重ねる
+        let advanced = false;
+        const next = () => { if(!advanced){ advanced = true; res(); } };
+        a.onended = next;
+        a.onerror = next;
+        const pr = a.play();
+        if(pr && pr.catch) pr.catch(next);
+        // 終了の少し手前で次トークンへ進める（オーバーラップ）
+        const tick = () => {
+          if(advanced) return;
+          if(a.duration && isFinite(a.duration) && (a.duration - a.currentTime) <= OVERLAP){ next(); return; }
+          setTimeout(tick, 20);
+        };
+        tick();
+      }));
+    });
+    return p;
+  });
+}
+
+// 時計の「○じ○ふん」専用読み（gen_audio.py の hour_read/min_read と一致させること）
+function hourRead(h){
+  const s={0:'れい',1:'いち',2:'に',3:'さん',4:'よ',5:'ご',6:'ろく',7:'しち',8:'はち',9:'く'};
+  let r;
+  if(h<10) r=s[h];
+  else if(h===10) r='じゅう';
+  else if(h<20) r='じゅう'+s[h-10];
+  else if(h===20) r='にじゅう';
+  else r='にじゅう'+s[h-20];
+  return r+'じ';
+}
+function minRead(m){
+  if(m===0) return '';
+  const o={1:'いっぷん',2:'にふん',3:'さんぷん',4:'よんぷん',5:'ごふん',6:'ろっぷん',7:'ななふん',8:'はっぷん',9:'きゅうふん'};
+  const t={1:'じゅう',2:'にじゅう',3:'さんじゅう',4:'よんじゅう',5:'ごじゅう'};
+  const tp={10:'じゅっぷん',20:'にじゅっぷん',30:'さんじゅっぷん',40:'よんじゅっぷん',50:'ごじゅっぷん'};
+  if(m<10) return o[m];
+  if(tp[m]) return tp[m];
+  return t[Math.floor(m/10)]+o[m%10];
+}
+function clockReadTokens(h,m){ const a=[hourRead(h)]; if(m>0) a.push(minRead(m)); return a; }
+function clockSpeak(q){ return spJaSeq(clockReadTokens(q.h, q.m)); }
+
+// 計算（数式）問題文のトークン: "nj(a) たす/ひく nj(b) は？"
+function mathQTokens(q){ return [q.a, q.type==='add'?'たす':'ひく', q.b, 'は']; }
 
 // 読み上げテキストを自然な日本語に正規化
 function normalizeSpText(t){
@@ -4230,6 +4343,7 @@ function speakSeq(parts, lang, gap){
 
 function spJa(t){
   if(!t) return Promise.resolve();
+  stopAllSpeech();   // 再生中の音声を止めてから（ボタン重複・連打防止）
   // 文末（。．!?！？）で区切り、各文を正規化してから順に読む
   const parts = String(t).split(/(?<=[。．.!?！？])/).map(normalizeSpText);
   return speakSeq(parts, 'ja', 350);
@@ -4925,7 +5039,7 @@ function renderStudyRecord(){
 const EGG_CHARS = [
   // ── 1だんめ（1〜50）──
   {char:'🐣', name:'ひよこ',           msg:'ぴよぴよ！うまれたよ！'},
-  {char:'🐥', name:'ちびひよこ',       msg:'[NAME]だいすき！'},
+  {char:'🐥', name:'ちびひよこ',       msg:'だいすき！'},
   {char:'🐤', name:'まるひよこ',       msg:'まんまるだよ！'},
   {char:'🦆', name:'あひる',           msg:'がーがー！'},
   {char:'🐸', name:'かえる',           msg:'ぴょこぴょこ〜！'},
@@ -4938,7 +5052,7 @@ const EGG_CHARS = [
   {char:'🦅', name:'わし',             msg:'たかくとぶよ！'},
   {char:'🦉', name:'ふくろう',         msg:'ほーほー！かしこいね！'},
   {char:'🦚', name:'くじゃく',         msg:'きれいでしょ〜！'},
-  {char:'🦜', name:'オウム',           msg:'[NAME]すごい！[NAME]すごい！'},
+  {char:'🦜', name:'オウム',           msg:'すごい！すごい！'},
   {char:'🐉', name:'ドラゴン',         msg:'まほうがつかえるよ！'},
   {char:'🦄', name:'ユニコーン',       msg:'きらきら！まほうのこ！'},
   {char:'🐨', name:'コアラ',           msg:'のんびりだよ〜！'},
