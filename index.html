@@ -4380,8 +4380,8 @@ function esc(s){return s.replace(/'/g,"\\'").replace(/\n/g,' ');}
 let audioCtx=null, bgmNodes=[], bgmPlaying=false, bgmMaster=null;
 let bgmTimer=null, bgmLoopStart=0;   // 次ループの開始絶対時刻（audioCtx時計）
 
-// BGM全体の音量（小さめ：音声に被らないよう 0.08）
-const BGM_VOL=0.08;
+// BGM全体の音量（小さめ：音声に被らないよう 0.06）
+const BGM_VOL=0.06;
 
 function initAudio(){
   if(audioCtx) return;
@@ -5618,7 +5618,7 @@ function showStreakPopup(){
 // ============================================================
 const BGM_MODES = ['にぎやか','しずか','おやすみ'];
 const BGM_MODE_LABELS = {
-  'にぎやか': { emoji:'🎉', vol:0.08, bpm:120 },
+  'にぎやか': { emoji:'🎉', vol:0.06, bpm:120 },
   'しずか':   { emoji:'🎵', vol:0.04, bpm:90  },
   'おやすみ': { emoji:'🌙', vol:0.03, bpm:72  },
 };
