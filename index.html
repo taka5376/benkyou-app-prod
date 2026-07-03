@@ -4378,6 +4378,7 @@ function esc(s){return s.replace(/'/g,"\\'").replace(/\n/g,' ');}
 // BGM — 明るくポップな子ども向けBGM（小音量・音声に被らない）
 // ============================================================
 let audioCtx=null, bgmNodes=[], bgmPlaying=false, bgmMaster=null;
+let bgmTimer=null, bgmLoopStart=0;   // 次ループの開始絶対時刻（audioCtx時計）
 
 // BGM全体の音量（小さめ：音声に被らないよう 0.08）
 const BGM_VOL=0.08;
@@ -4410,6 +4411,7 @@ function note(freq,start,dur,vol=1.0,wave='triangle'){
   osc.connect(gain);
   gain.connect(dest);
   osc.start(start);osc.stop(start+dur+0.05);
+  osc._end=start+dur+0.1;   // 掃除用の終了時刻
   bgmNodes.push(osc);
 }
 
@@ -4433,6 +4435,7 @@ function drum(start,type='kick'){
   src.connect(gain);
   gain.connect(bgmMaster);
   src.start(start);
+  src._end=start+0.2;   // 掃除用の終了時刻
   bgmNodes.push(src);
 }
 
@@ -4445,15 +4448,23 @@ const N={
 
 function scheduleBGM(){
   if(!audioCtx||!bgmPlaying)return;
-  if(audioCtx.state==='suspended')return;
-  bgmNodes.forEach(n=>{try{n.stop&&n.stop()}catch(e){}});
-  bgmNodes=[];
+  if(bgmTimer){clearTimeout(bgmTimer);bgmTimer=null;}
 
   // ③ BGMモードに応じてテンポを変える（デフォルトはBPM120）
   const curBPM = [120, 90, 72][bgmModeIdx] || 120;
   const curBAR = 4 * 60 / curBPM;
 
-  const t=audioCtx.currentTime+0.05;
+  const now=audioCtx.currentTime;
+  // 次ループがまだ十分先（suspend中/復帰直後など）→ 予約せず待ち直す（多重予約防止）
+  if(bgmLoopStart>now+1.5){
+    bgmTimer=setTimeout(scheduleBGM,500);
+    return;
+  }
+  // 再生済みノードを掃除（止めない：鳴っている音はそのまま）
+  bgmNodes=bgmNodes.filter(n=>!(n._end&&n._end<now));
+
+  // 前ループの終了時刻ちょうどから次ループを予約（隙間ゼロで自然にループ）
+  const t=(bgmLoopStart>now+0.05)?bgmLoopStart:now+0.05;
   const q=curBAR/4;  // 四分音符
   const e=q/2;       // 八分音符
   const s=e/2;       // 十六分音符
@@ -4531,7 +4542,7 @@ function scheduleBGM(){
   // DRUMS — 軽快なリズム
   // ────────────────────────────────────
   for(let b=0;b<8;b++){
-    const bt=t+b*BAR;
+    const bt=t+b*curBAR;
     // キック: 1・3拍
     drum(bt,      'kick');
     drum(bt+q*2,  'kick');
@@ -4543,7 +4554,9 @@ function scheduleBGM(){
   }
 
   const totalDur=8*curBAR;
-  setTimeout(scheduleBGM,(totalDur-0.4)*1000);
+  bgmLoopStart=t+totalDur;   // 次ループはこのループの終了時刻ちょうどから
+  // 終了の1秒前に次ループを予約（音は止めないので切れ目なし）
+  bgmTimer=setTimeout(scheduleBGM,Math.max(200,(bgmLoopStart-audioCtx.currentTime-1.0)*1000));
 }
 
 function toggleBGM(){
@@ -4554,12 +4567,15 @@ function toggleBGM(){
   if(bgmPlaying){
     btn.textContent='🎵 BGM OFF';
     btn.style.background='linear-gradient(135deg,#e94560,#c0392b)';
+    bgmLoopStart=0;   // 新規スタート
     scheduleBGM();
   } else {
     btn.textContent='🎵 BGM ON';
     btn.style.background='linear-gradient(135deg,#1a1a2e,#16213e)';
+    if(bgmTimer){clearTimeout(bgmTimer);bgmTimer=null;}
     bgmNodes.forEach(n=>{try{n.stop&&n.stop(audioCtx.currentTime+0.05)}catch(e){}});
     bgmNodes=[];
+    bgmLoopStart=0;
   }
 }
 
@@ -5455,17 +5471,17 @@ function recordKanjiMaster(kanji){
 // ============================================================
 // ② タブ非表示・最小化時にBGM・音声を一時停止
 // ============================================================
-// BGMを完全停止するヘルパー（scheduleBGMの再スケジュールも防ぐ）
+// BGMを一時停止するヘルパー
+// audioCtx.suspend()はWeb Audioの時計ごと止めるので、ノードは止めない。
+// resume()すると予約済みの音が「続きから」鳴る（最初からにならない）。
 function suspendBGM(){
   if(audioCtx){
-    bgmNodes.forEach(n=>{try{n.stop&&n.stop(audioCtx.currentTime+0.02)}catch(e){}});
-    bgmNodes=[];
     try{ audioCtx.suspend(); }catch(e){}
   }
 }
 function resumeBGM(){
   if(bgmPlaying && audioCtx){
-    audioCtx.resume().then(()=>scheduleBGM()).catch(()=>{});
+    audioCtx.resume().catch(()=>{});   // 続きから再生（再スケジュールしない）
   }
 }
 
@@ -5482,10 +5498,7 @@ window.addEventListener('blur',()=>{
   stopAllSpeech();
 });
 window.addEventListener('focus',()=>{
-  if(bgmPlaying && audioCtx){
-    if(audioCtx.state==='suspended') audioCtx.resume();
-    scheduleBGM();
-  }
+  resumeBGM();   // 続きから（最初からにしない）
 });
 
 // ============================================================
@@ -5631,8 +5644,10 @@ function cycleBGMMode(){
 
   // ② フェードアウト完了後に既存ノードを停止→新テンポで再スケジュール
   setTimeout(()=>{
+    if(bgmTimer){clearTimeout(bgmTimer);bgmTimer=null;}
     bgmNodes.forEach(n=>{ try{ n.stop&&n.stop(0); }catch(e){} });
     bgmNodes = [];
+    bgmLoopStart = 0;   // 新テンポは今すぐ開始
 
     // ③ 新テンポでBGMを再開しながら音量を0→目標値へフェードイン
     bgmMaster.gain.setValueAtTime(0, audioCtx.currentTime);
