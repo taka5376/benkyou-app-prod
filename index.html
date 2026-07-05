@@ -729,6 +729,30 @@ body{
 .egg-glow-evening{filter:drop-shadow(0 0 14px rgba(255,100,50,.8)) drop-shadow(0 6px 14px rgba(0,0,0,.15));}
 .egg-glow-night  {filter:drop-shadow(0 0 14px rgba(150,80,255,.8)) drop-shadow(0 6px 14px rgba(0,0,0,.15));}
 
+/* ── キャラおひろめポップ（コレクションのキャラをタップすると大きくおどる） ── */
+#char-pop{position:fixed;inset:0;z-index:650;display:none;align-items:center;justify-content:center;pointer-events:none}
+#char-pop.on{display:flex}
+@keyframes charPopIn{
+  from{transform:scale(.2) rotate(-14deg);opacity:0}
+  60% {transform:scale(1.25) rotate(6deg);opacity:1}
+  to  {transform:scale(1) rotate(0);opacity:1}
+}
+@keyframes charSway{
+  from{transform:scale(1.04) rotate(-6deg)}
+  to  {transform:scale(1.04) rotate(6deg)}
+}
+@keyframes charPopOut{to{transform:scale(.6);opacity:0}}
+#char-pop-inner{font-size:150px;line-height:1;
+  filter:drop-shadow(0 10px 26px rgba(0,0,0,.28));
+  animation:charPopIn .5s ease, charSway .9s ease-in-out .5s infinite alternate}
+#char-pop.out #char-pop-inner{animation:charPopOut .3s ease forwards}
+#char-pop.out #char-pop-name{animation:charPopOut .3s ease forwards}
+#char-pop-name{margin-top:10px;display:inline-block;
+  background:rgba(255,255,255,.95);border:3px solid #FFD07A;border-radius:999px;
+  padding:6px 22px;font-size:19px;font-weight:900;color:#7A4F00;
+  box-shadow:0 5px 0 #E6B80055, 0 8px 22px rgba(0,0,0,.15);
+  animation:fadeUp .4s ease .15s both}
+
 /* ═══════════════════════════════════════
    🔥 ストリーク
 ═══════════════════════════════════════ */
@@ -1890,6 +1914,7 @@ function goTop(){
 function goHome(){
   REVIEW=false;
   scr('scr-home');
+  updateHeroGreeting();   // 時間帯にあわせて「おはよう/こんにちは/こんばんは」
   (()=>{
     initEggState();
     const col = REC.eggs.collected;
@@ -5049,13 +5074,24 @@ function getChildName(){
 }
 function resolveMsg(msg){ return msg.replace(/\[NAME\]/g, getChildName()); }
 
+// 時間帯にあわせたあいさつ（トップページと同じ区分）
+function getTimeGreeting(){
+  const h = new Date().getHours();
+  if(h >= 5 && h < 10)  return 'おはよう';
+  if(h >= 10 && h < 17) return 'こんにちは';
+  return 'こんばんは';
+}
+function updateHeroGreeting(){
+  const hn = $('hero-name-label');
+  if(hn) hn.textContent = `${getChildName()}、${getTimeGreeting()}！`;
+}
+
 function applyChildName(){
   const name = getChildName();
   document.title = `${name}のおべんきょう 🌟`;
   const st = $('start-name-title');
   if(st) st.textContent = `${name}の`;
-  const hn = $('hero-name-label');
-  if(hn) hn.textContent = `${name}、こんにちは！`;
+  updateHeroGreeting();
 }
 
 loadRecord();
@@ -5466,11 +5502,42 @@ function renderEggCollection(){
   grid.innerHTML = html;
 }
 
+// キャラおひろめポップ（大きく表示しておどる）
+function showCharPop(c){
+  let cp = $('char-pop');
+  if(!cp){
+    cp = document.createElement('div');
+    cp.id = 'char-pop';
+    cp.innerHTML = '<div style="text-align:center"><div id="char-pop-inner"></div><div id="char-pop-name"></div></div>';
+    document.body.appendChild(cp);
+  }
+  $('char-pop-inner').innerHTML = eggCharHTML(c, 150);
+  $('char-pop-name').textContent = c.name;
+  // アニメを最初から再生
+  cp.classList.remove('out');
+  const inner = $('char-pop-inner');
+  inner.style.animation='none'; void inner.offsetWidth; inner.style.animation='';
+  cp.classList.add('on');
+}
+function hideCharPop(){
+  const cp = $('char-pop');
+  if(!cp || !cp.classList.contains('on')) return;
+  cp.classList.add('out');                       // ふわっと退場
+  setTimeout(()=>{ cp.classList.remove('on','out'); }, 320);
+}
+
 // コレクションアイテムタップ
 function ecollTap(i, got){
   if(!got) return;
   const c = EGG_CHARS[i];
-  spJa(c.name + '！' + resolveMsg(c.msg));
+  showCharPop(c);   // 大きく登場して、声が流れているあいだ おどる
+  const gen = ++window._charPopGen || (window._charPopGen = 1);
+  spJa(c.name + '！' + resolveMsg(c.msg)).then(()=>{
+    if(gen === window._charPopGen) hideCharPop();  // 声がおわったら退場
+  });
+  // 念のため（音声が中断されて終わらない場合）10秒で自動退場
+  clearTimeout(window._charPopTimer);
+  window._charPopTimer = setTimeout(hideCharPop, 10000);
   // ぷるぷる（表示中ページ内の位置で要素をさがす）
   const items = document.querySelectorAll('.ecol-item');
   const el = items[i - ECOL_PAGE*EGG_BATCH];
@@ -5650,19 +5717,21 @@ function startApp(){
   const ss=document.getElementById('start-screen');
   if(!ss) return;
   const h=new Date().getHours();
-  let cls, emoji, msg;
+  let cls, emoji, icon, msg;
   if(h>=5 && h<10){
-    cls='time-morning'; emoji='🌅'; msg='おはよう！いっしょにべんきょうしよう！';
+    cls='time-morning'; emoji='🌅'; icon='sunrise'; msg='おはよう！いっしょにべんきょうしよう！';
   } else if(h>=10 && h<17){
-    cls='time-day'; emoji='☀️'; msg='たのしく まなぼう 🌟';
+    cls='time-day'; emoji='☀️'; icon='sun'; msg='たのしく まなぼう 🌟';
   } else if(h>=17 && h<20){
-    cls='time-evening'; emoji='🌆'; msg='もうひとがんばり！いっしょにやろう！';
+    cls='time-evening'; emoji='🌆'; icon='sunset'; msg='もうひとがんばり！いっしょにやろう！';
   } else {
-    cls='time-night'; emoji='🌙'; msg='こんばんは！いっしょにべんきょうしよう！';
+    cls='time-night'; emoji='🌙'; icon='crescent_moon'; msg='こんばんは！いっしょにべんきょうしよう！';
   }
   ss.classList.add(cls);
   const charEl=ss.querySelector('.start-char');
-  if(charEl) charEl.textContent=emoji;
+  // Fluent Emoji 3D のアイコン画像（読み込めない場合は従来の絵文字にフォールバック）
+  if(charEl) charEl.innerHTML =
+    `<img src="assets/time/${icon}_3d.png" alt="${emoji}" style="height:104px;vertical-align:bottom" onerror="this.replaceWith(this.alt)">`;
   const subEl=ss.querySelector('.start-sub');
   if(subEl) subEl.textContent=msg;
   if(cls==='time-morning'||cls==='time-day'){

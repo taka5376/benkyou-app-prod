@@ -88,6 +88,27 @@ body{
 .deco-flower{position:absolute;top:-70px;animation:decoFall linear forwards;
   filter:drop-shadow(0 3px 5px rgba(0,0,0,.10));
   pointer-events:auto;cursor:pointer;touch-action:manipulation}
+
+/* ── トップページ：ながれ星（タップでキラーン♪） ── */
+@keyframes decoShoot{
+  from{transform:translate(-16vw,0) rotate(0)}
+  to  {transform:translate(118vw,26vh) rotate(8deg)}
+}
+.deco-star{position:fixed;left:0;z-index:6;
+  animation:decoShoot linear forwards;
+  pointer-events:auto;cursor:pointer;touch-action:manipulation}
+.deco-star-core{font-size:48px;display:inline-block;
+  filter:drop-shadow(0 0 12px rgba(255,240,150,.95))}
+
+/* ── トップページ：なぞったあとに咲く花・星 ── */
+@keyframes decoTraceBloom{
+  from{transform:translate(-50%,-50%) scale(.25);opacity:.95}
+  55% {transform:translate(-50%,-62%) scale(1.15);opacity:1}
+  to  {transform:translate(-50%,-95%) scale(.9);opacity:0}
+}
+.deco-trace{position:fixed;z-index:5;pointer-events:none;
+  animation:decoTraceBloom .9s ease-out forwards;
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,.12))}
 .deco-flower .deco-sway{display:inline-block;animation:decoSwayX ease-in-out infinite alternate}
 
 /* ── 見出しフォント：もちいポップ ── */

@@ -30,13 +30,13 @@
   }
 
   /* ── しぶき／きらきらのバースト表示 ── */
-  function spawnBurst(x, y, parts){
+  function spawnBurst(x, y, parts, parent){
     var burst = document.createElement('div');
     burst.className = 'deco-burst';
     burst.style.left = x + 'px';
     burst.style.top  = y + 'px';
     burst.innerHTML = parts;
-    layer.appendChild(burst);
+    (parent || layer).appendChild(burst);
     setTimeout(function(){ burst.remove(); }, 520);
   }
   var BUB_PARTS =
@@ -151,4 +151,64 @@
   }
   for(var j=0;j<3;j++) setTimeout(spawnFlower, j*1800);
   setInterval(spawnFlower, 3600);
+
+  /* ═══ トップページのあそび ═══ */
+  var ss = document.getElementById('start-screen');
+  if(ss){
+    function topVisible(){
+      return !document.hidden &&
+             getComputedStyle(ss).display !== 'none' &&
+             ss.style.opacity !== '0';
+    }
+
+    /* ── ながれ星キャッチ：タップできたら「キラーン♪」 ── */
+    var STAR_PARTS =
+      '<span style="--dx:-20px;--dy:-14px">⭐</span>' +
+      '<span style="--dx:20px;--dy:-16px">✨</span>' +
+      '<span style="--dx:-14px;--dy:16px">✨</span>' +
+      '<span style="--dx:18px;--dy:14px">⭐</span>';
+    var starAlive = false;
+    function spawnStar(){
+      if(!topVisible() || starAlive) return;
+      starAlive = true;
+      var st = document.createElement('div');
+      st.className = 'deco-star';
+      st.style.cssText = 'top:'+rnd(6,34)+'%;animation-duration:'+(rnd(22,32)/10)+'s;';
+      st.innerHTML = '<span class="deco-star-core">🌠</span>';
+      st.addEventListener('pointerdown', function(e){
+        e.stopPropagation();
+        if(st._hit) return; st._hit = true;
+        tone(1046, 1568, 0.12, 0.10, 'triangle');                    // キラ
+        setTimeout(function(){ tone(1568, 2093, 0.16, 0.10, 'triangle'); }, 90);  // ーン♪
+        var r = st.getBoundingClientRect();
+        spawnBurst(r.left + r.width/2, r.top + r.height/2, STAR_PARTS, ss);
+        starAlive = false;
+        st.remove();
+      });
+      st.addEventListener('animationend', function(){
+        if(!st._hit){ starAlive = false; st.remove(); }
+      });
+      ss.appendChild(st);
+    }
+    setTimeout(spawnStar, 2500);
+    setInterval(function(){ if(Math.random() < 0.75) spawnStar(); }, 7000);
+
+    /* ── なぞって にじ：指のあとに花や星が咲く ── */
+    var TRACE_EMO = ['🌸','🌟','🌼','💠','✨'];
+    var lastX = -99, lastY = -99, traceCount = 0;
+    ss.addEventListener('pointermove', function(e){
+      if(!topVisible()) return;
+      var dx = e.clientX - lastX, dy = e.clientY - lastY;
+      if(dx*dx + dy*dy < 26*26) return;      // 26pxうごくごとに1つ咲く
+      lastX = e.clientX; lastY = e.clientY;
+      if(traceCount >= 40) return;           // 出しすぎ防止
+      traceCount++;
+      var t = document.createElement('span');
+      t.className = 'deco-trace';
+      t.textContent = TRACE_EMO[rnd(0, TRACE_EMO.length-1)];
+      t.style.cssText = 'left:'+e.clientX+'px;top:'+e.clientY+'px;font-size:'+rnd(16,30)+'px;';
+      ss.appendChild(t);
+      setTimeout(function(){ t.remove(); traceCount--; }, 900);
+    }, {passive:true});
+  }
 })();
