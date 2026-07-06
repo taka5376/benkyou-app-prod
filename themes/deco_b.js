@@ -167,14 +167,21 @@
       '<span style="--dx:20px;--dy:-16px">✨</span>' +
       '<span style="--dx:-14px;--dy:16px">✨</span>' +
       '<span style="--dx:18px;--dy:14px">⭐</span>';
-    var starAlive = false;
+    var starCount = 0, STAR_MAX = 2;                     // 同時に2つまで
     function spawnStar(){
-      if(!topVisible() || starAlive) return;
-      starAlive = true;
+      if(!topVisible() || starCount >= STAR_MAX) return;
+      starCount++;
+      var toRight = Math.random() < .5;                  // ながれる向きもランダム
       var st = document.createElement('div');
-      st.className = 'deco-star';
-      st.style.cssText = 'top:'+rnd(6,34)+'%;animation-duration:'+(rnd(22,32)/10)+'s;';
-      st.innerHTML = '<span class="deco-star-core">🌠</span>';
+      st.className = 'deco-star ' + (toRight ? 'r' : 'l');
+      st.style.cssText = 'top:'+rnd(5,48)+'%;'+           // 高さランダム
+        '--dy:'+rnd(6,34)+'vh;'+                          // 落ちる量もランダム
+        '--star-h:'+rnd(56,110)+'px;'+                    // 大きさもランダム（大きめも）
+        'animation-duration:'+(rnd(24,38)/10)+'s;';
+      st.innerHTML = '<span class="deco-star-body">'+
+        '<span class="deco-star-tail"></span>'+
+        '<img class="deco-star-img" src="assets/deco/glowing_star_3d.png" alt="⭐" onerror="this.replaceWith(this.alt)">'+
+        '</span>';
       st.addEventListener('pointerdown', function(e){
         e.stopPropagation();
         if(st._hit) return; st._hit = true;
@@ -182,16 +189,16 @@
         setTimeout(function(){ tone(1568, 2093, 0.16, 0.10, 'triangle'); }, 90);  // ーン♪
         var r = st.getBoundingClientRect();
         spawnBurst(r.left + r.width/2, r.top + r.height/2, STAR_PARTS, ss);
-        starAlive = false;
+        starCount--;
         st.remove();
       });
       st.addEventListener('animationend', function(){
-        if(!st._hit){ starAlive = false; st.remove(); }
+        if(!st._hit){ starCount--; st.remove(); }
       });
       ss.appendChild(st);
     }
-    setTimeout(spawnStar, 2500);
-    setInterval(function(){ if(Math.random() < 0.75) spawnStar(); }, 7000);
+    setTimeout(spawnStar, 1200);
+    setInterval(function(){ if(Math.random() < 0.85) spawnStar(); }, 4200);
 
     /* ── なぞって にじ：指のあとに花や星が咲く ── */
     var TRACE_EMO = ['🌸','🌟','🌼','💠','✨'];

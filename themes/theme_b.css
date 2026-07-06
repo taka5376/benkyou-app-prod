@@ -89,16 +89,27 @@ body{
   filter:drop-shadow(0 3px 5px rgba(0,0,0,.10));
   pointer-events:auto;cursor:pointer;touch-action:manipulation}
 
-/* ── トップページ：ながれ星（タップでキラーン♪） ── */
-@keyframes decoShoot{
-  from{transform:translate(-16vw,0) rotate(0)}
-  to  {transform:translate(118vw,26vh) rotate(8deg)}
+/* ── トップページ：ながれ星（タップでキラーン♪／向き・高さ・落下量ランダム） ── */
+@keyframes decoShootR{
+  from{transform:translate(-24vw,0)}
+  to  {transform:translate(120vw,var(--dy,22vh))}
+}
+@keyframes decoShootL{
+  from{transform:translate(120vw,0)}
+  to  {transform:translate(-24vw,var(--dy,22vh))}
 }
 .deco-star{position:fixed;left:0;z-index:6;
-  animation:decoShoot linear forwards;
+  animation:decoShootR linear forwards;
   pointer-events:auto;cursor:pointer;touch-action:manipulation}
-.deco-star-core{font-size:48px;display:inline-block;
-  filter:drop-shadow(0 0 12px rgba(255,240,150,.95))}
+.deco-star.l{animation-name:decoShootL}
+/* 星本体＋光の尾（進む向きの逆に伸びる。左向きは全体を反転） */
+.deco-star-body{display:flex;align-items:center;rotate:7deg;
+  filter:drop-shadow(0 0 12px rgba(255,225,120,.85))}
+.deco-star.l .deco-star-body{transform:scaleX(-1)}
+.deco-star-tail{width:calc(var(--star-h,66px)*1.7);height:calc(var(--star-h,66px)*.2);
+  border-radius:999px;margin-right:calc(var(--star-h,66px)*-.24);
+  background:linear-gradient(90deg,transparent,rgba(255,244,180,.9))}
+.deco-star-img{height:var(--star-h,66px)}
 
 /* ── トップページ：なぞったあとに咲く花・星 ── */
 @keyframes decoTraceBloom{
