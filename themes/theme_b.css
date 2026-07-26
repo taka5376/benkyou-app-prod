@@ -111,13 +111,14 @@ body{
   background:linear-gradient(90deg,transparent,rgba(255,244,180,.9))}
 .deco-star-img{height:var(--star-h,66px)}
 
-/* ── トップページ：なぞったあとに咲く花・星 ── */
+/* ── なぞって にじ（ぜんページ）：なぞり・タップのあとに咲く花・星 ── */
+#trace-layer{position:fixed;inset:0;pointer-events:none;z-index:10000;overflow:hidden}
 @keyframes decoTraceBloom{
   from{transform:translate(-50%,-50%) scale(.25);opacity:.95}
   55% {transform:translate(-50%,-62%) scale(1.15);opacity:1}
   to  {transform:translate(-50%,-95%) scale(.9);opacity:0}
 }
-.deco-trace{position:fixed;z-index:5;pointer-events:none;
+.deco-trace{position:fixed;pointer-events:none;
   animation:decoTraceBloom .9s ease-out forwards;
   filter:drop-shadow(0 2px 4px rgba(0,0,0,.12))}
 .deco-flower .deco-sway{display:inline-block;animation:decoSwayX ease-in-out infinite alternate}

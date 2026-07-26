@@ -200,22 +200,40 @@
     setTimeout(spawnStar, 1200);
     setInterval(function(){ if(Math.random() < 0.85) spawnStar(); }, 4200);
 
-    /* ── なぞって にじ：指のあとに花や星が咲く ── */
-    var TRACE_EMO = ['🌸','🌟','🌼','💠','✨'];
-    var lastX = -99, lastY = -99, traceCount = 0;
-    ss.addEventListener('pointermove', function(e){
-      if(!topVisible()) return;
-      var dx = e.clientX - lastX, dy = e.clientY - lastY;
-      if(dx*dx + dy*dy < 26*26) return;      // 26pxうごくごとに1つ咲く
-      lastX = e.clientX; lastY = e.clientY;
-      if(traceCount >= 40) return;           // 出しすぎ防止
-      traceCount++;
-      var t = document.createElement('span');
-      t.className = 'deco-trace';
-      t.textContent = TRACE_EMO[rnd(0, TRACE_EMO.length-1)];
-      t.style.cssText = 'left:'+e.clientX+'px;top:'+e.clientY+'px;font-size:'+rnd(16,30)+'px;';
-      ss.appendChild(t);
-      setTimeout(function(){ t.remove(); traceCount--; }, 900);
-    }, {passive:true});
   }
+
+  /* ── なぞって にじ（ぜんページ対応）：
+        なぞったあと・タップしたところに花や星が咲く ── */
+  var traceLayer = document.createElement('div');
+  traceLayer.id = 'trace-layer';
+  document.body.appendChild(traceLayer);
+
+  var TRACE_EMO = ['🌸','🌟','🌼','💠','✨'];
+  var lastX = -99, lastY = -99, traceCount = 0;
+
+  function bloomAt(x, y, big){
+    if(traceCount >= 40) return;             // 出しすぎ防止
+    traceCount++;
+    var t = document.createElement('span');
+    t.className = 'deco-trace';
+    t.textContent = TRACE_EMO[rnd(0, TRACE_EMO.length-1)];
+    t.style.cssText = 'left:'+x+'px;top:'+y+'px;font-size:'+(big?rnd(22,34):rnd(16,30))+'px;';
+    traceLayer.appendChild(t);
+    setTimeout(function(){ t.remove(); traceCount--; }, 900);
+  }
+
+  // なぞり（PC=マウス移動 / スマホ・タブレット=指でドラッグ）
+  document.addEventListener('pointermove', function(e){
+    var dx = e.clientX - lastX, dy = e.clientY - lastY;
+    if(dx*dx + dy*dy < 26*26) return;        // 26pxうごくごとに1つ咲く
+    lastX = e.clientX; lastY = e.clientY;
+    bloomAt(e.clientX, e.clientY, false);
+  }, {passive:true});
+
+  // タップ／クリックでも ぽんっと咲く（スマホ・タブレット向け）
+  document.addEventListener('pointerdown', function(e){
+    bloomAt(e.clientX, e.clientY, true);
+    bloomAt(e.clientX + rnd(-28,28), e.clientY + rnd(-28,28), false);
+    bloomAt(e.clientX + rnd(-28,28), e.clientY + rnd(-28,28), false);
+  }, {passive:true});
 })();
