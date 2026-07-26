@@ -1109,10 +1109,7 @@ body{
     </div>
     <div id="egg-collection">
       <div class="ecol-title">🎁 コレクション <span id="ecol-count"></span></div>
-      <div class="ecol-tabs">
-        <button class="ecol-tab on" id="ecol-tab-0" onclick="setEcolPage(0)">1〜50</button>
-        <button class="ecol-tab" id="ecol-tab-1" onclick="setEcolPage(1)">51〜100</button>
-      </div>
+      <div class="ecol-tabs"><!-- タブは renderEggCollection() が だんかい数ぶん作る --></div>
       <div class="ecol-grid" id="ecol-grid"></div>
     </div>
   </div>
@@ -5297,8 +5294,110 @@ const EGG_CHARS = [
   {char:'🌈', name:'にじのこ',         msg:'なな色 きれいでしょ！'},
   {char:'💎', name:'ダイヤのこ',       msg:'キラキラ たからもの！'},
   {char:'🐧', name:'ぐぐがが', isGugu:true, msg:'でんせつの ペンギン、ぐぐがが あらわる！！'},
+  // ── 3だんめ（101〜150）うみ・とり・むし ──
+  {char:'🐋', name:'シャチ',           msg:'うみの ハンター！'},
+  {char:'🪼', name:'クラゲ',           msg:'ふわふわ ただようよ〜'},
+  {char:'🐡', name:'はりせんぼん',     msg:'とげとげ ふくらむよ！'},
+  {char:'🦭', name:'トド',             msg:'おおきな こえで ほえるよ！'},
+  {char:'🐟', name:'マグロ',           msg:'うみを ぐるぐる およぐよ！'},
+  {char:'🐠', name:'クマノミ',         msg:'いそぎんちゃくが おうち！'},
+  {char:'🦈', name:'ジンベエザメ',     msg:'やさしい きょだいザメ！'},
+  {char:'🐙', name:'ミズダコ',         msg:'すみを ぷしゅー！'},
+  {char:'🦑', name:'ホタルイカ',       msg:'ひかって おどろかすよ！'},
+  {char:'🦐', name:'クルマエビ',       msg:'ぴちぴち はねるよ！'},
+  {char:'🦞', name:'ロブスター',       msg:'おおきな はさみだぞ！'},
+  {char:'🦀', name:'タカアシガニ',     msg:'あしが なが〜い！'},
+  {char:'🐚', name:'ホタテ',           msg:'かいを パカパカ とじるよ！'},
+  {char:'🐢', name:'ウミガメ',         msg:'うみを とおくまで およぐよ！'},
+  {char:'🦎', name:'イグアナ',         msg:'ひなたぼっこ だいすき！'},
+  {char:'🐊', name:'アリゲーター',     msg:'みずべの おうじゃ！'},
+  {char:'🐬', name:'シロイルカ',       msg:'まっしろで つるつる！'},
+  {char:'🐳', name:'ザトウクジラ',     msg:'うたを うたうクジラ！'},
+  {char:'🦩', name:'トキ',             msg:'ももいろの はねが きれい！'},
+  {char:'🦅', name:'タカ',             msg:'めが とっても いいんだ！'},
+  {char:'🦉', name:'シロフクロウ',     msg:'ゆきの もりに すんでるよ！'},
+  {char:'🦜', name:'インコ',           msg:'おしゃべり だいすき！'},
+  {char:'🐦', name:'ツバメ',           msg:'はるを つれてくるよ！'},
+  {char:'🐦', name:'スズメ',           msg:'ちゅんちゅん なかまと いっしょ！'},
+  {char:'🕊️', name:'カモメ',          msg:'うみの うえを とぶよ！'},
+  {char:'🦆', name:'カルガモ',         msg:'こどもと れつを つくるよ！'},
+  {char:'🦢', name:'コウノトリ',       msg:'しあわせを はこぶとり！'},
+  {char:'🦚', name:'キジ',             msg:'にほんの くにの とり！'},
+  {char:'🐓', name:'ひな',             msg:'ぴよっ！おおきくなるよ！'},
+  {char:'🦤', name:'ペリカン',         msg:'くちばしに おさかな いっぱい！'},
+  {char:'🦋', name:'アゲハチョウ',     msg:'おおきな はねで ひらひら！'},
+  {char:'🐝', name:'クマバチ',         msg:'ぶんぶん とびまわるよ！'},
+  {char:'🐞', name:'ナナホシテントウ', msg:'ななつの ほしが あるよ！'},
+  {char:'🦗', name:'バッタ',           msg:'ぴょんっと とおくまで！'},
+  {char:'🦗', name:'キリギリス',       msg:'ぎーちょん ぎーちょん♪'},
+  {char:'🪰', name:'トンボ',           msg:'すいーっと とぶ めいじん！'},
+  {char:'🪳', name:'カマキリ',         msg:'かまで じっと まつよ！'},
+  {char:'🐜', name:'アリ',             msg:'ちからもち！みんなで はたらくよ！'},
+  {char:'🪲', name:'クワガタ',         msg:'おおあごで はっけよい！'},
+  {char:'✨', name:'ホタル',           msg:'ぽうっと ひかるよ！'},
+  {char:'🦟', name:'セミ',             msg:'しゃーしゃー なつの こえ！'},
+  {char:'🕸️', name:'ジョロウグモ',    msg:'きれいな すを つくるよ！'},
+  {char:'🐛', name:'あおむし',         msg:'いつか チョウに なるんだ！'},
+  {char:'🐌', name:'ナメクジ',         msg:'ぬるぬる すすむよ〜'},
+  {char:'🪱', name:'ミミズ',           msg:'つちを ふかふかに するよ！'},
+  {char:'🦂', name:'ダンゴムシ',       msg:'まるまって みを まもる！'},
+  {char:'🐸', name:'アマガエル',       msg:'あめが ふると げこげこ！'},
+  {char:'🐸', name:'オタマジャクシ',   msg:'あしが はえてきたよ！'},
+  {char:'🦎', name:'ヤモリ',           msg:'かべを すいすい のぼるよ！'},
+  {char:'🐍', name:'アオダイショウ',   msg:'いえを まもる へびだよ！'},
+  // ── 4だんめ（151〜200）どうぶつ・きょうりゅう・レア ──
+  {char:'🐼', name:'レッサーパンダ',   msg:'しっぽが ふさふさ！'},
+  {char:'🐹', name:'カピバラ',         msg:'おんせん きもちいい〜'},
+  {char:'🦫', name:'プレーリードッグ', msg:'きょろきょろ みはりばん！'},
+  {char:'🦡', name:'ミーアキャット',   msg:'ぴんと たって みはるよ！'},
+  {char:'🐒', name:'ニホンザル',       msg:'おんせんに はいるサル！'},
+  {char:'🦍', name:'ゴリラ',           msg:'ドラミング ぽこぽこ！'},
+  {char:'🦧', name:'オランウータン',   msg:'きのうえの せいかつ！'},
+  {char:'🐨', name:'ウォンバット',     msg:'しかくい うんちを するよ！'},
+  {char:'🦘', name:'ワラビー',         msg:'ちいさな カンガルー！'},
+  {char:'🦔', name:'モグラ',           msg:'つちの なかを ほりほり！'},
+  {char:'🐭', name:'ハタネズミ',       msg:'すばやく かけるよ！'},
+  {char:'🐰', name:'ノウサギ',         msg:'ふゆは しろく なるんだ！'},
+  {char:'🐱', name:'ヤマネコ',         msg:'もりの しずかな ハンター！'},
+  {char:'🐯', name:'ホワイトタイガー', msg:'しろい けがわ かっこいい！'},
+  {char:'🦁', name:'チーター',         msg:'せかいで いちばん はやい！'},
+  {char:'🐺', name:'コヨーテ',         msg:'あおーん さばくの なかま！'},
+  {char:'🦊', name:'キタキツネ',       msg:'ゆきの うえを あるくよ！'},
+  {char:'🐻', name:'ヒグマ',           msg:'さけを つかまえるよ！'},
+  {char:'🐻‍❄️', name:'シロクマ',      msg:'こおりの うえが おうち！'},
+  {char:'🐼', name:'ジャイアントパンダ',msg:'たけが だいすき！'},
+  {char:'🐷', name:'イノシシ',         msg:'もりを かけまわるよ！'},
+  {char:'🐮', name:'すいぎゅう',       msg:'どろあそび すきなんだ！'},
+  {char:'🐴', name:'シマウマのこ',     msg:'ママの あとを ついていくよ！'},
+  {char:'🦙', name:'ビクーニャ',       msg:'たかい やまに すんでるよ！'},
+  {char:'🐘', name:'アフリカゾウ',     msg:'みみが とっても おおきい！'},
+  {char:'🦏', name:'シロサイ',         msg:'つのが ふたつ あるよ！'},
+  {char:'🦒', name:'オカピ',           msg:'キリンの なかまなんだ！'},
+  {char:'🐆', name:'ジャガー',         msg:'およぐのも じょうずだよ！'},
+  {char:'🐿️', name:'シマリス',         msg:'ほっぺに どんぐり いっぱい！'},
+  {char:'🦥', name:'アルマジロ',       msg:'かたい よろいで あんしん！'},
+  {char:'🦕', name:'トリケラトプス',   msg:'つのが みっつ あるぞ！'},
+  {char:'🦖', name:'ヴェロキラプトル', msg:'すばやい ハンターだ！'},
+  {char:'🦕', name:'ステゴサウルス',   msg:'せなかの いたが じまん！'},
+  {char:'🦕', name:'ブラキオサウルス', msg:'くびが たか〜い！'},
+  {char:'🦅', name:'プテラノドン',     msg:'そらを とんだ きょうりゅう！'},
+  {char:'🦈', name:'メガロドン',       msg:'むかしの きょだいザメ！'},
+  {char:'🐚', name:'アンモナイト',     msg:'うずまきの かせきだよ！'},
+  {char:'🦂', name:'サーベルタイガー', msg:'きばが なが〜い！'},
+  {char:'🦣', name:'ケナガマンモス',   msg:'ながい けで さむさへいき！'},
+  {char:'🦤', name:'アルケオプテリクス',msg:'とりの ごせんぞさま！'},
+  {char:'🌻', name:'ひまわりのこ',     msg:'たいようの ほうを むくよ！'},
+  {char:'🌷', name:'チューリップのこ', msg:'はるに さくよ！'},
+  {char:'🌵', name:'サボテンのこ',     msg:'とげで みずを まもるんだ！'},
+  {char:'🍀', name:'よつばのクローバー',msg:'みつけたら ラッキー！'},
+  {char:'🐉', name:'こおりのドラゴン', msg:'つめたい いぶきを はくよ！'},
+  {char:'🔥', name:'ほのおのとり',     msg:'なんども よみがえる でんせつ！'},
+  {char:'🦄', name:'ペガサス',         msg:'つばさで そらを かけるよ！'},
+  {char:'🐲', name:'うみのりゅう',     msg:'ふかい うみの ぬしだよ！'},
+  {char:'⭐', name:'ぎんがのこ',       msg:'ほしぞらを つれてきたよ！'},
+  {char:'👑', name:'でんせつのおうじゃ',msg:'ぜんぶ あつめた きみに かんぱい！'},
 ];
-// たまごの だんかい（1だんめ＝0〜49 / 2だんめ＝50〜99）
+// たまごの だんかい（50個ごとに解禁：1〜50 / 51〜100 / 101〜150 / 151〜200）
 const EGG_BATCH = 50;
 
 // 相棒ペンギン「ぐぐがが」のSVG（画面下のマスコットと同じ絵）
@@ -5368,11 +5467,20 @@ function initEggState(){
   }
 }
 
-// いま 出現できる たまごの上限（1だんめを全部集めたら 2だんめ解禁）
+// たまごの だんかい数（50個ごと。EGG_CHARSを増やせば自動でふえる）
+function eggBatchCount(){ return Math.ceil(EGG_CHARS.length / EGG_BATCH); }
+
+// いま 出現できる たまごの上限（その だんめを全部集めたら つぎの だんめが解禁）
 function eggUnlockedMax(){
   const col = (REC.eggs && REC.eggs.collected) || [];
-  const firstBatchDone = col.filter(i=>i<EGG_BATCH).length >= EGG_BATCH;
-  return firstBatchDone ? EGG_CHARS.length : EGG_BATCH;
+  const batches = eggBatchCount();
+  for(let b=0; b<batches; b++){
+    const start = b*EGG_BATCH;
+    const end   = Math.min(start+EGG_BATCH, EGG_CHARS.length);
+    const got   = col.filter(i=>i>=start && i<end).length;
+    if(got < (end-start)) return end;      // このだんめが未コンプ → ここまで
+  }
+  return EGG_CHARS.length;                 // ぜんぶコンプ
 }
 
 // 時間帯グロークラス取得
@@ -5462,9 +5570,6 @@ function renderEggWidget(){
 let ECOL_PAGE = 0;
 function setEcolPage(p){
   ECOL_PAGE = p;
-  const t0=$('ecol-tab-0'), t1=$('ecol-tab-1');
-  if(t0) t0.classList.toggle('on', p===0);
-  if(t1) t1.classList.toggle('on', p===1);
   renderEggCollection();
 }
 function renderEggCollection(){
@@ -5472,11 +5577,22 @@ function renderEggCollection(){
   if(!grid) return;
   const collected = (REC.eggs && REC.eggs.collected) || [];
   const maxN = eggUnlockedMax();          // 解禁ずみの上限
-  const unlocked2 = maxN > EGG_BATCH;     // 2だんめ解禁ずみ？
+  const batches = eggBatchCount();
 
-  // タブのラベル（2だんめが未解禁なら 🔒）
-  const t1 = $('ecol-tab-1');
-  if(t1) t1.textContent = unlocked2 ? '51〜100' : '🔒 51〜100';
+  // タブを だんかい数ぶん作る（未解禁は 🔒）
+  const tabs = document.querySelector('.ecol-tabs');
+  if(tabs){
+    if(ECOL_PAGE >= batches) ECOL_PAGE = 0;
+    let th = '';
+    for(let b=0;b<batches;b++){
+      const s = b*EGG_BATCH+1;
+      const e = Math.min((b+1)*EGG_BATCH, EGG_CHARS.length);
+      const lk = (b*EGG_BATCH) >= maxN;   // このだんめは未解禁？
+      th += `<button class="ecol-tab${b===ECOL_PAGE?' on':''}" onclick="setEcolPage(${b})">`+
+            `${lk?'🔒 ':''}${s}〜${e}</button>`;
+    }
+    tabs.innerHTML = th;
+  }
 
   // ヘッダーの収集数
   const cnt = $('ecol-count');
@@ -5490,7 +5606,7 @@ function renderEggCollection(){
     const locked = i >= maxN;             // まだ解禁されていないだんかい
     const got = !locked && collected.includes(i);
     if(locked){
-      html += `<div class="ecol-item locked" title="1だんめを ぜんぶ あつめると でてくるよ！">
+      html += `<div class="ecol-item locked" title="まえの だんかいを ぜんぶ あつめると でてくるよ！">
         <span class="ecol-no">${i+1}</span>🔒</div>`;
     } else {
       html += `<div class="ecol-item${got?'':' locked'}" title="${got?c.name+'「'+resolveMsg(c.msg)+'」':'？？？'}" onclick="ecollTap(${i},${got})">
