@@ -883,7 +883,43 @@ body{
   --shp:#FF7043; --shp-l:#FFF3EF; --shp-d:#D84315;
   --mon:#14B8A6; --mon-l:#ECFDF8; --mon-d:#0E8C7E;
   --kot:#F06292; --kot-l:#FFEEF4; --kot-d:#C2185B;
+  --kt2:#8B5CF6; --kt2-l:#F1ECFF; --kt2-d:#5B32C7;
+  --mul:#0EA5E9; --mul-l:#E6F7FF; --mul-d:#0369A1;
 }
+.c-kt2{
+  background:linear-gradient(155deg,#F1ECFF,#D9CCFF);
+  border-color:#B9A2FA;
+  box-shadow:0 8px 0 #B9A2FA88, 0 12px 28px #8B5CF618;
+}
+.c-kt2 .card-name{color:var(--kt2-d)}
+.c-kt2:active{box-shadow:0 2px 0 #B9A2FA88, 0 3px 10px #8B5CF618 !important}
+.c-mul{
+  background:linear-gradient(155deg,#E6F7FF,#BFE8FB);
+  border-color:#7DD3FC;
+  box-shadow:0 8px 0 #7DD3FC88, 0 12px 28px #0EA5E918;
+}
+.c-mul .card-name{color:var(--mul-d)}
+.c-mul:active{box-shadow:0 2px 0 #7DD3FC88, 0 3px 10px #0EA5E918 !important}
+/* ことば2：（　）のあなあき・なかま・よみとり */
+.kt2-blank{display:inline-block;min-width:1.8em;padding:0 .25em;margin:0 .1em;border-bottom:4px solid var(--kt2);color:var(--kt2-d);font-weight:900}
+.kt2-sent{font-size:26px;font-weight:900;line-height:1.6;color:#4E342E;margin:6px 0}
+.kt2-items{font-size:22px;font-weight:900;color:#4E342E;margin:4px 0}
+.kt2-story{font-size:19px;font-weight:700;line-height:1.75;color:#4E342E;text-align:left;background:#FAF7FF;border:2px solid #E4DAFF;border-radius:14px;padding:10px 14px;margin:4px 0 8px}
+.kt2-ask{font-size:19px;font-weight:900;color:var(--kt2-d);margin:4px 0}
+.kt2-story,.kt2-sent,.kt2-ask,.kt2-wrap{word-break:keep-all;overflow-wrap:anywhere}  /* ことばの とちゅうで おりかえさない（スペースで おりかえす） */
+/* かけざん：あなあき・ヒント・九九ひょう */
+.mul-hole{display:inline-block;min-width:1.1em;border-radius:10px;background:var(--mul-l);border:3px dashed var(--mul);color:var(--mul-d);padding:0 .15em}
+.mul-groups{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:8px 0}
+.mul-group{display:flex;flex-wrap:wrap;gap:2px;max-width:66px;justify-content:center;background:#fff;border:2px solid #BAE6FD;border-radius:10px;padding:4px}
+.mul-dot{width:12px;height:12px;border-radius:50%;background:var(--mul)}
+.kuku-wrap{margin:16px auto 0;max-width:420px;background:#fff;border:3px solid #BAE6FD;border-radius:18px;padding:10px 10px 12px}
+.kuku-title{font-size:16px;font-weight:900;color:var(--mul-d);text-align:center;margin-bottom:6px}
+.kuku-grid{display:grid;grid-template-columns:28px repeat(9,1fr) 20px;gap:3px;align-items:center}
+.kuku-h{font-size:12px;font-weight:900;color:#78909C;text-align:center}
+.kuku-c{aspect-ratio:1;border-radius:6px;background:#F1F5F9;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;color:#fff}
+.kuku-c.on{background:var(--mul)}
+.kuku-star{font-size:13px;text-align:center}
+.kuku-msg{font-size:13px;font-weight:700;color:#5D4037;text-align:center;margin-top:8px}
 .c-mon{
   background:linear-gradient(155deg,#ECFDF8,#C8F2E9);
   border-color:#5FD9C4;
@@ -1012,6 +1048,11 @@ body{
       <div class="card-name">ひきざん</div>
       <div class="card-hint">Lv1〜5</div>
     </div>
+    <div class="card c-mul" onclick="showLevel('mul')">
+      <span class="card-ic">✖️</span>
+      <div class="card-name">かけざん</div>
+      <div class="card-hint">Lv1〜5 くく</div>
+    </div>
     <div class="card c-eng" onclick="showLevel('eng')">
       <span class="card-ic">🌍</span>
       <div class="card-name">えいご</div>
@@ -1052,6 +1093,11 @@ body{
       <span class="card-ic">💬</span>
       <div class="card-name">ことば</div>
       <div class="card-hint">Lv1〜5 よみ・つづり</div>
+    </div>
+    <div class="card c-kt2" onclick="showLevel('kt2')">
+      <span class="card-ic">📝</span>
+      <div class="card-name">ことば2</div>
+      <div class="card-hint">Lv1〜5 なかま・じょし・よみとり</div>
     </div>
   </div>
   <button id="review-btn" onclick="startReview()" style="display:none">
@@ -1233,6 +1279,11 @@ body{
     <div class="parent-sec-title">📊 がくしゅうきろく</div>
     <div class="parent-grid" id="parent-rec-grid"></div>
     <div style="margin-top:12px;font-size:13px;color:#8D6E63;font-weight:700;text-align:center" id="parent-star-total"></div>
+  </div>
+
+  <!-- くくひょう -->
+  <div class="parent-section">
+    <div class="kuku-wrap" id="parent-kuku" style="margin-top:0"></div>
   </div>
 
   <!-- たまごコレクション -->
@@ -1825,6 +1876,128 @@ let WRONG=[];         // まちがえた問題の保存リスト（localStorage�
 // ============================================================
 // MODE CONFIG
 // ============================================================
+// ============================================================
+// ことば2（kt2）：なかまことば / じょし / くとうてん / よみとり
+//   読み上げ文は kt2Read / kt2Say で作る（tools/gen_audio.py と同じ規則にすること）
+//   Lv1 name: {type:'name', e, items(、区切り), a, w[3]}  odd: {type:'odd', ae, a, we[3], w[3]}
+//   Lv2/3 : {e, pre, post, a, w[3]}  →  pre（　）post
+//   Lv4   : {e, a(ただしい文), w[1](まちがいの文)}
+//   Lv5   : {story, q, a, w[3]}
+// ============================================================
+const KOTOBA2={
+  1:[
+    {type:"name", e:"🍎🍌🍇", items:"りんご、バナナ、ぶどう", a:"くだもの", w:["やさい","のりもの","どうぶつ"]},
+    {type:"name", e:"🥕🥬🥒", items:"にんじん、キャベツ、きゅうり", a:"やさい", w:["くだもの","おかし","のみもの"]},
+    {type:"name", e:"🚗🚃✈️", items:"くるま、でんしゃ、ひこうき", a:"のりもの", w:["どうぶつ","くだもの","いろ"]},
+    {type:"name", e:"🐶🐱🐰", items:"いぬ、ねこ、うさぎ", a:"どうぶつ", w:["のりもの","やさい","おかし"]},
+    {type:"name", e:"✏️📏📒", items:"えんぴつ、ものさし、ノート", a:"ぶんぼうぐ", w:["たべもの","のりもの","どうぶつ"]},
+    {type:"name", e:"🌸🌻🍁", items:"はる、なつ、あき", a:"きせつ", w:["てんき","いろ","からだ"]},
+    {type:"name", e:"☀️☔❄️", items:"はれ、あめ、ゆき", a:"てんき", w:["きせつ","いろ","のりもの"]},
+    {type:"name", e:"👀👂👃", items:"め、みみ、はな", a:"からだ", w:["どうぶつ","てんき","やさい"]},
+    {type:"name", e:"🔴🔵🟡", items:"あか、あお、きいろ", a:"いろ", w:["かたち","てんき","からだ"]},
+    {type:"name", e:"🍪🍫🍬", items:"クッキー、チョコレート、キャンディ", a:"おかし", w:["やさい","くだもの","のりもの"]},
+    {type:"odd", ae:"🚃", a:"でんしゃ", we:["🐶","🐱","🐰"], w:["いぬ","ねこ","うさぎ"]},
+    {type:"odd", ae:"🍎", a:"りんご", we:["🥕","🥬","🥒"], w:["にんじん","キャベツ","きゅうり"]},
+    {type:"odd", ae:"🐟", a:"さかな", we:["🚗","🚲","🚌"], w:["くるま","じてんしゃ","バス"]},
+    {type:"odd", ae:"🍙", a:"おにぎり", we:["✏️","📏","✂️"], w:["えんぴつ","ものさし","はさみ"]},
+    {type:"odd", ae:"🐘", a:"ぞう", we:["🍎","🍊","🍓"], w:["りんご","みかん","いちご"]},
+  ],
+  2:[
+    {e:"🌧️", pre:"あめ",            post:"ふる。",                 a:"が", w:["の","と","へ"]},
+    {e:"🌸", pre:"はな",            post:"さく。",                 a:"が", w:["の","と","へ"]},
+    {e:"🍃", pre:"つよい かぜ",      post:"ふく。",                 a:"が", w:["の","と","へ"]},
+    {e:"👟", pre:"あめで くつ",      post:"ぬれた。",               a:"が", w:["の","と","へ"]},
+    {e:"👜", pre:"これは ママ",      post:"かばん です。",          a:"の", w:["が","と","へ"]},
+    {e:"🧢", pre:"これは ぼく",      post:"ぼうし です。",          a:"の", w:["が","と","へ"]},
+    {e:"🐘", pre:"ぞう",            post:"はなは ながい。",        a:"の", w:["が","と","へ"]},
+    {e:"📕", pre:"これは せんせい",   post:"ほん です。",            a:"の", w:["が","と","へ"]},
+    {e:"🧸", pre:"ぼくは ともだち",   post:"あそぶ。",               a:"と", w:["が","の","へ"]},
+    {e:"🐱", pre:"ねこ",            post:"いぬが いっしょに ねて いる。", a:"と", w:["が","の","へ"]},
+    {e:"🍎", pre:"りんご",          post:"みかんを かう。",        a:"と", w:["が","の","へ"]},
+    {e:"🏫", pre:"がっこう",         post:"いきます。",             a:"へ", w:["が","の","と"]},
+    {e:"🌊", pre:"うみ",            post:"いこう。",               a:"へ", w:["が","の","と"]},
+    {e:"🏃", pre:"こうえん",         post:"はしって いく。",        a:"へ", w:["が","の","と"]},
+    {e:"🏠", pre:"おうち",          post:"かえる。",               a:"へ", w:["が","の","と"]},
+  ],
+  3:[
+    {e:"🛝", pre:"こうえん",         post:"あそぶ。",               a:"で", w:["に","の","が"]},
+    {e:"✂️", pre:"はさみ",          post:"かみを きる。",          a:"で", w:["に","の","へ"]},
+    {e:"🖍️", pre:"クレヨン",         post:"えを かく。",            a:"で", w:["に","へ","と"]},
+    {e:"🥢", pre:"おはし",          post:"ごはんを たべる。",      a:"で", w:["に","へ","の"]},
+    {e:"📚", pre:"へや",            post:"ほんを よむ。",          a:"で", w:["に","へ","が"]},
+    {e:"🏊", pre:"プール",          post:"およぐ。",               a:"で", w:["に","の","が"]},
+    {e:"✏️", pre:"えんぴつ",         post:"なまえを かく。",        a:"で", w:["に","へ","が"]},
+    {e:"🪑", pre:"いす",            post:"すわる。",               a:"に", w:["で","の","と"]},
+    {e:"⏰", pre:"しちじ",          post:"おきる。",               a:"に", w:["で","の","へ"]},
+    {e:"🐟", pre:"いけ",            post:"さかなが いる。",        a:"に", w:["で","へ","と"]},
+    {e:"🚌", pre:"バス",            post:"のる。",                 a:"に", w:["で","へ","の"]},
+    {e:"🎁", pre:"ぼくは ともだち",   post:"プレゼントを あげる。",   a:"に", w:["で","が","を"]},
+    {e:"🖼️", pre:"かべ",            post:"えを はる。",            a:"に", w:["で","の","が"]},
+    {e:"🌙", pre:"よる",            post:"なると ほしが でる。",   a:"に", w:["で","の","へ"]},
+    {e:"🧺", pre:"かご",            post:"りんごを いれる。",      a:"に", w:["で","が","を"]},
+  ],
+  4:[
+    {e:"☀️", a:"きょうは はれです。",                 w:["きょうは。はれです"]},
+    {e:"🍙", a:"おにぎりを たべました。",             w:["おにぎりを。たべました"]},
+    {e:"🐶", a:"いぬが はしります。",                 w:["いぬが。はしります"]},
+    {e:"🌙", a:"よるに なりました。ねる じかんです。", w:["よるに なりました ねる。じかんです"]},
+    {e:"🎒", a:"がっこうへ いきます。",               w:["がっこう。へ いきます"]},
+    {e:"🌅", a:"あさ、ぼくは はやく おきた。",         w:["あ、さ ぼくは はやく おきた。"]},
+    {e:"🛒", a:"りんご、みかん、ぶどうを かった。",     w:["りん、ご みかん、ぶどうを かった。"]},
+    {e:"☔", a:"あめが ふったので、かさを さした。",   w:["あめが ふった、ので かさを さした。"]},
+    {e:"🐱", a:"ねこは、ねむそうに あくびを した。",   w:["ねこは ねむ、そうに あくびを した。"]},
+    {e:"🎵", a:"ぼくは、うたが すきです。",           w:["ぼくは うた、が すきです。"]},
+    {e:"🌞", a:"「おはよう」と ママが いいました。",   w:["おは「よう」と ママが いいました。"]},
+    {e:"🍚", a:"「いただきます」と みんなで いった。", w:["「いただき」ます と みんなで いった。"]},
+    {e:"👋", a:"せんせいが「さようなら」と いった。", w:["せんせいが さよう「なら」と いった。"]},
+    {e:"🎂", a:"「おめでとう」と ともだちが いった。", w:["おめでとう「と」ともだちが いった。"]},
+    {e:"🐸", a:"かえるが「けろけろ」と なきました。",   w:["かえる「が けろけろ」と なきました。"]},
+  ],
+  5:[
+    {story:"たろうくんは あさ こうえんへ いきました。こうえんで ともだちと ボールで あそびました。", q:"たろうくんは どこへ いきましたか？", a:"こうえん", w:["がっこう","うみ","おみせ"]},
+    {story:"はなちゃんは おかあさんと ケーキを つくりました。いちごを たくさん のせました。", q:"はなちゃんは なにを つくりましたか？", a:"ケーキ", w:["クッキー","おにぎり","カレー"]},
+    {story:"にわに ねこが いました。ねこは ひなたで ねむって いました。", q:"ねこは なにを して いましたか？", a:"ねむって いた", w:["はしって いた","たべて いた","ないて いた"]},
+    {story:"きのう ゆきが たくさん ふりました。けんたくんは ゆきだるまを つくりました。", q:"ゆきが ふったのは いつですか？", a:"きのう", w:["きょう","あした","けさ"]},
+    {story:"ゆいちゃんは あかい かさを さして がっこうへ いきました。", q:"かさは なにいろですか？", a:"あか", w:["あお","きいろ","みどり"]},
+    {story:"こうたくんは おじいちゃんと つりに いきました。おおきな さかなが つれました。", q:"こうたくんは だれと つりに いきましたか？", a:"おじいちゃん", w:["おばあちゃん","おとうさん","ともだち"]},
+    {story:"うさぎが はたけで にんじんを みつけました。うさぎは にんじんを ぽりぽり たべました。", q:"うさぎは なにを たべましたか？", a:"にんじん", w:["キャベツ","りんご","くさ"]},
+    {story:"あさ、そらは はれて いました。でも、ひるから あめが ふって きました。", q:"ひるから どう なりましたか？", a:"あめが ふった", w:["はれた","ゆきが ふった","かぜが ふいた"]},
+    {story:"みかちゃんは たんじょうびに あたらしい くつを もらいました。とても うれしかったです。", q:"みかちゃんは なにを もらいましたか？", a:"くつ", w:["ぼうし","ほん","ぬいぐるみ"]},
+    {story:"えきで まって いると、あおい でんしゃが きました。ぼくは その でんしゃに のりました。", q:"なにいろの でんしゃが きましたか？", a:"あお", w:["あか","きいろ","みどり"]},
+    {story:"ゆうがた、ひろくんは いぬの さんぽに いきました。いぬは うれしそうに しっぽを ふりました。", q:"ひろくんが さんぽに いったのは いつですか？", a:"ゆうがた", w:["あさ","ひる","よる"]},
+    {story:"そうたくんは としょかんで きょうりゅうの ほんを かりました。", q:"そうたくんは どこで ほんを かりましたか？", a:"としょかん", w:["がっこう","おみせ","こうえん"]},
+    {story:"りすが どんぐりを みっつ ひろいました。そして、ひとつ たべました。", q:"りすは どんぐりを いくつ ひろいましたか？", a:"みっつ", w:["ひとつ","ふたつ","よっつ"]},
+    {story:"ももちゃんが ないて いました。まいちゃんが「だいじょうぶ？」と こえを かけました。", q:"こえを かけたのは だれですか？", a:"まいちゃん", w:["ももちゃん","せんせい","おかあさん"]},
+    {story:"なつやすみに かぞくで うみへ いきました。ぼくは すなで おしろを つくりました。", q:"ぼくは すなで なにを つくりましたか？", a:"おしろ", w:["いえ","やま","トンネル"]},
+  ],
+};
+// 読み上げ文（gen_audio.py の kt2_read / kt2_say と同じ規則）
+function kt2Read(q,lv){
+  if(lv===1) return q.type==='name' ? `${q.items}。なんの なかまかな？` : 'なかまはずれは どれかな？';
+  if(lv===2||lv===3) return `${q.pre}。${q.post}`;
+  if(lv===4) return q.a;
+  return `${q.story}${q.q}`;
+}
+function kt2Say(q,lv){
+  if(lv===1) return q.type==='name' ? `${q.a}の なかま！` : `なかまはずれは ${q.a}！`;
+  if(lv===2||lv===3) return `${q.pre}${q.a} ${q.post}`;
+  if(lv===4) return q.a;
+  return `こたえは ${q.a}！`;
+}
+
+// くくの となえかた（KUKU_YOMI[a-1][b-1] = a×b）
+const KUKU_YOMI=[
+  ["いんいちが いち","いんにが に","いんさんが さん","いんしが し","いんごが ご","いんろくが ろく","いんしちが しち","いんはちが はち","いんくが く"],
+  ["にいちが に","ににんが し","にさんが ろく","にしが はち","にご じゅう","にろく じゅうに","にしち じゅうし","にはち じゅうろく","にく じゅうはち"],
+  ["さんいちが さん","さんにが ろく","さざんが く","さんし じゅうに","さんご じゅうご","さぶろく じゅうはち","さんしち にじゅういち","さんぱ にじゅうし","さんく にじゅうしち"],
+  ["しいちが し","しにが はち","しさん じゅうに","しし じゅうろく","しご にじゅう","しろく にじゅうし","ししち にじゅうはち","しは さんじゅうに","しく さんじゅうろく"],
+  ["ごいちが ご","ごに じゅう","ごさん じゅうご","ごし にじゅう","ごご にじゅうご","ごろく さんじゅう","ごしち さんじゅうご","ごは しじゅう","ごっく しじゅうご"],
+  ["ろくいちが ろく","ろくに じゅうに","ろくさん じゅうはち","ろくし にじゅうし","ろくご さんじゅう","ろくろく さんじゅうろく","ろくしち しじゅうに","ろくは しじゅうはち","ろっく ごじゅうし"],
+  ["しちいちが しち","しちに じゅうし","しちさん にじゅういち","しちし にじゅうはち","しちご さんじゅうご","しちろく しじゅうに","しちしち しじゅうく","しちは ごじゅうろく","しちく ろくじゅうさん"],
+  ["はちいちが はち","はちに じゅうろく","はちさん にじゅうし","はちし さんじゅうに","はちご しじゅう","はちろく しじゅうはち","はちしち ごじゅうろく","はっぱ ろくじゅうし","はっく しちじゅうに"],
+  ["くいちが く","くに じゅうはち","くさん にじゅうしち","くし さんじゅうろく","くご しじゅうご","くろく ごじゅうし","くしち ろくじゅうさん","くは しちじゅうに","くく はちじゅういち"],
+];
+
 const MC={
   add:{name:"たしざん", ic:"➕", col:"var(--add)", pcol:"#FF6B35",
     lv:[
@@ -1889,6 +2062,22 @@ const MC={
       {n:"のばすおと②",       d:"せんせい・こおり えやおの れいがい"},
       {n:"カタカナのかたち",   d:"シとツ・ソとン にてる字の みわけ"},
       {n:"つづり・ぎおんご",   d:"スリッパ・ワンワン ただしいのは？"},
+    ]},
+  kt2:{name:"ことば2", ic:"📝", col:"var(--kt2)", pcol:"#8B5CF6",
+    lv:[
+      {n:"なかまことば",         d:"なかまを みつけよう"},
+      {n:"じょし①",              d:"「が・の・と・へ」を いれよう"},
+      {n:"じょし②",              d:"「で・に」を いれよう"},
+      {n:"まる・てん・かぎ",       d:"「。」「、」「 」の ただしい かきかた"},
+      {n:"よみとり",             d:"おはなしを よんで こたえよう"},
+    ]},
+  mul:{name:"かけざん", ic:"✖️", col:"var(--mul)", pcol:"#0EA5E9",
+    lv:[
+      {n:"2のだん・5のだん", d:"くくの はじめの いっぽ"},
+      {n:"3のだん・4のだん", d:"じゅんばんに となえよう"},
+      {n:"6のだん・7のだん", d:"ヒントなしで ちょうせん"},
+      {n:"8・9・1のだん",   d:"むずかしい だんも がんばろう"},
+      {n:"くくマスター",     d:"ぜんぶの だん＋あなあき もんだい"},
     ]},
 };
 
@@ -2006,7 +2195,9 @@ function showLevel(mode){
       <div class="lv-stars">${stars(i)}</div>
     </button>`;
   });
-  h+=`</div></div>`;
+  h+=`</div>`;
+  if(mode==='mul') h+=`<div class="kuku-wrap">${kukuTableHTML()}</div>`;
+  h+=`</div>`;
   $('lv-wrap').outerHTML=h;
 }
 
@@ -2043,6 +2234,8 @@ function buildQ(mode,lv){
   if(mode==='eng') return shuffle([...ENG[lv]]).slice(0,10);
   if(mode==='kan') return shuffle([...KAN[lv]]).slice(0,10);
   if(mode==='kot') return shuffle([...KOTOBA[lv]]).slice(0,10);
+  if(mode==='kt2') return shuffle([...KOTOBA2[lv]]).slice(0,10);
+  if(mode==='mul') return buildMulQ(lv);
   if(mode==='clk'){
     // 連続で同じ時刻が出ないよう生成
     return (()=>{
@@ -2140,6 +2333,8 @@ function renderQ(){
   if(CM==='eng') buildEng();
   else if(CM==='kan') buildKan();
   else if(CM==='kot') buildKotoba();
+  else if(CM==='kt2') buildKotoba2();
+  else if(CM==='mul') buildMul();
   else if(CM==='clk') buildClock();
   else if(CM==='shp') buildShape();
   else if(CM==='mon') buildMoney();
@@ -2350,6 +2545,208 @@ function ansKotoba(btn,ok,q){
       btn.disabled=false;
       ANS=false;
     });
+  }
+}
+
+// ── ことば2（kt2）──
+function buildKotoba2(){
+  const q=CQ, lv=CL;
+  const readText=kt2Read(q,lv);
+  let label, body='', opts;
+  if(lv===1){
+    if(q.type==='name'){
+      label='なんの なかま？';
+      body=`<div class="q-main" style="font-size:54px;min-height:64px;display:flex;align-items:center;justify-content:center">${q.e}</div>
+        <div class="kt2-items">${q.items}</div>`;
+      opts=[{t:q.a,ok:true},...q.w.map(x=>({t:x,ok:false}))];
+    } else {
+      label='なかまはずれは どれ？';
+      body=`<div class="q-main" style="font-size:54px;min-height:64px;display:flex;align-items:center;justify-content:center">🤔</div>`;
+      opts=[{t:`${q.ae} ${q.a}`,ok:true},...q.w.map((x,i)=>({t:`${q.we[i]} ${x}`,ok:false}))];
+    }
+  } else if(lv===2||lv===3){
+    label='（　）に はいる ことばは？';
+    body=`<div class="q-main" style="font-size:54px;min-height:64px;display:flex;align-items:center;justify-content:center">${q.e}</div>
+      <div class="kt2-sent">${q.pre}<span class="kt2-blank" id="kt2-blank">？</span> ${q.post}</div>`;
+    opts=[{t:q.a,ok:true},...q.w.map(x=>({t:x,ok:false}))];
+  } else if(lv===4){
+    label='ただしい かきかたは どっち？';
+    body=`<div class="q-main" style="font-size:64px;min-height:76px;display:flex;align-items:center;justify-content:center">${q.e}</div>`;
+    opts=[{t:q.a,ok:true},...q.w.map(x=>({t:x,ok:false}))];
+  } else {
+    label='おはなしを よんで こたえよう';
+    body=`<div class="kt2-story">${q.story}</div><div class="kt2-ask">${q.q}</div>`;
+    opts=[{t:q.a,ok:true},...q.w.map(x=>({t:x,ok:false}))];
+  }
+  $('qcard').innerHTML=`
+    <div class="q-label">${label}</div>
+    ${body}
+    <div style="display:flex;gap:0;justify-content:center;flex-wrap:wrap">
+      <button class="speak-btn" onclick="spJa('${esc(readText)}')">🔊 よんで！</button>
+    </div>`;
+  shuffle(opts).forEach(o=>{
+    const b=mk('button','ch');
+    if(lv===4){ b.style.fontSize='19px'; b.style.gridColumn='1 / -1'; b.classList.add('kt2-wrap'); }
+    else if(lv===2||lv===3){ b.style.fontSize='30px'; b.style.fontWeight='900'; }
+    else b.style.fontSize='20px';
+    b.textContent=o.t;
+    b.onclick=()=>ansKotoba2(b,o.ok,q);
+    $('choices').appendChild(b);
+  });
+  setTimeout(()=>spJa(readText),500);
+}
+
+function ansKotoba2(btn,ok,q){
+  if(ANS)return; ANS=true;
+  if(ok){
+    btn.classList.add('ok');
+    document.querySelectorAll('.ch').forEach(b=>{ if(b!==btn) b.disabled=true; });
+    const bl=$('kt2-blank'); if(bl) bl.textContent=q.a;   // （　）に こたえを いれて みせる
+    SS++; TS++; $('total-star').textContent=TS;
+    showFB(true);
+    playCorrectSFX(); zeztzReact(true);
+    updateStreak(true);
+    if(REVIEW) removeWrongCurrent();
+    const hatching = addStarToEgg(1);
+    spJa(kt2Say(q,CL)).then(()=>setTimeout(()=>{ if(!hatching) nextQ(); }, 500));
+  } else {
+    showFB(false);
+    playWrongSFX(); zeztzReact(false);
+    updateStreak(false);
+    recordWrong();
+    btn.classList.add('ng');
+    btn.disabled=true;
+    spJa('もういちどやってみよう！').then(()=>{
+      btn.classList.remove('ng');
+      btn.disabled=false;
+      ANS=false;
+    });
+  }
+}
+
+// ── かけざん（mul）──
+const MUL_DANS={1:[2,5],2:[3,4],3:[6,7],4:[8,9,1],5:[1,2,3,4,5,6,7,8,9]};
+function buildMulQ(lv){
+  const dans=MUL_DANS[lv];
+  const qs=[], used=new Set();
+  const push=(a,b,hole=null)=>{ used.add(`${a}x${b}`); qs.push({type:'mul',a,b,ans:a*b,hole,e:'⭐'}); };
+  if(lv<=4){
+    // 前半5問：ひとつの だんを じゅんばんに（例 3×4, 3×5 …）
+    const d=dans[rn(0,dans.length-1)], k=rn(1,5);
+    for(let i=0;i<5;i++) push(d,k+i);
+  }
+  // のこり：だんの なかから バラバラ（おなじ もんだい・れんぞくで おなじ こたえは さける）
+  let tries=0;
+  while(qs.length<10 && tries++<500){
+    const a=dans[rn(0,dans.length-1)], b=rn(1,9);
+    if(used.has(`${a}x${b}`)) continue;
+    const prev=qs[qs.length-1];
+    if(prev && prev.ans===a*b) continue;
+    push(a,b);
+  }
+  if(lv===5){
+    // 10問のうち3問を あなあき（□×b＝こたえ / a×□＝こたえ）に
+    shuffle([...Array(10).keys()]).slice(0,3).forEach(i=>{ qs[i].hole = Math.random()<.5 ? 'a' : 'b'; });
+  }
+  return qs;
+}
+function mulAnswer(q){ return q.hole==='a' ? q.a : q.hole==='b' ? q.b : q.ans; }
+// 問題の読み上げトークン（例「さん かける よん は」「なに かける よん で じゅうに」）
+function mulQTokens(q){
+  if(q.hole==='a') return ['なに','かける',q.b,'で',q.ans];
+  if(q.hole==='b') return [q.a,'かける','なに','で',q.ans];
+  return [q.a,'かける',q.b,'は'];
+}
+function kukuSay(q){ return KUKU_YOMI[q.a-1][q.b-1]+'！'; }
+function mulChoices(q){
+  const ans=mulAnswer(q), ws=new Set();
+  if(q.hole){
+    // あなあき：1〜9 の となりの かず
+    shuffle([ans-1,ans+1,ans-2,ans+2,ans+3,ans-3]).forEach(v=>{ if(ws.size<3 && v>=1 && v<=9 && v!==ans) ws.add(v); });
+    for(let v=1; ws.size<3 && v<=9; v++) if(v!==ans) ws.add(v);
+  } else {
+    const {a,b}=q;
+    // よくある まちがい：となりの こたえ・となりの だん・たしざん
+    const near=shuffle([a*(b+1),a*(b-1),(a+1)*b,(a-1)*b]).filter(v=>v>0 && v!==ans);
+    near.forEach(v=>{ if(ws.size<2) ws.add(v); });
+    if(a+b!==ans && !ws.has(a+b) && Math.random()<.5) ws.add(a+b);
+    near.forEach(v=>{ if(ws.size<3) ws.add(v); });
+    for(let d=1; ws.size<3 && d<=10; d++){
+      [ans+d,ans-d].forEach(v=>{ if(ws.size<3 && v>0 && v!==ans) ws.add(v); });
+    }
+  }
+  return shuffle([ans,...ws]);
+}
+function buildMul(){
+  const q=CQ;
+  const H='<span class="mul-hole">□</span>';
+  const expr = q.hole==='a' ? `${H} × ${q.b} ＝ ${q.ans}`
+             : q.hole==='b' ? `${q.a} × ${H} ＝ ${q.ans}`
+             : `${q.a} × ${q.b} ＝ ？`;
+  const showHint = CL<=2 && !q.hole;
+  $('qcard').innerHTML=`
+    <div class="q-label">${q.hole?'□に はいる かずは？':'かけざん'}</div>
+    <div class="q-math" style="color:${MC.mul.pcol}">${expr}</div>
+    <div style="display:flex;gap:0;justify-content:center;flex-wrap:wrap">
+      <button class="speak-btn" onclick="stopAllSpeech();spJaSeq(mulQTokens(CQ))">🔊 よんで！</button>
+      ${showHint?`<button class="hint-btn" onclick="showMulHint()">💡 ヒント</button>`:''}
+    </div>
+    <div class="hint-box" id="hbox"></div>`;
+  setTimeout(()=>spJaSeq(mulQTokens(q)),400);
+  const right=mulAnswer(q);
+  mulChoices(q).forEach(c=>{
+    const b=mk('button','ch');
+    b.style.fontSize='28px'; b.style.fontWeight='900';
+    b.textContent=c;
+    b.onclick=()=>ans(b, c===right, String(right), '✖️', null, 'mul');
+    $('choices').appendChild(b);
+  });
+}
+// ヒント：●の まとまり（3×4 なら ●●● が 4こ）
+function showMulHint(){
+  stopAllSpeech();
+  const q=CQ, box=$('hbox'); if(!box) return;
+  const grp=Array.from({length:q.b}).map(()=>
+    `<div class="mul-group">${'<span class="mul-dot"></span>'.repeat(q.a)}</div>`).join('');
+  box.innerHTML=`<div class="mul-groups">${grp}</div>
+    <div style="font-size:16px;font-weight:900;color:var(--mul-d);text-align:center">${q.a}が ${q.b}こぶん だね</div>`;
+  box.classList.add('show');
+  spJaSeq([q.a,'が',q.b,'こぶん だね']);
+}
+
+// ── くくひょう ──
+function kukuRec(){ if(!REC.kuku) REC.kuku={}; return REC.kuku; }
+function markKuku(q){
+  if(!q || q.type!=='mul') return;
+  const k=kukuRec(), key=`${q.a}x${q.b}`;
+  if(!k[key]){ k[key]=true; saveRecord(); }
+}
+function kukuCount(){ return Object.keys(kukuRec()).length; }
+function kukuTableHTML(){
+  const k=kukuRec();
+  let h='<div class="kuku-grid"><span></span>';
+  for(let b=1;b<=9;b++) h+=`<span class="kuku-h">${b}</span>`;
+  h+='<span></span>';
+  for(let a=1;a<=9;a++){
+    h+=`<span class="kuku-h">${a}</span>`;
+    let full=true;
+    for(let b=1;b<=9;b++){
+      const on=!!k[`${a}x${b}`]; if(!on) full=false;
+      h+=`<span class="kuku-c${on?' on':''}">${on?a*b:''}</span>`;
+    }
+    h+=`<span class="kuku-star">${full?'⭐':''}</span>`;
+  }
+  h+='</div>';
+  const n=kukuCount();
+  const msg = n>=81 ? '🏆 くくマスター！ぜんぶ おぼえたね！' : `せいかいした くく ${n} / 81`;
+  return `<div class="kuku-title">✖️ くくひょう</div>${h}<div class="kuku-msg">${msg}</div>`;
+}
+// 81マス そろった ときの おいわい（いちどだけ）
+function checkKukuMaster(){
+  if(kukuCount()>=81 && !REC.kukuMaster){
+    REC.kukuMaster=true; saveRecord();
+    confetti();
+    setTimeout(()=>spJa('すごい！くくを ぜんぶ おぼえたね！くくマスターだよ！'),3200);
   }
 }
 
@@ -3564,6 +3961,7 @@ function ans(btn,ok,correctText,emoji,correctSp,mode){
     let sp;
     if(mode==='eng') sp=spEn2(correctSp);
     else if(mode==='clk') sp=spJa(praise()).then(()=>clockSpeak(CQ));  // 正解を褒めてから時刻を読む
+    else if(mode==='mul'){ markKuku(CQ); sp=spJa(kukuSay(CQ)); }        // くくの となえかたで よむ
     else sp=spJa(praise());
     const epopTarget = mode==='eng' ? 'eng-emoji' : null;
     const hatching = addStarToEgg(1);
@@ -3701,6 +4099,7 @@ function showResult(){
   // ── 記録保存（復習モードは進捗カウントしない）──
   if(!REVIEW) recordClear(CM, CL, s);   // クリア判定
   addStar(s);                            // 正解数分スター加算
+  if(CM==='mul') checkKukuMaster();      // くくひょう 81マス そろったら おいわい
   const msg=pct>=0.9?`${s}もんせいかい！かんぺき！すごすぎる！`:
             pct>=0.7?`${s}もんせいかい！やったね！`:
             pct>=0.5?`${s}もんせいかい！よくがんばったよ！`:
@@ -5102,9 +5501,11 @@ function renderStudyRecord(){
   const modeInfo={
     add:{name:'たしざん', col:'#FF6B6B', ic:'➕'},
     sub:{name:'ひきざん', col:'#FF9F43', ic:'➖'},
+    mul:{name:'かけざん', col:'#0EA5E9', ic:'✖️'},
     eng:{name:'えいご',   col:'#48DBFB', ic:'🔤'},
     kan:{name:'かんじ',   col:'#FF9FF3', ic:'漢'},
     kot:{name:'ことば',   col:'#F06292', ic:'💬'},
+    kt2:{name:'ことば2',  col:'#8B5CF6', ic:'📝'},
     clk:{name:'とけい',   col:'#C87FFF', ic:'🕐'},
     shp:{name:'かたち',   col:'#FF7043', ic:'🔺'},
     mon:{name:'おかね',   col:'#14B8A6', ic:'💰'},
@@ -6012,12 +6413,12 @@ function lockOK(){
 
 // ── かけ算チャレンジ ──
 function switchToMath(){
-  // 問題を3問生成（2桁×1桁でやや難しめ）
+  // 問題を3問生成（2桁×1桁でやや難しめ。かけざんモードで くくを おぼえても とけないように 11〜19 × 3〜9）
   mathQList = [];
   const used = new Set();
   while(mathQList.length < 3){
-    const a = Math.floor(Math.random()*9)+2;   // 2〜10
-    const b = Math.floor(Math.random()*9)+2;   // 2〜10
+    const a = Math.floor(Math.random()*9)+11;  // 11〜19
+    const b = Math.floor(Math.random()*7)+3;   // 3〜9
     const key = `${a}x${b}`;
     if(!used.has(key)){ used.add(key); mathQList.push({a,b,ans:a*b}); }
   }
@@ -6095,7 +6496,8 @@ function renderParentPage(){
   if(nameInput) nameInput.value = getChildName() === 'かなとくん' ? '' : getChildName();
   // 学習記録グリッド
   const grid = $('parent-rec-grid');
-  const modeNames = {add:'たしざん',sub:'ひきざん',eng:'えいご',kan:'かんじ',kot:'ことば',clk:'とけい',shp:'かたち',mon:'おかね'};
+  const modeNames = {add:'たしざん',sub:'ひきざん',mul:'かけざん',eng:'えいご',kan:'かんじ',kot:'ことば',kt2:'ことば2',clk:'とけい',shp:'かたち',mon:'おかね'};
+  const pk=$('parent-kuku'); if(pk) pk.innerHTML=kukuTableHTML();
   if(grid){
     const getCount=(mode,lv)=>{
       const v=(REC.cleared[mode]||{})[String(lv)];

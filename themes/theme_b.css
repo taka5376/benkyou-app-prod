@@ -208,6 +208,8 @@ body{
 .c-shp{background:linear-gradient(155deg,#FFEFE8,#FFC4AE)}
 .c-mon{background:linear-gradient(155deg,#E4FBF5,#ABEBDD)}
 .c-kot{background:linear-gradient(155deg,#FFE9F1,#FFC2D8)}
+.c-kt2{background:linear-gradient(155deg,#F0EAFF,#D2C2FF)}
+.c-mul{background:linear-gradient(155deg,#E3F6FF,#AEE2FA)}
 
 /* ── レベルボタン：にじいろの番号アクセント ── */
 .lv-btn{border-radius:22px;background:#fff}
