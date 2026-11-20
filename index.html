@@ -6122,6 +6122,7 @@ function hatchEgg(){
 
 function closeEggHatch(){
   $('egg-hatch-popup').classList.remove('show');
+  stopAllSpeech();   // 「やったー！」で とじたら キャラの せつめい音声も とめる
   // 問題画面（scr-qz）が表示中なら次の問題へ進む
   if($('scr-qz') && $('scr-qz').classList.contains('on')){
     nextQ();
