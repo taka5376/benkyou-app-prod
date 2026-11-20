@@ -698,6 +698,55 @@ body{
   transition:transform .12s,box-shadow .12s;
 }
 .ehp-btn:active{transform:translateY(6px);box-shadow:0 1px 0 #CC333366}
+/* ═══ 🌟 あいぼうそだて ═══ */
+#aibou-widget{
+  margin:20px 0 0;
+  background:linear-gradient(135deg,rgba(255,255,255,.94),rgba(232,244,255,.96));
+  border-radius:28px;padding:16px 16px 14px;
+  box-shadow:0 8px 0 #9CC8F066, 0 14px 32px rgba(0,0,0,.08);
+  border:3px solid rgba(110,170,240,.45);
+  text-align:center;
+}
+.aib-row{display:flex;align-items:center;gap:14px}
+.aib-imgwrap{flex:0 0 auto;width:118px;height:132px;display:flex;align-items:flex-end;justify-content:center;cursor:pointer}
+.aib-img{max-height:132px;max-width:118px;object-fit:contain;animation:aibFloat 2.4s ease-in-out infinite alternate;
+  filter:drop-shadow(0 6px 8px rgba(0,0,0,.18))}
+@keyframes aibFloat{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+.aib-img.jump{animation:aibJump .5s ease}
+@keyframes aibJump{0%{transform:translateY(0) scale(1)}35%{transform:translateY(-22px) scale(1.06)}70%{transform:translateY(0) scale(.96,1.04)}100%{transform:translateY(0)}}
+.aib-info{flex:1;min-width:0;text-align:left}
+.aib-name{font-size:16px;font-weight:900;color:#1E4E8C;line-height:1.3}
+.aib-stage{font-size:12px;font-weight:900;color:#5C7CFA;margin:2px 0 4px}
+.aib-bar-fill{background:linear-gradient(90deg,#8EA8FF,#5BC6FF) !important}
+.aib-btn{
+  border:none;border-radius:16px;padding:11px 18px;font-family:inherit;font-size:15px;font-weight:900;cursor:pointer;
+  color:#fff;background:linear-gradient(135deg,#5BC6FF,#3D7BFF);box-shadow:0 5px 0 #2C5FCC88;
+}
+.aib-btn:active{transform:translateY(4px);box-shadow:0 1px 0 #2C5FCC88}
+.aib-btn.sub{background:#fff;color:#3D7BFF;border:2.5px solid #BFD4FF;box-shadow:0 4px 0 #BFD4FF;font-size:13px;padding:8px 14px}
+.aib-lead{font-size:13px;font-weight:700;color:#5B6B85;margin:4px 0 12px;line-height:1.6}
+#aibou-pop{position:fixed;inset:0;z-index:700;display:none;align-items:center;justify-content:center;padding:16px;}
+#aibou-pop.show{display:flex;}
+#aibou-pop .ehp-box{max-width:360px;max-height:92vh;overflow-y:auto;padding:26px 18px 22px;
+  background:linear-gradient(135deg,#F0F7FF,#FFF9E6);border-color:#BFD4FF;box-shadow:0 10px 0 #8EA8FF66, 0 24px 70px rgba(0,0,0,.3)}
+.aib-pick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 16px}
+.aib-card{position:relative;background:#fff;border:3px solid #DCE8FF;border-radius:18px;padding:8px 4px 6px;cursor:pointer;
+  box-shadow:0 4px 0 #DCE8FF;font-family:inherit}
+.aib-card img{height:84px;max-width:100%;object-fit:contain}
+.aib-card .nm{font-size:12px;font-weight:900;color:#1E4E8C;margin-top:2px}
+.aib-card.off{cursor:default;background:#F2F2F2;border-color:#E2E2E2;box-shadow:0 4px 0 #E2E2E2}
+.aib-card.off .sil{height:84px;display:flex;align-items:center;justify-content:center;font-size:40px;filter:grayscale(1) brightness(.6);opacity:.45}
+.aib-card.off .nm{color:#999;font-size:10px;white-space:nowrap}
+.aib-card .crown{position:absolute;top:-8px;right:-4px;font-size:20px}
+.aib-big{height:220px;display:flex;align-items:flex-end;justify-content:center;margin:6px 0 4px;position:relative}
+.aib-big img{max-height:220px;max-width:100%;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(0,0,0,.2))}
+.aib-big img.flash{animation:aibFlash .8s ease forwards}
+@keyframes aibFlash{to{filter:brightness(3) drop-shadow(0 0 24px #fff) drop-shadow(0 0 30px #FFE082);transform:scale(1.08)}}
+.aib-big img.popin{animation:ehpCharIn .7s cubic-bezier(.34,1.56,.64,1) both}
+.aib-album{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 14px}
+.aib-album div{background:#fff;border-radius:14px;padding:6px 2px;border:2px solid #E3ECFF}
+.aib-album img{height:90px;max-width:100%;object-fit:contain}
+.aib-album span{display:block;font-size:10px;font-weight:900;color:#5B6B85;line-height:1.3}
 #egg-collection{margin-top:12px;}
 .ecol-title{font-size:13px;font-weight:900;color:#8D6E63;margin-bottom:8px;text-align:left;display:flex;align-items:center;gap:5px;}
 .ecol-title #ecol-count{font-size:11px;color:#B0A090;font-weight:900;}
@@ -1140,6 +1189,8 @@ body{
     <span class="rev-badge"><b id="review-count">0</b><span>もん</span></span>
   </button>
   <div id="home-score-wrap"></div>
+  <!-- 🌟 あいぼうそだて（renderAibouWidget が描画） -->
+  <div id="aibou-widget"></div>
   <!-- 🥚 たまごそだて -->
   <div id="egg-widget">
     <div class="egg-title">🥚 たまごをそだてよう！</div>
@@ -1286,6 +1337,13 @@ body{
     <div class="kuku-wrap" id="parent-kuku" style="margin-top:0"></div>
   </div>
 
+  <!-- あいぼうそだて -->
+  <div class="parent-section">
+    <div class="parent-sec-title">🌟 あいぼうそだて</div>
+    <div id="parent-aibou-info" style="font-size:14px;font-weight:700;color:#5D4037;text-align:center;margin-bottom:10px;line-height:1.7"></div>
+    <button class="danger-btn safe" onclick="showResetModal('aibou')">🌟 あいぼうを えらびなおす</button>
+  </div>
+
   <!-- たまごコレクション -->
   <div class="parent-section">
     <div class="parent-sec-title">🥚 たまごコレクション</div>
@@ -1422,6 +1480,11 @@ body{
     <div class="ehp-msg" id="ehp-msg">ぴよぴよ！</div>
     <button class="ehp-btn" onclick="closeEggHatch()">やったー！🎉</button>
   </div>
+</div>
+<!-- 🌟 あいぼう ポップアップ（えらぶ・しんか・でんどういり） -->
+<div id="aibou-pop">
+  <div class="ehp-bg" onclick="closeAibouPop()"></div>
+  <div class="ehp-box" id="aibou-pop-box"></div>
 </div>
 <!-- FEEDBACK -->
 <div id="fb"></div>
@@ -5965,6 +6028,7 @@ function renderEggWidget(){
   }
 
   renderEggCollection();
+  renderAibouWidget();
 }
 
 // コレクション表示（2ページ：1〜50 / 51〜100）
@@ -6078,12 +6142,17 @@ function eggTap(){
 function addStarToEgg(n){
   initEggState();
   REC.eggs.starsInCurrentEgg += n;
+  const evo = aibouAddStars(n);   // おなじ スターを あいぼうにも（わけあわない）
   saveRecord();
   if(REC.eggs.starsInCurrentEgg >= EGG_STARS_NEEDED){
     // 正解演出（epopのアニメ）が終わった後に孵化演出を表示
-    // nextQはcloseEggHatch()で呼ばれるのでここでは呼ばない
+    // nextQはcloseEggHatch()で呼ばれるのでここでは呼ばない（あいぼうの しんかは そのあと）
     setTimeout(()=>hatchEgg(), 800);
     return true; // 孵化フラグ
+  }
+  if(evo){
+    setTimeout(()=>showAibouEvolve(), 800);
+    return true; // しんか中も nextQ は closeAibouPop に まかせる
   }
   return false;
 }
@@ -6123,10 +6192,198 @@ function hatchEgg(){
 function closeEggHatch(){
   $('egg-hatch-popup').classList.remove('show');
   stopAllSpeech();   // 「やったー！」で とじたら キャラの せつめい音声も とめる
-  // 問題画面（scr-qz）が表示中なら次の問題へ進む
-  if($('scr-qz') && $('scr-qz').classList.contains('on')){
+  // あいぼうも しんかするなら、つづけて その演出（nextQ は そのあと）
+  if(aibouEvoPending()){ setTimeout(()=>showAibouEvolve(), 250); return; }
+  afterRewardPopup();
+}
+// ごほうび演出を とじたあと：問題のとちゅうなら 次の問題へ（結果画面の上なら なにもしない）
+function afterRewardPopup(){
+  if($('scr-qz') && $('scr-qz').classList.contains('on') && !$('res').classList.contains('on')){
     nextQ();
   }
+}
+
+// ============================================================
+// 🌟 あいぼうそだて（えらんだ あいぼうが スターで 6だんかい せいちょう）
+//   仕様: docs/spec_aibou.md ／ 絵: assets/aibou/<key>_<1〜6>.png（tools/extract_aibou.py で切り出し）
+// ============================================================
+const AIBOU_STARS=[0,100,220,340,470,600];   // だんかい1〜6に ひつような スター（えらんでからの合計）
+const AIBOU_TYPES=[
+  {key:'hero', name:'ヒーロー', icon:'🦸', ready:true,
+   stages:[
+     {n:'げんきな おとこのこ', say:'よろしくね！いっしょに つよく なろう！'},
+     {n:'きのけんの けんし',   say:'きのけんを てに いれた！'},
+     {n:'ぼうけんしゃ',       say:'たてと マントで ぼうけんに しゅっぱつ！'},
+     {n:'ぎんの きし',        say:'ぎんの よろいで きしに なった！'},
+     {n:'ひかりの きし',      say:'ひかりの けんが かがやいて いるよ！'},
+     {n:'でんせつの ゆうしゃ', say:'ついに でんせつの ゆうしゃに なった！'},
+   ],
+   taps:['きょうも がんばろう！','いっしょに べんきょう しよう！','スターで つよく なるぞ！','えいっ！やあっ！','つぎの そうびが たのしみ！']},
+  {key:'robot',  name:'ロボット',    icon:'🤖', ready:false},
+  {key:'dino',   name:'きょうりゅう', icon:'🦖', ready:false},
+  {key:'ghost',  name:'おばけ',      icon:'👻', ready:false},
+  {key:'wizard', name:'まほうつかい', icon:'🧙', ready:false},
+];
+const aibouType=k=>AIBOU_TYPES.find(t=>t.key===k);
+const aibouImg=(k,st)=>`assets/aibou/${k}_${st}.png`;
+function aibouRec(){
+  if(!REC.aibou) REC.aibou={type:null, stars:0, stage:0, done:[]};
+  if(!REC.aibou.done) REC.aibou.done=[];
+  return REC.aibou;
+}
+function aibouStageOf(stars){ let s=0; AIBOU_STARS.forEach((v,i)=>{ if(stars>=v) s=i+1; }); return s; }
+// スターを たす。しんかする（だんかいが あがる）なら true
+function aibouAddStars(n){
+  const a=aibouRec();
+  if(!a.type) return false;                     // まだ えらんでいない ときは ためない
+  a.stars=Math.min(AIBOU_STARS[5], a.stars+n);
+  return aibouEvoPending();
+}
+// まだ みせていない しんかが あるか
+function aibouEvoPending(){ const a=aibouRec(); return !!a.type && aibouStageOf(a.stars)>a.stage; }
+
+// ── ホームの ウィジェット ──
+function renderAibouWidget(){
+  const w=$('aibou-widget'); if(!w) return;
+  const a=aibouRec(), t=a.type && aibouType(a.type);
+  const hallBtn = a.done.length ? `<button class="aib-btn sub" onclick="openAibouHall()">📜 でんどういり（${a.done.length}）</button>` : '';
+  if(!t){
+    w.innerHTML=`<div class="egg-title">🌟 あいぼうを そだてよう！</div>
+      <div class="aib-lead">べんきょうで スターを ためると<br>あいぼうが どんどん つよく なるよ！</div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <button class="aib-btn" onclick="openAibouPick()">あいぼうを えらぶ</button>${hallBtn}</div>`;
+  } else {
+    const st=Math.max(1,a.stage), cur=AIBOU_STARS[st-1], nxt=AIBOU_STARS[st];
+    const pct=Math.min(100,(a.stars-cur)/(nxt-cur)*100);
+    const rem=Math.max(0,nxt-a.stars);
+    w.innerHTML=`<div class="egg-title">🌟 あいぼうそだて</div>
+      <div class="aib-row">
+        <div class="aib-imgwrap" onclick="aibouTap()"><img class="aib-img" id="aib-img" src="${aibouImg(t.key,st)}" alt="${t.stages[st-1].n}"></div>
+        <div class="aib-info">
+          <div class="aib-name">${t.stages[st-1].n}</div>
+          <div class="aib-stage">${t.icon} ${t.name}　だんかい ${st} / 6</div>
+          <div class="egg-bar-wrap"><div class="egg-bar-fill aib-bar-fill" style="width:${pct}%"></div></div>
+          <div class="egg-bar-label" style="text-align:left">${rem>0?`つぎの しんかまで あと⭐${rem}`:'もうすぐ しんか！'}</div>
+          ${hallBtn?`<div style="margin-top:8px">${hallBtn}</div>`:''}
+        </div>
+      </div>`;
+  }
+  // まだ みせていない しんか（とちゅうで アプリを とじた など）は ホームで みせる
+  if(aibouEvoPending() && $('scr-home') && $('scr-home').classList.contains('on')
+     && !$('aibou-pop').classList.contains('show') && !$('egg-hatch-popup').classList.contains('show')){
+    setTimeout(()=>{ if(aibouEvoPending() && !$('aibou-pop').classList.contains('show')) showAibouEvolve(); }, 700);
+  }
+}
+function aibouTap(){
+  const a=aibouRec(), t=a.type && aibouType(a.type); if(!t) return;
+  const im=$('aib-img');
+  if(im){ im.classList.remove('jump'); void im.offsetWidth; im.classList.add('jump'); setTimeout(()=>im.classList.remove('jump'),520); }
+  spJa(t.taps[Math.floor(Math.random()*t.taps.length)]);
+}
+
+// ── ポップアップ ──
+let AIB_POP='';   // 'pick' | 'confirm' | 'evo' | 'hall' | 'album'
+function aibouPopShow(mode, html){
+  AIB_POP=mode;
+  $('aibou-pop-box').innerHTML=html;
+  const pop=$('aibou-pop');
+  pop.classList.add('show');
+  const box=$('aibou-pop-box'); box.style.animation='none'; void box.offsetWidth; box.style.animation='';
+}
+function closeAibouPop(){
+  const wasEvo = AIB_POP==='evo';
+  $('aibou-pop').classList.remove('show');
+  AIB_POP='';
+  stopAllSpeech();                 // とじたら 読み上げも とめる
+  renderAibouWidget();
+  if(wasEvo) afterRewardPopup();   // 問題のとちゅうなら 次の問題へ
+}
+// えらぶ
+function openAibouPick(){
+  const a=aibouRec();
+  const cards=AIBOU_TYPES.map(t=>{
+    const crown=a.done.some(d=>d.type===t.key)?'<span class="crown">👑</span>':'';
+    if(!t.ready) return `<div class="aib-card off">${crown}<div class="sil">${t.icon}</div><div class="nm">じゅんびちゅう</div></div>`;
+    return `<button class="aib-card" onclick="aibouConfirm('${t.key}')">${crown}<img src="${aibouImg(t.key,1)}" alt="${t.name}"><div class="nm">${t.name}</div></button>`;
+  }).join('');
+  aibouPopShow('pick',`<div class="ehp-title" style="font-size:22px;color:#1E4E8C">🌟 あいぼうを えらぼう！</div>
+    <div class="ehp-sub" style="margin-bottom:0">いっしょに せいちょうする なかまだよ</div>
+    <div class="aib-pick">${cards}</div>
+    <button class="aib-btn sub" onclick="closeAibouPop()">とじる</button>`);
+  spJa('どの あいぼうに する？');
+}
+function aibouConfirm(key){
+  const t=aibouType(key);
+  aibouPopShow('confirm',`<div class="ehp-title" style="font-size:22px;color:#1E4E8C">${t.icon} ${t.name}</div>
+    <div class="aib-big"><img class="popin" src="${aibouImg(key,1)}" alt="${t.name}"></div>
+    <div class="ehp-sub" style="margin:6px 0 14px">この あいぼうに する？</div>
+    <div style="display:flex;gap:10px;justify-content:center">
+      <button class="aib-btn sub" onclick="openAibouPick()">もどる</button>
+      <button class="ehp-btn" style="padding:13px 26px" onclick="aibouChoose('${key}')">けってい！</button></div>`);
+  spJa('この あいぼうに する？');
+}
+function aibouChoose(key){
+  const a=aibouRec(), t=aibouType(key);
+  a.type=key; a.stars=0; a.stage=1; saveRecord();
+  aibouPopShow('intro',`<div class="ehp-title">🌟 よろしくね！</div>
+    <div class="aib-big"><img class="popin" src="${aibouImg(key,1)}" alt="${t.stages[0].n}"></div>
+    <div class="ehp-name">${t.stages[0].n}</div>
+    <div class="ehp-msg">スターを ためて そだてよう！</div>
+    <button class="ehp-btn" onclick="closeAibouPop()">がんばるぞ！</button>`);
+  confetti();
+  spJa(t.stages[0].say);
+}
+// しんか（だんかい6なら かんせい → でんどういり）
+function showAibouEvolve(){
+  const a=aibouRec(), t=aibouType(a.type);
+  if(!t || !aibouEvoPending()){ afterRewardPopup(); return; }
+  const from=Math.max(1,a.stage), to=aibouStageOf(a.stars);
+  const key=t.key, s=t.stages[to-1], done=(to>=6);
+  a.stage=to;
+  if(done){
+    a.done.push({type:key, date:new Date().toISOString().slice(0,10)});
+    a.type=null; a.stars=0; a.stage=0;     // つぎの あいぼうを えらべるように
+  }
+  saveRecord();
+  aibouPopShow('evo',`<div class="ehp-title" id="aib-evo-title">✨ あれれ…？</div>
+    <div class="ehp-sub" id="aib-evo-sub">${t.stages[from-1].n}の ようすが…</div>
+    <div class="aib-big"><img id="aib-evo-img" src="${aibouImg(key,from)}" alt=""></div>
+    <div class="ehp-name" id="aib-evo-name" style="visibility:hidden">${s.n}</div>
+    <div class="ehp-msg" id="aib-evo-msg" style="visibility:hidden">${done?'👑 かんせい！でんどういり したよ！':s.say}</div>
+    <button class="ehp-btn" onclick="closeAibouPop()">やったー！🎉</button>`);
+  const im=$('aib-evo-img');
+  setTimeout(()=>{ if(AIB_POP==='evo' && im) im.classList.add('flash'); }, 500);
+  setTimeout(()=>{
+    if(AIB_POP!=='evo' || !im) return;
+    im.classList.remove('flash'); im.src=aibouImg(key,to); im.classList.add('popin');
+    $('aib-evo-title').textContent = done ? '👑 かんせい！' : '🎉 しんかした！';
+    $('aib-evo-sub').textContent   = `${s.n}に なったよ！`;
+    $('aib-evo-name').style.visibility='visible';
+    $('aib-evo-msg').style.visibility='visible';
+    confetti();
+    spJa(`${s.n}に なったよ！${s.say}` + (done?'かんせい！でんどういり したよ！':''));
+  }, 1400);
+  renderAibouWidget();
+}
+// でんどういり
+function openAibouHall(){
+  const a=aibouRec();
+  const cards=a.done.map((d,i)=>{
+    const t=aibouType(d.type); if(!t) return '';
+    return `<button class="aib-card" onclick="openAibouAlbum(${i})"><span class="crown">👑</span><img src="${aibouImg(t.key,6)}" alt="${t.name}">
+      <div class="nm">${t.name}</div><div style="font-size:10px;color:#999;font-weight:700">${d.date.replace(/-/g,'/')}</div></button>`;
+  }).join('');
+  aibouPopShow('hall',`<div class="ehp-title" style="font-size:22px;color:#B8860B">📜 でんどういり</div>
+    <div class="ehp-sub" style="margin-bottom:0">そだてきった あいぼうたち</div>
+    <div class="aib-pick">${cards}</div>
+    <button class="aib-btn sub" onclick="closeAibouPop()">とじる</button>`);
+}
+function openAibouAlbum(i){
+  const d=aibouRec().done[i], t=d && aibouType(d.type); if(!t) return;
+  const cells=t.stages.map((s,k)=>`<div><img src="${aibouImg(t.key,k+1)}" alt="${s.n}"><span>${k+1}. ${s.n}</span></div>`).join('');
+  aibouPopShow('album',`<div class="ehp-title" style="font-size:22px;color:#1E4E8C">${t.icon} ${t.name}の せいちょう</div>
+    <div class="aib-album">${cells}</div>
+    <button class="aib-btn sub" onclick="openAibouHall()">もどる</button>`);
 }
 
 // ── スター加算 & 進化チェック ──
@@ -6527,6 +6784,14 @@ function renderParentPage(){
   // スター合計
   const st = $('parent-star-total');
   if(st) st.textContent = `⭐ これまでのスター：${REC.totalStars || TS}こ　　📖 おぼえた漢字：${Object.keys(REC.kanjiMastered).length}じ`;
+  // あいぼう情報
+  const ai = $('parent-aibou-info');
+  if(ai){
+    const a=aibouRec(), t=a.type && aibouType(a.type);
+    ai.innerHTML = (t ? `いまの あいぼう：${t.icon} ${t.name}（だんかい ${Math.max(1,a.stage)} / 6・⭐${a.stars} / ${AIBOU_STARS[5]}）`
+                      : 'いまの あいぼう：まだ えらんでいません')
+                 + `<br>でんどういり：${a.done.length}たい`;
+  }
   // たまご情報
   const ei = $('parent-egg-info');
   if(ei && REC.eggs){
@@ -6547,7 +6812,11 @@ function showResetModal(target){
   const msg     = $('reset-modal-msg');
   if(!overlay) return;
 
-  if(target === 'egg'){
+  if(target === 'aibou'){
+    icon.textContent  = '🌟';
+    title.textContent = 'あいぼうを えらびなおしますか？';
+    msg.textContent   = 'いま そだてている あいぼうの せいちょうは\nリセットされます。\nでんどういり・たまご・がくしゅうきろくは のこります。';
+  } else if(target === 'egg'){
     icon.textContent  = '🥚';
     title.textContent = 'たまごをリセットしますか？';
     msg.textContent   = 'コレクションや そだて中のたまごが\nすべて消えます。\nがくしゅうきろくは のこります。';
@@ -6567,7 +6836,15 @@ function closeResetModal(){
 }
 
 function execReset(){
-  if(_resetTarget === 'egg'){
+  if(_resetTarget === 'aibou'){
+    const a=aibouRec();
+    a.type=null; a.stars=0; a.stage=0;
+    saveRecord();
+    renderAibouWidget();
+    renderParentPage();
+    closeResetModal();
+    showResetDone('🌟 あいぼうを えらびなおせるように しました！');
+  } else if(_resetTarget === 'egg'){
     // たまごのみリセット（がくしゅうきろくは保持）
     REC.eggs = null;
     saveRecord();
@@ -6581,6 +6858,7 @@ function execReset(){
   } else if(_resetTarget === 'study'){
     // がくしゅうきろくのみリセット（たまごは保持）
     const savedEggs = REC.eggs; // たまごデータを退避
+    const savedAibou = REC.aibou; // あいぼうも のこす（ごほうびは リセットしない）
     REC = {
       totalStars: 0, lastStage: 0,
       cleared: {
@@ -6594,6 +6872,7 @@ function execReset(){
       kanjiMastered: {},
       maxLv: {add:0,sub:0,eng:0,kan:0,clk:0,shp:0},
       eggs: savedEggs, // たまごデータを復元
+      aibou: savedAibou,
     };
     TS = 0; SS = 0;
     saveRecord();
